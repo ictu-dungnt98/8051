@@ -1,0 +1,161 @@
+C51 COMPILER V9.01   MAIN                                                                  10/06/2018 19:35:51 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Tool\KeilC_8051\C51\BIN\C51.EXE main.c OMF2 BROWSE DEBUG
+
+line level    source
+
+   1          #include <REGX51.H>
+   2          #include <stdlib.h>
+   3          
+   4          
+   5          #define BUFFER_SIZE             2
+   6          
+   7          volatile unsigned long tick = 0;
+   8          volatile char _data = '\0';
+   9          
+  10          char buffer[BUFFER_SIZE] = "";
+  11          unsigned char write_index = 0;
+  12          unsigned char read_index = 0;
+  13          
+  14          /****************** delay function ******************************/
+  15          void delay(unsigned long time)
+  16          {
+  17   1              unsigned long current_tick = tick;
+  18   1              while(!(tick - current_tick == time));
+  19   1      }
+  20          
+  21          /****************** TIMER ******************************/
+  22          void timer0_init()         // 1ms
+  23          {
+  24   1              TMOD &= ~0x0F;
+  25   1              TMOD |= 0x01; // 16 bit
+  26   1      
+  27   1              TH0 = 0xFC;
+  28   1              TL0 = 0x67;
+  29   1      
+  30   1              IE = 0x82;   // enable timer0 interrupt
+  31   1              
+  32   1              TR0 = 1;
+  33   1      }
+  34          
+  35          
+  36          /****************** UART ******************************/
+  37          void uart_init()
+  38          {
+  39   1              TMOD = 0x20;     // timer1 mode 2 auto update
+  40   1              SCON = 0x50;    // uart 8bit baudrate is selected by timer1
+  41   1              TH1 = 0xFD; //9600      
+  42   1              IE = 0x90;    // enable interrupt uart 
+  43   1              TR1 = 1;
+  44   1      }
+  45          
+  46          void uart_send_byte(char data_)
+  47          {
+  48   1              SBUF = data_;
+  49   1              while(TI ==0){}
+  50   1              TI = 0;
+  51   1      
+  52   1      }
+  53          
+  54          void uart_send_str(char* str)
+  55          {
+C51 COMPILER V9.01   MAIN                                                                  10/06/2018 19:35:51 PAGE 2   
+
+  56   1              while(*str)
+  57   1              {
+  58   2                      uart_send_byte(*str);
+  59   2                      str++;  
+  60   2              }
+  61   1      }
+  62                  int result = 0;
+  63                  int port,pin;
+  64                  char val = 0;
+  65          /********************************************************************************/
+  66          /****************************    MAIN   ****************************************/
+  67          /******************************************************************************/
+  68          void main()
+  69          {
+  70   1              timer0_init();
+  71   1              uart_init();
+  72   1              P1 = 0x00;
+  73   1      
+  74   1      
+  75   1              while(1)
+  76   1              {               
+  77   2                      if(_data != 0)
+  78   2                      {       
+  79   3                              switch(_data)
+  80   3                              {
+  81   4                                      
+  82   4                                      case 10:
+  83   4                                              P1_0 = ~P1_0;
+  84   4                                              break;
+  85   4                                      case 11:
+  86   4                                              P1_1 = ~P1_1;
+  87   4                                              break;
+  88   4                                      case 12:
+  89   4                                              P1_2 = ~P1_2;
+  90   4                                              break;
+  91   4                                      case 13:
+  92   4                                              P1_3 = ~P1_3;
+  93   4                                              break;
+  94   4                                      case 14:
+  95   4                                              P1_4 = ~P1_4;
+  96   4                                              break;
+  97   4                                      case 15:
+  98   4                                              P1_5 = ~P1_5;
+  99   4                                              break;
+ 100   4                                      case 16:
+ 101   4                                              P1_6 = ~P1_6;
+ 102   4                                              break;
+ 103   4                                      case 17:
+ 104   4                                              P1_7 = ~P1_7;
+ 105   4                                              break;
+ 106   4                                      case 1:
+ 107   4                                              P1 = 0x00;
+ 108   4                                              break;
+ 109   4                                                      
+ 110   4                              }
+ 111   3                              _data = 0;
+ 112   3                      }
+ 113   2              }                               
+ 114   1      }
+ 115          /****************** INTERRUPT  ******************************/
+ 116          void timer0_ISR(void) interrupt 1
+ 117          {
+C51 COMPILER V9.01   MAIN                                                                  10/06/2018 19:35:51 PAGE 3   
+
+ 118   1               tick++;
+ 119   1               TH0 = 0xFC;
+ 120   1               TL0 = 0x66;
+ 121   1      }
+ 122          void uart_ISR(void) interrupt 4
+ 123          {
+ 124   1              if(RI == 1)
+ 125   1              {
+ 126   2                      _data = SBUF;
+ 127   2                      RI = 0;
+ 128   2              }
+ 129   1      
+ 130   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    287    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
