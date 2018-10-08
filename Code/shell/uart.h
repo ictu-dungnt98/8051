@@ -4,7 +4,7 @@
 #include <REGX51.H>
 
 
-#define BUFFER_SIZE		50
+#define BUFFER_SIZE		20
 
 extern volatile char _data;
 extern char buffer[BUFFER_SIZE];

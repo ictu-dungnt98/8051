@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   MAIN                                                                  10/08/2018 08:24:22 PAGE 1   
+C51 COMPILER V9.01   MAIN                                                                  10/08/2018 15:13:27 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
@@ -12,75 +12,70 @@ line level    source
    3          #include "./cli.h"
    4          #include "./gpio.h"
    5          #include "./timer.h"
-   6          
-   7          #define    NUM_CLI              2
+   6          #include <stdlib.h>
+   7          
    8          
-   9          cli_t list_cmd[NUM_CLI] =       {
-  10                                                                          {
-  11                                                                                  "led", /* name of cmd */
-  12                                                                                  2, /* num_input_par */
-  13                                                                                  led_callback,
-  14                                                                                  NULL
-  15                                                                          },
-  16                                                                          {
-  17                                                                                  "test",
-  18                                                                                  0,
-  19                                                                                  test_callback,
-  20                                                                                  NULL
-  21                                                                          }
-  22                                                                  };
-  23          
-  24          void main()
-  25          {
-  26   1              timer0_init();
-  27   1              uart_init();
+   9          #define    NUM_CLI              2
+  10          
+  11          cli_t list_cmd[NUM_CLI] =       {
+  12                                                                          {
+  13                                                                                  "led", /* name of cmd */
+  14                                                                                  2, /* num_input_par */
+  15                                                                                  led_callback,
+  16                                                                                  NULL
+  17                                                                          },
+  18                                                                          {
+  19                                                                                  "test",
+  20                                                                                  0,
+  21                                                                                  test_callback,
+  22                                                                                  NULL
+  23                                                                          }
+  24                                                                  };
+  25          
+  26          void main()
+  27          {
   28   1              P1 = 0x00;
-  29   1      
-  30   1              cli_init();
-  31   1      #if 1
-  32   1              uart_send_str("\n\r3main :: cli_init()\n\rhead_cmd: ");
-  33   1              uart_send_str(head_cmd->cmd);
-  34   1              uart_send_str("\n\r\n\r");
-  35   1      #endif
-  36   1      
-  37   1              cli_add(list_cmd,NUM_CLI);
-  38   1      
-  39   1              while(1)
-  40   1              {               
-  41   2                      if(_data != 0)
-  42   2                      {
-  43   3                              if(prepare_cli(_data))
-  44   3                              {
-  45   4                                      uart_send_str("\n\r");
-  46   4                              }       
-  47   3                              _data = 0;
-  48   3                      }
-  49   2              }                               
-  50   1      }
-  51          /****************** INTERRUPT  ******************************/
-  52          void timer0_ISR(void) interrupt 1
-  53          {
-  54   1               tick++;
-  55   1               TH0 = 0xFC;
-C51 COMPILER V9.01   MAIN                                                                  10/08/2018 08:24:22 PAGE 2   
+  29   1              timer0_init();
+  30   1              uart_init();
+  31   1              cli_init();
+  32   1              cli_add(list_cmd,NUM_CLI);
+  33   1              
+  34   1              while(1)
+  35   1              {               
+  36   2                      if(_data != 0)
+  37   2                      {
+  38   3                              if(prepare_cli(_data))
+  39   3                              {
+  40   4                                      uart_send_str("\n\r");
+  41   4                              }       
+  42   3                              _data = 0;
+  43   3                      }
+  44   2              }                               
+  45   1      }
+  46          /****************** INTERRUPT  ******************************/
+  47          void timer0_ISR(void) interrupt 1
+  48          {
+  49   1               tick++;
+  50   1               TH0 = 0xFC;
+  51   1               TL0 = 0x66;
+  52   1      }
+  53          
+  54          void uart_ISR(void) interrupt 4
+  55          {
+C51 COMPILER V9.01   MAIN                                                                  10/08/2018 15:13:27 PAGE 2   
 
-  56   1               TL0 = 0x66;
-  57   1      }
-  58          
-  59          void uart_ISR(void) interrupt 4
-  60          {
-  61   1              if(RI == 1)
-  62   1              {
-  63   2                      _data = SBUF;
-  64   2                      uart_send_byte(_data);
-  65   2                      RI = 0;
-  66   2              }
-  67   1      }
+  56   1              if(RI == 1)
+  57   1              {
+  58   2                      _data = SBUF;
+  59   2                      uart_send_byte(_data);
+  60   2                      RI = 0;
+  61   2              }
+  62   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    213    ----
-   CONSTANT SIZE    =     51    ----
+   CODE SIZE        =    183    ----
+   CONSTANT SIZE    =     12    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =     22    ----

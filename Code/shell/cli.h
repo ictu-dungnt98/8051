@@ -10,18 +10,21 @@
 
 
 #define DELIMITED		"_ "
-#define NUM_CLI			2
+
+
 
 typedef struct _cli_t_
 {
-	const char* cmd;	/* name of command */
+	const char* cmd;
 	unsigned int num_parameter;
 	const void (*callback)(unsigned char argc,unsigned char** argv);
 	struct _cli_t_ *next_cmd;
 }cli_t;
 
+
 extern cli_t* head_cmd;
 extern cli_t* current_cmd;
+
 
 void test_callback(char argc,char** argv);
 void help(unsigned char argc, unsigned char** argv);

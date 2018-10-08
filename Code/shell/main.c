@@ -3,6 +3,8 @@
 #include "./cli.h"
 #include "./gpio.h"
 #include "./timer.h"
+#include <stdlib.h>
+
 
 #define    NUM_CLI 		2
 
@@ -23,19 +25,12 @@ cli_t list_cmd[NUM_CLI] =	{
 
 void main()
 {
+	P1 = 0x00;
 	timer0_init();
 	uart_init();
-	P1 = 0x00;
-
 	cli_init();
-#if 1
-	uart_send_str("\n\r3main :: cli_init()\n\rhead_cmd: ");
-	uart_send_str(head_cmd->cmd);
-	uart_send_str("\n\r\n\r");
-#endif
-
 	cli_add(list_cmd,NUM_CLI);
-
+	
 	while(1)
 	{		
 		if(_data != 0)
