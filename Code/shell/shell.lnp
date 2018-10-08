@@ -1,4 +1,8 @@
-"main.obj" 
+"main.obj",
+"uart.obj",
+"cli.obj",
+"gpio.obj",
+"timer.obj" 
 TO "shell" 
 
 ru 

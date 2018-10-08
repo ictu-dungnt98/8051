@@ -1,0 +1,60 @@
+C51 COMPILER V9.01   UART                                                                  10/08/2018 08:24:22 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.OBJ
+COMPILER INVOKED BY: C:\Tool\KeilC_8051\C51\BIN\C51.EXE uart.c OMF2 BROWSE DEBUG
+
+line level    source
+
+   1          #include "uart.h"
+   2          
+   3          volatile char _data = 0;
+   4          char buffer[BUFFER_SIZE] = "";
+   5          unsigned char write_index = 0;
+   6          unsigned char read_index = 0;
+   7          
+   8          /****************** UART ******************************/
+   9          void uart_init()
+  10          {
+  11   1              TMOD = 0x20;     // timer1 mode 2 auto update
+  12   1              SCON = 0x50;    // uart 8bit baudrate is selected by timer1
+  13   1              TH1 = 0xFD; //9600      
+  14   1              IE = 0x90;    // enable interrupt uart 
+  15   1              TR1 = 1;
+  16   1      }
+  17          /* UART send 1 byte */
+  18          void uart_send_byte(char data_)
+  19          {
+  20   1              SBUF = data_;
+  21   1              while(TI ==0){}
+  22   1              TI = 0;
+  23   1      
+  24   1      }
+  25          /* UART send string */
+  26          void uart_send_str(char* str)
+  27          {
+  28   1              while(*str)
+  29   1              {
+  30   2                      uart_send_byte(*str);
+  31   2                      str++;  
+  32   2              }
+  33   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     42    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     53    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,4 +1,4 @@
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 1   
+C51 COMPILER V9.01   MAIN                                                                  10/08/2018 08:24:22 PAGE 1   
 
 
 C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
@@ -8,463 +8,82 @@ COMPILER INVOKED BY: C:\Tool\KeilC_8051\C51\BIN\C51.EXE main.c OMF2 BROWSE DEBUG
 line level    source
 
    1          #include <REGX51.H>
-   2          #include <stdlib.h>
-   3          #include <string.h>
-   4          
-   5          
-   6          #define BUFFER_SIZE             50
-   7          #define DELIMITED               "_ "
-   8          #define NUM_CLI                 2
-   9          
-  10          volatile unsigned long tick = 0;
-  11          volatile char _data = 0;
-  12          
-  13          static char buffer[BUFFER_SIZE] = "";
-  14          static unsigned char write_index = 0;
-  15          static unsigned char read_index = 0;
-  16          
-  17          /*************************   Function   ***************************************/
-  18          void uart_send_byte(char data_);
-  19          void uart_send_str(const char* str);
-  20          void test_callback(char argc,char** argv);
-  21          
-  22          /*********************************  GPIO  **************************************/
-  23          void led_on(unsigned char led_pin)
-  24          {
-  25   1              switch(led_pin)
-  26   1              {
-  27   2                      case 0:
-  28   2                              P1_0 = 1;
-  29   2                              break;
-  30   2                      case 1:
-  31   2                              P1_1 = 1;
-  32   2                              break;
-  33   2                      case 2:
-  34   2                              P1_2 = 1;
-  35   2                              break;
-  36   2                      case 3:
-  37   2                              P1_3 = 1;
-  38   2                              break;
-  39   2                      case 4:
-  40   2                              P1_4 = 1;
-  41   2                              break;
-  42   2                      case 5:
-  43   2                              P1_5 = 1;
-  44   2                              break;
-  45   2                      case 6:
-  46   2                              P1_6 = 1;
-  47   2                              break;
-  48   2                      case 7:
-  49   2                              P1_7 = 1;
-  50   2                              break;          
-  51   2              }
-  52   1      }
-  53          void led_off(unsigned char led_pin)
-  54          {
-  55   1              switch(led_pin)
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 2   
+   2          #include "./uart.h"
+   3          #include "./cli.h"
+   4          #include "./gpio.h"
+   5          #include "./timer.h"
+   6          
+   7          #define    NUM_CLI              2
+   8          
+   9          cli_t list_cmd[NUM_CLI] =       {
+  10                                                                          {
+  11                                                                                  "led", /* name of cmd */
+  12                                                                                  2, /* num_input_par */
+  13                                                                                  led_callback,
+  14                                                                                  NULL
+  15                                                                          },
+  16                                                                          {
+  17                                                                                  "test",
+  18                                                                                  0,
+  19                                                                                  test_callback,
+  20                                                                                  NULL
+  21                                                                          }
+  22                                                                  };
+  23          
+  24          void main()
+  25          {
+  26   1              timer0_init();
+  27   1              uart_init();
+  28   1              P1 = 0x00;
+  29   1      
+  30   1              cli_init();
+  31   1      #if 1
+  32   1              uart_send_str("\n\r3main :: cli_init()\n\rhead_cmd: ");
+  33   1              uart_send_str(head_cmd->cmd);
+  34   1              uart_send_str("\n\r\n\r");
+  35   1      #endif
+  36   1      
+  37   1              cli_add(list_cmd,NUM_CLI);
+  38   1      
+  39   1              while(1)
+  40   1              {               
+  41   2                      if(_data != 0)
+  42   2                      {
+  43   3                              if(prepare_cli(_data))
+  44   3                              {
+  45   4                                      uart_send_str("\n\r");
+  46   4                              }       
+  47   3                              _data = 0;
+  48   3                      }
+  49   2              }                               
+  50   1      }
+  51          /****************** INTERRUPT  ******************************/
+  52          void timer0_ISR(void) interrupt 1
+  53          {
+  54   1               tick++;
+  55   1               TH0 = 0xFC;
+C51 COMPILER V9.01   MAIN                                                                  10/08/2018 08:24:22 PAGE 2   
 
-  56   1              {
-  57   2                      case 0:
-  58   2                              P1_0 = 0;
-  59   2                              break;
-  60   2                      case 1:
-  61   2                              P1_1 = 0;
-  62   2                              break;
-  63   2                      case 2:
-  64   2                              P1_2 = 1;
-  65   2                              break;
-  66   2                      case 3:
-  67   2                              P1_3 = 0;
-  68   2                              break;
-  69   2                      case 4:
-  70   2                              P1_4 = 0;
-  71   2                              break;
-  72   2                      case 5:
-  73   2                              P1_5 = 0;
-  74   2                              break;
-  75   2                      case 6:
-  76   2                              P1_6 = 0;
-  77   2                              break;
-  78   2                      case 7:
-  79   2                              P1_7 = 0;
-  80   2                              break;          
-  81   2              }
-  82   1      }
-  83          void led_callback(unsigned char argc,unsigned char** argv)
-  84          {
-  85   1        unsigned char led_id = argv[0][0] - '0';
-  86   1        if(!strcmp("on",argv[1]))
-  87   1        {
-  88   2              led_on(led_id);
-  89   2        }else{
-  90   2              led_off(led_id);
-  91   2        }
-  92   1      }
-*** WARNING C280 IN LINE 83 OF MAIN.C: 'argc': unreferenced local variable
-  93          /****************** UART ******************************/
-  94          void uart_init()
-  95          {
-  96   1              TMOD = 0x20;     // timer1 mode 2 auto update
-  97   1              SCON = 0x50;    // uart 8bit baudrate is selected by timer1
-  98   1              TH1 = 0xFD; //9600      
-  99   1              IE = 0x90;    // enable interrupt uart 
- 100   1              TR1 = 1;
- 101   1      }
- 102          /* UART send 1 byte */
- 103          void uart_send_byte(char data_)
- 104          {
- 105   1              SBUF = data_;
- 106   1              while(TI ==0){}
- 107   1              TI = 0;
- 108   1      
- 109   1      }
- 110          /* UART send string */
- 111          void uart_send_str(char* str)
- 112          {
- 113   1              while(*str)
- 114   1              {
- 115   2                      uart_send_byte(*str);
- 116   2                      str++;  
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 3   
-
- 117   2              }
- 118   1      }
- 119          
- 120          /*****************************************************************/
- 121          /*************************** CLI ********************************/
- 122          /***************************************************************/
- 123          typedef struct _cli_t_
- 124          {
- 125                  const char* cmd;        /* name of command */
- 126                  unsigned int num_parameter;
- 127                  const void (*callback)(unsigned char argc,unsigned char** argv);
- 128                  struct _cli_t_ *next_cmd;
- 129          }cli_t;
- 130          
- 131          static cli_t* head_cmd = NULL ;
- 132          static cli_t* current_cmd = NULL;
- 133          
- 134          cli_t list_cmd[NUM_CLI] =       {
- 135                                                                          {
- 136                                                                                  "led", /* name of cmd */
- 137                                                                                  2, /* num_input_par */
- 138                                                                                  led_callback,
- 139                                                                                  NULL
- 140                                                                          },
- 141                                                                          {
- 142                                                                                  "test",
- 143                                                                                  0,
- 144                                                                                  test_callback,
- 145                                                                                  NULL
- 146                                                                          }
- 147                                                                  };
- 148          
- 149          void test_callback(char argc,char** argv)
- 150          {
- 151   1      //      uart_send_str("\nTest function callback!\n");
- 152   1              
- 153   1              cli_t* temp_cmd = head_cmd;
- 154   1      
- 155   1              char i = 48;
- 156   1              while(temp_cmd != NULL)
- 157   1              {
- 158   2                      i++;
- 159   2                      uart_send_byte(i);
- 160   2                      uart_send_str("\n\r");
- 161   2                      uart_send_str(temp_cmd->cmd);
- 162   2                      uart_send_str("\n\r");
- 163   2      
- 164   2                      temp_cmd = temp_cmd->next_cmd;
- 165   2              }                       
- 166   1      }
-*** WARNING C280 IN LINE 149 OF MAIN.C: 'argc': unreferenced local variable
-*** WARNING C280 IN LINE 149 OF MAIN.C: 'argv': unreferenced local variable
- 167          
- 168          void help(unsigned char argc, unsigned char** argv)
- 169          {
- 170   1              cli_t* temp_cmd = head_cmd;
- 171   1      
- 172   1              while(temp_cmd != NULL)
- 173   1              {
- 174   2                      if(argc == 0)
- 175   2                      {
- 176   3                              uart_send_str(temp_cmd->cmd);
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 4   
-
- 177   3                              uart_send_str("\n\r\t");
- 178   3                              uart_send_str((char*)temp_cmd->num_parameter);
- 179   3                              uart_send_str("\n\r");                          
- 180   3                      }
- 181   2                      else
- 182   2                      {
- 183   3                              uart_send_str(temp_cmd->cmd);
- 184   3                              uart_send_str("\n\r\t");
- 185   3                              uart_send_str((char*)temp_cmd->num_parameter);
- 186   3                              uart_send_str("\n\r");
- 187   3      
- 188   3                              break;
- 189   3                      }
- 190   2      
- 191   2                      temp_cmd = temp_cmd->next_cmd;
- 192   2              }
- 193   1      
- 194   1      }
-*** WARNING C280 IN LINE 168 OF MAIN.C: 'argv': unreferenced local variable
- 195          void cli_init(void)
- 196          {
- 197   1              unsigned int  num_input = 0;
- 198   1              const char* help_command = "help";
- 199   1              cli_t* command = (cli_t*)malloc(sizeof(cli_t));
- 200   1      #if 1
- 201   1              uart_send_str("\n\r1.CLI::cli_init()\n\rhelp_command: ");
- 202   1              uart_send_str(help_command);
- 203   1              uart_send_str("\n\r\n\r");
- 204   1      #endif
- 205   1              if(command == NULL)      /* if cannot allocate memmory */
- 206   1              {
- 207   2                      uart_send_str("Memmory overflow !\n");
- 208   2                      while(1);
- 209   2              }
- 210   1              command->cmd = help_command;
- 211   1              command->num_parameter = 0;
- 212   1              command->callback = help;
- 213   1              command->next_cmd = NULL;
- 214   1              
- 215   1              head_cmd = command;
- 216   1              current_cmd = command;
- 217   1      
- 218   1      #if 1
- 219   1              uart_send_str("\n\r2.CLI::cli_init()\n\rhead_cmd: ");
- 220   1              uart_send_str(head_cmd->cmd);
- 221   1              uart_send_str("\n\r\n\r");
- 222   1      #endif
- 223   1              
- 224   1      }
- 225          
- 226          void cli_add(cli_t* list_cmd, unsigned char num_cmd)
- 227          {
- 228   1              unsigned char i = 0;
- 229   1              cli_t *new_node = (cli_t*)malloc(sizeof(cli_t));
- 230   1      
- 231   1      #if 1
- 232   1              uart_send_str("\n\r4.CLI::cli_add()\n\rcurrent_cmd: ");
- 233   1              uart_send_str(current_cmd->cmd);
- 234   1              uart_send_str("\n\r\n\r");
- 235   1      #endif
- 236   1      
- 237   1              for(i=0; i< num_cmd; i++)
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 5   
-
- 238   1              {
- 239   2                              new_node->cmd = list_cmd[i].cmd;
- 240   2                              new_node->num_parameter = list_cmd[i].num_parameter;
- 241   2                              new_node->callback = list_cmd[i].callback;
- 242   2                      
- 243   2      #if 1
- 244   2      uart_send_byte(i+48);
- 245   2      uart_send_str("\n\r***.CLI::cli_add()\n\rlist_cmd[i]: ");
- 246   2      uart_send_str(list_cmd[i].cmd);
- 247   2      uart_send_str("\n\r\n\r");
- 248   2      #endif
- 249   2      
- 250   2      
- 251   2                      current_cmd->next_cmd = new_node;
- 252   2      
- 253   2                      current_cmd = current_cmd->next_cmd;
- 254   2                      current_cmd->next_cmd = NULL;
- 255   2                      
- 256   2      #if 1
- 257   2                      uart_send_byte(i+48);
- 258   2                      uart_send_str("\n\r***.CLI::cli_add()\n\rcurrent_cmd: ");
- 259   2                      uart_send_str(current_cmd->next_cmd->cmd);
- 260   2                      uart_send_str("\n\r\n\r");
- 261   2      #endif  
- 262   2                      
- 263   2              }
- 264   1      
- 265   1      }
- 266          /* 
- 267           * function : parse_cli
- 268           * parameter :  function take 2 parameter, 
- 269           *                              unsigned char* buffer, that is string command of user trasmit through Terminal 
- 270           *                              unsigned char len_buffer, lengh of command
- 271           * brief : *function is not written finish*
- 272          */
- 273          void parse_cli(unsigned char* buffer, unsigned char len_buffer)
- 274          {
- 275   1              cli_t* temp_cmd = head_cmd;
- 276   1              unsigned char* temp_str = NULL;
- 277   1              unsigned char** input_parameter;
- 278   1              unsigned char num_input = 0;
- 279   1      
- 280   1              temp_str = strtok(buffer,DELIMITED);
- 281   1      
- 282   1              #if 1
- 283   1              uart_send_str("\n\rCLI :: parse_cli()\n\rhead_cmd : ");
- 284   1              uart_send_str(head_cmd->cmd);
- 285   1              uart_send_str("\n\r\n\r");
- 286   1              #endif
- 287   1              
- 288   1              while(temp_cmd != NULL)
- 289   1              {
- 290   2                      if(!strcmp(temp_cmd->cmd, temp_str))   /* if found function */
- 291   2                      {
- 292   3                              input_parameter = (unsigned char**)malloc(sizeof(unsigned int) * temp_cmd->num_parameter);
- 293   3                              num_input = 0;
- 294   3                              temp_str = strtok(NULL,DELIMITED);
- 295   3                              while(temp_str != NULL)
- 296   3                              {
- 297   4                                      if(num_input > temp_cmd->num_parameter)
- 298   4                                      {
- 299   5                                              break;
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 6   
-
- 300   5                                      }
- 301   4                                      else
- 302   4                                      {
- 303   5                                              input_parameter[num_input] = temp_str;
- 304   5                                              num_input++;
- 305   5                                              temp_str = strtok(NULL,DELIMITED);
- 306   5                                      }       
- 307   4                              }
- 308   3                              break;
- 309   3                      }
- 310   2                      temp_cmd = temp_cmd->next_cmd;
- 311   2              }
- 312   1      
- 313   1              if(temp_cmd != NULL)   /* If have this function */
- 314   1              {
- 315   2                 if(num_input == temp_cmd->num_parameter)     /* if syntax of function is correct */
- 316   2                 {
- 317   3                        temp_cmd->callback(num_input,input_parameter);
- 318   3                 }
- 319   2                 else
- 320   2                 {
- 321   3                              uart_send_str("! ERROR : syntax error !\n");
- 322   3                 }
- 323   2              
- 324   2              }
- 325   1              else
- 326   1              {
- 327   2                      uart_send_str("! ERROR : Function not exist !\n");
- 328   2              }
- 329   1      
- 330   1      }
-*** WARNING C280 IN LINE 273 OF MAIN.C: 'len_buffer': unreferenced local variable
- 331          /* 
- 332           * function : prepare_cli
- 333           * parameter : char rx_data that is data is received from RX uart
- 334           * return : function return 1 if rx_data is enter (ascii == 13), else return 0
- 335           * brief :       
- 336          */
- 337          char prepare_cli(char rx_data)
- 338          {
- 339   1              char result = 0;
- 340   1              if(rx_data == 13)
- 341   1              {
- 342   2                      /* Command Process*/
- 343   2                      parse_cli(buffer,write_index);
- 344   2                      write_index = 0;
- 345   2                      memset(buffer,0,BUFFER_SIZE);
- 346   2      
- 347   2                      result = 1;
- 348   2              }
- 349   1              else if(rx_data == 8)
- 350   1              {
- 351   2                      if(write_index >0)
- 352   2                      {
- 353   3                              write_index-- ;
- 354   3                              buffer[write_index] = 0;
- 355   3                      }
- 356   2              }
- 357   1              else
- 358   1              {
- 359   2                      buffer[write_index] = rx_data;
- 360   2                      write_index++ ;
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 7   
-
- 361   2              }
- 362   1              return result;  
- 363   1      }
- 364          
- 365          /****************** TIMER ******************************/
- 366          void timer0_init()         // 1ms
- 367          {
- 368   1              TMOD &= ~0x0F;
- 369   1              TMOD |= 0x01; // 16 bit
- 370   1      
- 371   1              TH0 = 0xFC;
- 372   1              TL0 = 0x67;
- 373   1      
- 374   1              IE = 0x82;   // enable timer0 interrupt
- 375   1              
- 376   1              TR0 = 1;
- 377   1      }
- 378          /****************** delay function ******************************/
- 379          void delay(unsigned long time)
- 380          {
- 381   1              unsigned long current_tick = tick;
- 382   1              while(!(tick - current_tick == time));
- 383   1      }
- 384          
- 385          /********************************************************************************/
- 386          /****************************    MAIN   ****************************************/
- 387          /******************************************************************************/
- 388          void main()
- 389          {
- 390   1              timer0_init();
- 391   1              uart_init();
- 392   1              P1 = 0x00;
- 393   1      
- 394   1              cli_init();
- 395   1      
- 396   1              uart_send_str("\n\r3main :: cli_init()\n\rhead_cmd: ");
- 397   1              uart_send_str(head_cmd->cmd);
- 398   1              uart_send_str("\n\r\n\r");
- 399   1      
- 400   1      
- 401   1              cli_add(list_cmd,NUM_CLI);
- 402   1      
- 403   1              while(1)
- 404   1              {               
- 405   2                      if(_data != 0)
- 406   2                      {
- 407   3                              if(prepare_cli(_data))
- 408   3                              {
- 409   4                                      uart_send_str("\n\r");
- 410   4                              }       
- 411   3                              _data = 0;
- 412   3                      }
- 413   2              }                               
- 414   1      }
- 415          /****************** INTERRUPT  ******************************/
- 416          void timer0_ISR(void) interrupt 1
- 417          {
- 418   1               tick++;
- 419   1               TH0 = 0xFC;
- 420   1               TL0 = 0x66;
- 421   1      }
- 422          
-C51 COMPILER V9.01   MAIN                                                                  10/07/2018 16:33:40 PAGE 8   
-
- 423          void uart_ISR(void) interrupt 4
- 424          {
- 425   1              if(RI == 1)
- 426   1              {
- 427   2                      _data = SBUF;
- 428   2                      uart_send_byte(_data);
- 429   2                      RI = 0;
- 430   2              }
- 431   1      }
+  56   1               TL0 = 0x66;
+  57   1      }
+  58          
+  59          void uart_ISR(void) interrupt 4
+  60          {
+  61   1              if(RI == 1)
+  62   1              {
+  63   2                      _data = SBUF;
+  64   2                      uart_send_byte(_data);
+  65   2                      RI = 0;
+  66   2              }
+  67   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1627    ----
-   CONSTANT SIZE    =    352    ----
+   CODE SIZE        =    213    ----
+   CONSTANT SIZE    =     51    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     85      57
+   DATA SIZE        =     22    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
@@ -474,4 +93,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  5 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
