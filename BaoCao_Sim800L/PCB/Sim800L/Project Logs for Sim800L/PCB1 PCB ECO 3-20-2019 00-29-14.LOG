@@ -1,0 +1,15 @@
+Added Component: Designator=R9(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R10(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=VCC Pin=R9-1
+Added Pin To Net: NetName=P0.0 Pin=R9-2
+Added Pin To Net: NetName=VCC Pin=R10-1
+Added Pin To Net: NetName=P0.1 Pin=R10-2
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R9 330
+Added Member To Class: ClassName=Sheet1 Member=Component R10 330
+Added Room: Name=Sheet1

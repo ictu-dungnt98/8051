@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=GND Pin=C1-1
+Removed Pin From Net: NetName=GND Pin=C2-1
+Removed Pin From Net: NetName=GND Pin=R?-1
+Removed Pin From Net: NetName=GND Pin=RL1-1
+Removed Pin From Net: NetName=GND Pin=RL2-1
+Change Component Footprint: Designator=C? Old Footprint=CP1/2.5 New Footprint=CP1.5/3.4
+Added Pin To Net: NetName=Net*_1 Pin=C1-1
+Added Pin To Net: NetName=Net*_1 Pin=C2-1
+Added Pin To Net: NetName=Net*_1 Pin=R?-1
+Added Pin To Net: NetName=Net*_1 Pin=RL1-1
+Added Pin To Net: NetName=Net*_1 Pin=RL2-1
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Room: Name=Sheet1

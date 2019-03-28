@@ -1,0 +1,8 @@
+Change Component Footprint: Designator=QB1 Old Footprint=QTO-92 New Footprint=QTO-247
+Change Component Footprint: Designator=QB2 Old Footprint=QTO-92 New Footprint=QTO-247
+Added Pin To Net: NetName=Sim_RX Pin=*-3
+Change Net Name : Old Net Name=NetLabel5 New Net Name=Sim_TX
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k
+Added Room: Name=Sheet1

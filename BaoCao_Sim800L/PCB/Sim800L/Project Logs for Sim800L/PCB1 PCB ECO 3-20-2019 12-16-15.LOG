@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=NetC?_1 Pin=JP1-2
+Removed Pin From Net: NetName=Sim_RX Pin=JP1-4
+Removed Pin From Net: NetName=8051_RX Pin=JP1-5
+Removed Pin From Net: NetName=GND Pin=JP1-6
+Added Pin To Net: NetName=NetC?_1 Pin=JP1-1
+Added Pin To Net: NetName=Sim_RX Pin=JP1-3
+Added Pin To Net: NetName=8051_RX Pin=JP1-4
+Added Pin To Net: NetName=GND Pin=JP1-5
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k
+Added Room: Name=Sheet1

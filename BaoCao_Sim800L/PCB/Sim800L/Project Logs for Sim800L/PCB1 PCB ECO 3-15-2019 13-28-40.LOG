@@ -1,0 +1,129 @@
+Added Component: Designator=*(JP5)
+Add component. Clean all parameters for all variants
+Added Component: Designator=*(JP5)
+Add component. Clean all parameters for all variants
+Added Component: Designator=20000(XT2)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "4Mhz"; VariantName = "[No Variations]"
+Added Component: Designator=C1(CN1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "100pF"; VariantName = "[No Variations]"
+Added Component: Designator=C2(CN1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "100pF"; VariantName = "[No Variations]"
+Added Component: Designator=C?(CP2/4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Description 1"; Value = "4700uF-6800uF/6,3V - 3300uF-4700uF/10V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 2"; Value = "2200uF-3300uF/16V - 470uF => 2200uF/25V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 3"; Value = "1000uF/35V-50V_470uF/63V_220uF>330uF/100V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 4"; Value = "47uF => 100uF/160V - 33uF-47uF/250V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 5"; Value = "47uF/200V - 22uF/350V - 400V - 10uF/450V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "2200uF/16V"; VariantName = "[No Variations]"
+Added Component: Designator=C?(CP1.5/3.4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Description 1"; Value = "1000uF/6,3V - 470uF/16V - 330uF - 25V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 2"; Value = "220uF/35V - 100uF/50V - 63V - 4,7uF/200V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 3"; Value = "22uF => 33uF100V - 3,3uF => 4,7uF/250V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 4"; Value = "2,2uF =>3,3uF/350 - 2,2uF/400V - 1uF/450V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100uF/35V/50V"; VariantName = "[No Variations]"
+Added Component: Designator=D?(D5A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "1N5408"; VariantName = "[No Variations]"
+Added Component: Designator=IC?(DIP40/W0.6)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "AT89S52"; VariantName = "[No Variations]"
+Added Component: Designator=JDC(DC-IN)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "Jac DC"; VariantName = "[No Variations]"
+Added Component: Designator=QB1(QTO-247)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "D718"; VariantName = "[No Variations]"
+Added Component: Designator=QB2(QTO-247)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "D718"; VariantName = "[No Variations]"
+Added Component: Designator=R1(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R2(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R2(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=RL1(RL_SPDT_10A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = ""; Value = "Relay SPDT, 10A, 24V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "Relay SPDT, 10A, 12V"; VariantName = "[No Variations]"
+Added Component: Designator=RL2(RL_SPDT_10A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = ""; Value = "Relay SPDT, 10A, 24V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "Relay SPDT, 10A, 12V"; VariantName = "[No Variations]"
+Added Component: Designator=SW?(SW4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "Button chip 4 pin"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=Net*_1 Pin=*-1
+Added Pin To Net: NetName=NetLabel7 Pin=*-2
+Added Pin To Net: NetName=NetLabel6 Pin=*-3
+Added Pin To Net: NetName=NetLabel5 Pin=*-4
+Added Pin To Net: NetName=GND Pin=*-5
+Added Pin To Net: NetName=Net20000_1 Pin=20000-1
+Added Pin To Net: NetName=Net20000_2 Pin=20000-2
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=Net20000_1 Pin=C1-2
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=Net20000_2 Pin=C2-2
+Added Pin To Net: NetName=Net*_1 Pin=C?-1
+Added Pin To Net: NetName=VCC Pin=C?-1
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=RST Pin=C?-2
+Added Pin To Net: NetName=VCC Pin=D?-1
+Added Pin To Net: NetName=Net*_1 Pin=D?-2
+Added Pin To Net: NetName=RST Pin=IC?-9
+Added Pin To Net: NetName=8051_RX Pin=IC?-10
+Added Pin To Net: NetName=8051_TX Pin=IC?-11
+Added Pin To Net: NetName=Net20000_1 Pin=IC?-18
+Added Pin To Net: NetName=Net20000_2 Pin=IC?-19
+Added Pin To Net: NetName=GND Pin=IC?-20
+Added Pin To Net: NetName=P0.1 Pin=IC?-38
+Added Pin To Net: NetName=P0.0 Pin=IC?-39
+Added Pin To Net: NetName=VCC Pin=IC?-40
+Added Pin To Net: NetName=VCC Pin=JDC-1
+Added Pin To Net: NetName=GND Pin=JDC-2
+Added Pin To Net: NetName=P0.0 Pin=QB1-1
+Added Pin To Net: NetName=VCC Pin=QB1-2
+Added Pin To Net: NetName=NetQB1_3 Pin=QB1-3
+Added Pin To Net: NetName=P0.1 Pin=QB2-1
+Added Pin To Net: NetName=VCC Pin=QB2-2
+Added Pin To Net: NetName=NetQB2_3 Pin=QB2-3
+Added Pin To Net: NetName=Sim_RX Pin=R1-1
+Added Pin To Net: NetName=8051_TX Pin=R1-2
+Added Pin To Net: NetName=GND Pin=R2-1
+Added Pin To Net: NetName=GND Pin=R2-1
+Added Pin To Net: NetName=RST Pin=R2-2
+Added Pin To Net: NetName=Sim_RX Pin=R2-2
+Added Pin To Net: NetName=GND Pin=RL1-1
+Added Pin To Net: NetName=NetQB2_3 Pin=RL1-3
+Added Pin To Net: NetName=VCC Pin=RL1-4
+Added Pin To Net: NetName=GND Pin=RL2-1
+Added Pin To Net: NetName=NetQB1_3 Pin=RL2-3
+Added Pin To Net: NetName=VCC Pin=RL2-4
+Added Pin To Net: NetName=RST Pin=SW?-3
+Added Pin To Net: NetName=VCC Pin=SW?-4
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component * JP51
+Added Member To Class: ClassName=Sheet1 Member=Component 20000 4Mhz
+Added Member To Class: ClassName=Sheet1 Member=Component C1 100pF
+Added Member To Class: ClassName=Sheet1 Member=Component C2 100pF
+Added Member To Class: ClassName=Sheet1 Member=Component C? 2200uF/16V
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component D? 1N5408
+Added Member To Class: ClassName=Sheet1 Member=Component IC? AT89S52
+Added Member To Class: ClassName=Sheet1 Member=Component JDC Jac DC
+Added Member To Class: ClassName=Sheet1 Member=Component QB1 D718
+Added Member To Class: ClassName=Sheet1 Member=Component QB2 D718
+Added Member To Class: ClassName=Sheet1 Member=Component R1 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R2 2k2
+Added Member To Class: ClassName=Sheet1 Member=Component RL1 Relay 10A/12V
+Added Member To Class: ClassName=Sheet1 Member=Component RL2 Relay 10A/12V
+Added Member To Class: ClassName=Sheet1 Member=Component SW? SW

@@ -1,0 +1,66 @@
+Removed Pin From Net: NetName=Net*_1 Pin=*-1
+Removed Pin From Net: NetName=Net*_1 Pin=C1-1
+Removed Pin From Net: NetName=Net*_1 Pin=C2-1
+Removed Pin From Net: NetName=Net20000_2 Pin=C?-2
+Removed Pin From Net: NetName=Net*_1 Pin=C?-2
+Removed Pin From Net: NetName=Net20000_2 Pin=IC?-9
+Removed Pin From Net: NetName=Net*_1 Pin=IC?-31
+Removed Pin From Net: NetName=Net*_1 Pin=JDC-2
+Removed Pin From Net: NetName=Net*_1 Pin=JDC-3
+Removed Pin From Net: NetName=Net*_1 Pin=R?-1
+Removed Pin From Net: NetName=Net20000_2 Pin=R?-2
+Removed Pin From Net: NetName=Net*_1 Pin=RL1-1
+Removed Pin From Net: NetName=NetQB1_3 Pin=RL1-3
+Removed Pin From Net: NetName=Net*_1 Pin=RL2-1
+Removed Pin From Net: NetName=NetQB2_3 Pin=RL2-3
+Removed Pin From Net: NetName=Net*_1 Pin=SW?-1
+Removed Pin From Net: NetName=Net*_1 Pin=SW?-2
+Removed Pin From Net: NetName=Net*_1 Pin=SW?-3
+Removed Member From Class: ClassName=Sheet1 Member=R?
+Change Component Comment : Designator=R2 Old Comment=1k New Comment=2k2
+Added Component: Designator=R2(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=*-5
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=GND Pin=C?-2
+Added Pin To Net: NetName=Net20000_1 Pin=IC?-18
+Added Pin To Net: NetName=Net*_1 Pin=IC?-40
+Added Pin To Net: NetName=GND Pin=JDC-2
+Added Pin To Net: NetName=GND Pin=R2-1
+Added Pin To Net: NetName=GND Pin=RL1-1
+Added Pin To Net: NetName=NetQB2_3 Pin=RL1-3
+Added Pin To Net: NetName=GND Pin=RL2-1
+Added Pin To Net: NetName=NetQB1_3 Pin=RL2-3
+Change Net Name : Old Net Name=Net*_1 New Net Name=VCC
+Change Net Name : Old Net Name=NetIC?_11 New Net Name=8051_TX
+Added Pin To Net: NetName=8051_RX Pin=IC?-10
+Added Net: Name=8051_RX
+Added Pin To Net: NetName=Net*_1 Pin=*-1
+Added Pin To Net: NetName=Net*_1 Pin=C?-1
+Added Pin To Net: NetName=Net*_1 Pin=D?-2
+Added Net: Name=Net*_1
+Added Pin To Net: NetName=NetLabel5 Pin=*-4
+Added Net: Name=NetLabel5
+Added Pin To Net: NetName=NetLabel6 Pin=*-3
+Added Net: Name=NetLabel6
+Added Pin To Net: NetName=NetLabel7 Pin=*-2
+Added Net: Name=NetLabel7
+Added Pin To Net: NetName=P0.0 Pin=IC?-39
+Added Pin To Net: NetName=P0.0 Pin=QB1-1
+Added Net: Name=P0.0
+Added Pin To Net: NetName=P0.1 Pin=IC?-38
+Added Pin To Net: NetName=P0.1 Pin=QB2-1
+Added Net: Name=P0.1
+Added Pin To Net: NetName=RST Pin=C?-2
+Added Pin To Net: NetName=RST Pin=IC?-9
+Added Pin To Net: NetName=RST Pin=R2-2
+Added Pin To Net: NetName=RST Pin=SW?-3
+Added Net: Name=RST
+Added Pin To Net: NetName=Sim_RX Pin=R1-1
+Added Pin To Net: NetName=Sim_RX Pin=R2-2
+Added Net: Name=Sim_RX
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k

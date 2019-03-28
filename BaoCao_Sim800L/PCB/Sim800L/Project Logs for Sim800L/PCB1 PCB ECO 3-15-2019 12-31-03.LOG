@@ -1,0 +1,7 @@
+Added Pin To Net: NetName=NetC?_2 Pin=20000-1
+Added Pin To Net: NetName=NetC?_2 Pin=C1-2
+Added Pin To Net: NetName=NetC?_2 Pin=IC?-18
+Added Pin To Net: NetName=NetC?_2 Pin=SW?-1
+Change Net Name : Old Net Name=NetC?_2 New Net Name=Net20000_1
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V

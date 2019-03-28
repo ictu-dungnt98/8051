@@ -1,0 +1,7 @@
+"main.obj",
+"timer.obj",
+"cli.obj",
+"uart.obj" 
+TO "shell" 
+
+ru 

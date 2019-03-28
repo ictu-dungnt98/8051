@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=VCC Pin=IC?-31
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k

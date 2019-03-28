@@ -1,0 +1,17 @@
+Change Component Comment : Designator=* Old Comment=JP5 New Comment=JP51
+Change Component Comment : Designator=* Old Comment=JP5 New Comment=JP52
+Change Component Designator: OldDesignator=C? NewDesignator=C1
+Change Component Designator: OldDesignator=C? NewDesignator=C2
+Change Component Designator: OldDesignator=QB? NewDesignator=QB1
+Change Component Designator: OldDesignator=QB? NewDesignator=QB2
+Change Component Designator: OldDesignator=R? NewDesignator=R1
+Change Component Designator: OldDesignator=R? NewDesignator=R2
+Change Net Name : Old Net Name=NetQB?_3 New Net Name=NetQB1_3
+Added Pin To Net: NetName=NetQB2_3 Pin=QB2-3
+Added Pin To Net: NetName=NetQB2_3 Pin=RL2-3
+Added Net: Name=NetQB2_3
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C1 100pF
+Added Member To Class: ClassName=Sheet1 Member=Component C2 100pF
+Added Member To Class: ClassName=Sheet1 Member=Component QB2 D718
+Added Member To Class: ClassName=Sheet1 Member=Component R2 1k

@@ -1,0 +1,16 @@
+﻿Field=#~Integer~#~50|Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~Sim800L.PrjPcb|ReportField=ProjectFullPath~D:\BaoCao\PCB\Sim800L\Sim800L.PrjPcb|ReportField=Title~Bill of Materials For Project [Sim800L.PrjPcb] (No PCB Document Selected)|ReportField=ReportTime~12:49:25|ReportField=ReportDate~3/20/2019|ReportField=ReportDateTime~3/20/2019 12:49:25|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=TotalQuantity~28|ReportField=TotalActualPrice~0|ReportField=TotalTargetPrice~0|ReportField=VersionControl_RevNumber~|ReportField=VersionControl_ProjFolderRevNumber~|ReportField=Address1~|ReportField=Address2~|ReportField=Address3~|ReportField=Address4~|ReportField=Application_BuildNumber~|ReportField=ApprovedBy~|ReportField=Author~|ReportField=CheckedBy~|ReportField=CompanyName~|ReportField=CurrentDate~3/20/2019|ReportField=CurrentTime~12:16:09|ReportField=Date~|ReportField=DocumentFullPathAndName~D:\BaoCao\PCB\Sim800L\Sheet1.SchDoc|ReportField=DocumentName~Sheet1.SchDoc|ReportField=DocumentNumber~|ReportField=DrawnBy~|ReportField=Engineer~|ReportField=ImagePath~|ReportField=ModifiedDate~3/20/2019|ReportField=Organization~|ReportField=ProjectName~Sim800L.PrjPcb|ReportField=Revision~|ReportField=Rule~|ReportField=SheetNumber~|ReportField=SheetTotal~|ReportField=Time~|ReportField=Title~|ReportField=DataSourceFileName~Sim800L.PrjPcb|ReportField=DataSourceFullPath~D:\BaoCao\PCB\Sim800L\Sim800L.PrjPcb|ReportField=PCBConfigurationName~Sources|ReportField=Item~|ReportField=ItemRevision~|ReportField=ItemAndRevision~|ReportField=ItemRevisionBase~|ReportField=ItemRevisionLevel1~|ReportField=ItemRevisionLevel2~|ReportField=ItemRevisionLevel1AndBase~|ReportField=ItemRevisionLevel2AndLevel1~
+1|4Mhz|Crystal For all Crystal 2pin.|20000|XT2|XT2|1
+2|100pF|Cap np  1pF - 472pF|C1, C2|CN1|CN1|2
+3|100uF/35V|Cap 100uF/35V - 470uF/16V|C?|CP1.5/3.4|CP3|1
+4|2200uF/16V|Cap 2200uF/16V - 1000uF/50V|C?|CP2/4|CP5|1
+5|LED|Typical LED|D1, D2|LED-0 5mm BLUE|LED|2
+6|1N5408|Diode 5A|D?|D5A|D5A|1
+7|AT89S52|AT89S52, 8k Byte Flash Memory , 40 Pin|IC?|DIP40/W0.6|AT89S52|1
+8|Jac DC|Jac DC input|JDC|DC-IN|DCIN|1
+9|JP6 PIN|JP6 PIN|JP1, JP2|JP6|JP6|2
+10|D718|Transistor Power Supply|QB1, QB2|QTO-247|D718|2
+11|1k|Resistor 1/4W|R1, R2, R3, R4, R5, R6, R7|R1/4W|R1/4W|7
+12|2k2|Resistor 1/4W|R2, R8|R1/4W|R1/4W|2
+13|330|Resistor 1/4W|R9, R10|R1/4W|R1/4W|2
+14|Relay 10A/12V|Relay SPDT,10A - 12VDC 5 Pin|RL1, RL2|RL_SPDT_10A|Relay 1|2
+15|SW|Switch button 4 pin|SW?|SW4|SW4|1

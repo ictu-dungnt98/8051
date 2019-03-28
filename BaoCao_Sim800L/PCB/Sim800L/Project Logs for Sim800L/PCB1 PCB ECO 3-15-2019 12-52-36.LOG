@@ -1,0 +1,23 @@
+Removed Pin From Net: NetName=Net20000_1 Pin=C?-2
+Removed Pin From Net: NetName=Net20000_1 Pin=IC?-9
+Removed Pin From Net: NetName=Net20000_1 Pin=IC?-18
+Removed Pin From Net: NetName=Net20000_1 Pin=R?-2
+Removed Pin From Net: NetName=Net20000_1 Pin=SW?-1
+Removed Pin From Net: NetName=Net20000_1 Pin=SW?-3
+Added Pin To Net: NetName=Net*_1 Pin=C?-1
+Added Pin To Net: NetName=Net20000_2 Pin=C?-2
+Added Pin To Net: NetName=Net*_1 Pin=D?-1
+Added Pin To Net: NetName=Net20000_2 Pin=IC?-9
+Added Pin To Net: NetName=Net*_1 Pin=IC?-31
+Added Pin To Net: NetName=Net*_1 Pin=JDC-1
+Added Pin To Net: NetName=Net*_1 Pin=QB1-2
+Added Pin To Net: NetName=Net*_1 Pin=QB2-2
+Added Pin To Net: NetName=Net20000_2 Pin=R?-2
+Added Pin To Net: NetName=Net*_1 Pin=RL1-4
+Added Pin To Net: NetName=Net*_1 Pin=RL2-4
+Added Pin To Net: NetName=Net*_1 Pin=SW?-1
+Added Pin To Net: NetName=Net*_1 Pin=SW?-2
+Added Pin To Net: NetName=Net*_1 Pin=SW?-3
+Added Pin To Net: NetName=Net*_1 Pin=SW?-4
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100uF/35V

@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=NetC?_1 Pin=C?-1
+Removed Pin From Net: NetName=Net*_5 Pin=C?-2
+Added Pin To Net: NetName=Net*_5 Pin=C?-1
+Added Pin To Net: NetName=Net*_1 Pin=C?-2
+Change Net Name : Old Net Name=NetC?_1 New Net Name=NetD?_1
+Added Member To Class: ClassName=Sheet1 Member=Component * JP52

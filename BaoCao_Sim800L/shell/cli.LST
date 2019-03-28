@@ -1,0 +1,86 @@
+C51 COMPILER V9.01   CLI                                                                   03/25/2019 11:48:36 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE CLI
+OBJECT MODULE PLACED IN cli.OBJ
+COMPILER INVOKED BY: C:\Tools\Keil C V4\C51\BIN\C51.EXE cli.c OMF2 BROWSE DEBUG
+
+line level    source
+
+   1          #include "cli.h"
+   2          /* 
+   3           * function : prepare_cli
+   4           * parameter : char rx_data that is data is received from RX uart
+   5           * return : function return 1 if rx_data is enter (ascii == 13), else return 0
+   6           * brief :       
+   7          */
+   8          char prepare_cli(char rx_data)
+   9          {
+  10   1              char result = 0;
+  11   1              if((rx_data == 13 || rx_data == 10))
+  12   1              {                       
+  13   2                              /* Command Process*/
+  14   2                              parse_cli(buffer,write_index);
+  15   2                              write_index = 0;
+  16   2                              memset(buffer,0,BUFFER_SIZE);
+  17   2                              result = 1;
+  18   2              }
+  19   1              else
+  20   1              {
+  21   2                      buffer[write_index] = rx_data;
+  22   2                      write_index++ ;
+  23   2              }
+  24   1              return result;  
+  25   1      }
+  26          /* 
+  27           * function : parse_cli
+  28           * parameter :  function take 2 parameter, 
+  29           *                              unsigned char* buffer, that is string command of user trasmit through Terminal 
+  30           *                              unsigned char len_buffer, lengh of command
+  31           * brief : *function is not written finish*
+  32          */
+  33          void parse_cli(unsigned char* buffer, unsigned char len_buffer)
+  34          {
+  35   1      
+  36   1              unsigned char* temp_cmd = NULL;
+  37   1      
+  38   1              temp_cmd = strtok(buffer,DELIMITED);
+  39   1              
+  40   1              while(temp_cmd != NULL)
+  41   1              {
+  42   2                      
+  43   2                      if(!strcmp(temp_cmd,"Ring") || !strcmp(temp_cmd,"RING"))
+  44   2                      {
+  45   3                              uart_send_str("ATH\r\n");
+  46   3                              P0 = ~P0;
+  47   3                              break;
+  48   3                      }
+  49   2                      else
+  50   2                      {
+  51   3                              temp_cmd = strtok(NULL,DELIMITED);
+  52   3                      }
+  53   2              }
+  54   1      }
+*** WARNING C280 IN LINE 33 OF CLI.C: 'len_buffer': unreferenced local variable
+C51 COMPILER V9.01   CLI                                                                   03/25/2019 11:48:36 PAGE 2   
+
+  55          
+  56          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

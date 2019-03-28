@@ -1,0 +1,102 @@
+Added Component: Designator=*(JP5)
+Add component. Clean all parameters for all variants
+Added Component: Designator=*(JP5)
+Add component. Clean all parameters for all variants
+Added Component: Designator=C?(CP2/4)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Description 1"; Value = "4700uF-6800uF/6,3V - 3300uF-4700uF/10V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 2"; Value = "2200uF-3300uF/16V - 470uF => 2200uF/25V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 3"; Value = "1000uF/35V-50V_470uF/63V_220uF>330uF/100V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 4"; Value = "47uF => 100uF/160V - 33uF-47uF/250V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Description 5"; Value = "47uF/200V - 22uF/350V - 400V - 10uF/450V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "2200uF/16V"; VariantName = "[No Variations]"
+Added Component: Designator=C?(CN1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "100pF"; VariantName = "[No Variations]"
+Added Component: Designator=C?(CN1)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "100pF"; VariantName = "[No Variations]"
+Added Component: Designator=D?(D5A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "1N5408"; VariantName = "[No Variations]"
+Added Component: Designator=IC?(DIP40/W0.6)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "AT89S52"; VariantName = "[No Variations]"
+Added Component: Designator=JDC(DC-IN)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "Jac DC"; VariantName = "[No Variations]"
+Added Component: Designator=QB?(QTO-247)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "D718"; VariantName = "[No Variations]"
+Added Component: Designator=QB?(QTO-247)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "D718"; VariantName = "[No Variations]"
+Added Component: Designator=R?(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R?(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=RL?(RL_SPDT_10A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = ""; Value = "Relay SPDT, 10A, 24V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "Relay SPDT, 10A, 12V"; VariantName = "[No Variations]"
+Added Component: Designator=RL?(RL_SPDT_10A)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = ""; Value = "Relay SPDT, 10A, 24V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "Relay SPDT, 10A, 12V"; VariantName = "[No Variations]"
+Added Component: Designator=X?(XT2)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "4Mhz"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=IC?-20
+Added Pin To Net: NetName=GND Pin=R?-1
+Added Pin To Net: NetName=GND Pin=RL?-1
+Added Pin To Net: NetName=GND Pin=RL?-1
+Added Net: Name=GND
+Added Pin To Net: NetName=Net*_1 Pin=*-1
+Added Pin To Net: NetName=Net*_1 Pin=C?-1
+Added Pin To Net: NetName=Net*_1 Pin=C?-1
+Added Pin To Net: NetName=Net*_1 Pin=JDC-2
+Added Pin To Net: NetName=Net*_1 Pin=JDC-3
+Added Net: Name=Net*_1
+Added Pin To Net: NetName=Net*_2 Pin=*-2
+Added Pin To Net: NetName=Net*_2 Pin=IC?-10
+Added Net: Name=Net*_2
+Added Pin To Net: NetName=Net*_3 Pin=*-3
+Added Pin To Net: NetName=Net*_3 Pin=R?-1
+Added Pin To Net: NetName=Net*_3 Pin=R?-2
+Added Net: Name=Net*_3
+Added Pin To Net: NetName=Net*_5 Pin=*-5
+Added Pin To Net: NetName=Net*_5 Pin=C?-2
+Added Net: Name=Net*_5
+Added Pin To Net: NetName=NetC?_1 Pin=C?-1
+Added Pin To Net: NetName=NetC?_1 Pin=D?-2
+Added Net: Name=NetC?_1
+Added Pin To Net: NetName=NetC?_2 Pin=C?-2
+Added Pin To Net: NetName=NetC?_2 Pin=IC?-19
+Added Pin To Net: NetName=NetC?_2 Pin=X?-1
+Added Net: Name=NetC?_2
+Added Pin To Net: NetName=NetD?_1 Pin=D?-1
+Added Pin To Net: NetName=NetD?_1 Pin=IC?-31
+Added Pin To Net: NetName=NetD?_1 Pin=JDC-1
+Added Pin To Net: NetName=NetD?_1 Pin=QB?-2
+Added Pin To Net: NetName=NetD?_1 Pin=QB?-2
+Added Pin To Net: NetName=NetD?_1 Pin=RL?-4
+Added Pin To Net: NetName=NetD?_1 Pin=RL?-4
+Added Net: Name=NetD?_1
+Added Pin To Net: NetName=NetIC?_11 Pin=IC?-11
+Added Pin To Net: NetName=NetIC?_11 Pin=R?-2
+Added Net: Name=NetIC?_11
+Added Pin To Net: NetName=NetIC?_21 Pin=IC?-21
+Added Pin To Net: NetName=NetIC?_21 Pin=QB?-1
+Added Net: Name=NetIC?_21
+Added Pin To Net: NetName=NetIC?_22 Pin=IC?-22
+Added Pin To Net: NetName=NetIC?_22 Pin=QB?-1
+Added Net: Name=NetIC?_22
+Added Pin To Net: NetName=NetQB?_3 Pin=QB?-3
+Added Pin To Net: NetName=NetQB?_3 Pin=RL?-3
+Added Net: Name=NetQB?_3
+Added Pin To Net: NetName=VCC Pin=IC?-40
+Added Net: Name=VCC
+Added Class: Name=Sheet1
+Added Room: Name=Sheet1

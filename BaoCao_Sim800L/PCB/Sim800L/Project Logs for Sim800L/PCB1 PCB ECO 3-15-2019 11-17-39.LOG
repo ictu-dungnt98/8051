@@ -1,0 +1,12 @@
+Change Component Designator: OldDesignator=X? NewDesignator=20000
+Change Net Name : Old Net Name=NetC?_2 New Net Name=Net20000_1
+Added Pin To Net: NetName=Net20000_2 Pin=20000-2
+Added Pin To Net: NetName=Net20000_2 Pin=C?-2
+Added Pin To Net: NetName=Net20000_2 Pin=IC?-19
+Added Net: Name=Net20000_2
+Added Member To Class: ClassName=Sheet1 Member=Component * JP5
+Added Member To Class: ClassName=Sheet1 Member=Component C? 100pF
+Added Member To Class: ClassName=Sheet1 Member=Component C? 2200uF/16V
+Added Member To Class: ClassName=Sheet1 Member=Component QB? D718
+Added Member To Class: ClassName=Sheet1 Member=Component R? 1k
+Added Member To Class: ClassName=Sheet1 Member=Component RL? Relay 10A/12V
