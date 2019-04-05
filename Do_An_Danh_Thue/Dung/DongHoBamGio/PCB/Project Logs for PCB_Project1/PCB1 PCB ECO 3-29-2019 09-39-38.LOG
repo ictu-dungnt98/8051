@@ -1,0 +1,49 @@
+Added Component: Designator=R9(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R10(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R10(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R11(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R12(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R13(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R13(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Component: Designator=R14(R1/4W)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "R1/4W - 1K"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=a Pin=R9-1
+Added Pin To Net: NetName=a Pin=R9-2
+Added Pin To Net: NetName=b Pin=R10-1
+Added Pin To Net: NetName=c Pin=R10-1
+Added Pin To Net: NetName=b Pin=R10-2
+Added Pin To Net: NetName=c Pin=R10-2
+Added Pin To Net: NetName=d Pin=R11-1
+Added Pin To Net: NetName=d Pin=R11-2
+Added Pin To Net: NetName=e Pin=R12-1
+Added Pin To Net: NetName=e Pin=R12-2
+Added Pin To Net: NetName=f Pin=R13-1
+Added Pin To Net: NetName=g Pin=R13-1
+Added Pin To Net: NetName=f Pin=R13-2
+Added Pin To Net: NetName=g Pin=R13-2
+Added Pin To Net: NetName=h Pin=R14-1
+Added Pin To Net: NetName=h Pin=R14-2
+Added Net: Name=h
+Added Member To Class: ClassName=Sheet1 Member=Component R9 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R10 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R10 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R11 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R12 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R13 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R13 1k
+Added Member To Class: ClassName=Sheet1 Member=Component R14 1k

@@ -1,0 +1,8 @@
+Added Component: Designator=J?(jp2h)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "JP 2"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=VCC Pin=J?-1
+Added Pin To Net: NetName=pin40 Pin=IC1-39
+Added Pin To Net: NetName=pin40 Pin=J?-2
+Added Net: Name=pin40
+Added Member To Class: ClassName=Sheet1 Member=Component J? Jumper 2

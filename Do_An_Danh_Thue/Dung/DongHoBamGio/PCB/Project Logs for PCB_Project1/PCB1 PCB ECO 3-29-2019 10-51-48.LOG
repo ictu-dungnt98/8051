@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=L1 Pin=R17-1
+Removed Pin From Net: NetName=L1 Pin=R17-2
+Removed Pin From Net: NetName=L2 Pin=R25-1
+Removed Pin From Net: NetName=L2 Pin=R25-2
+Removed Pin From Net: NetName=L3 Pin=R33-1
+Removed Pin From Net: NetName=L3 Pin=R33-2
+Removed Pin From Net: NetName=L4 Pin=R41-1
+Removed Pin From Net: NetName=L4 Pin=R41-2
+Removed Pin From Net: NetName=L5 Pin=R49-1
+Removed Pin From Net: NetName=L5 Pin=R49-2
+Removed Member From Class: ClassName=Sheet1 Member=R17
+Removed Member From Class: ClassName=Sheet1 Member=R25
+Removed Member From Class: ClassName=Sheet1 Member=R33
+Removed Member From Class: ClassName=Sheet1 Member=R41
+Removed Member From Class: ClassName=Sheet1 Member=R49
+Added Room: Name=Sheet1
