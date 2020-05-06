@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=VCC Pin=JDC1-1
+Removed Pin From Net: NetName=GND Pin=JDC1-2
+Removed Member From Class: ClassName=Sheet1 Member=JDC1
+Change Component Designator: OldDesignator=USB1 NewDesignator=USB2
+Added Component: Designator=USB1(USB_B_MINI_SMD)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=VCC Pin=USB1-1
+Added Pin To Net: NetName=GND Pin=USB1-5
+Added Member To Class: ClassName=Sheet1 Member=Component USB2 USB_M

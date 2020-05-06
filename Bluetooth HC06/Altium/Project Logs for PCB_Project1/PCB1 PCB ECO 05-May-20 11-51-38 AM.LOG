@@ -1,0 +1,8 @@
+Change Component Footprint: Designator=C1 Old Footprint=CP2/5 New Footprint=CP1/2
+Change Component Comment : Designator=C1 Old Comment=Cap Pol3 New Comment=10uF
+Change component parameters: Designator = "C1"; Footprint = "CP1/2"; UniqueID = "\FVLUIVOO"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Description 1"; Value = "10 => 220uF/6,3V/10V - 10uF => 100uF/16V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Description 2"; Value = "0,1uF => 33uF/50V - 10uF => 22uF/63V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Description 3"; Value = "0,47uF => 10uF/100V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10uF/50V"; VariantName = "[No Variations]"

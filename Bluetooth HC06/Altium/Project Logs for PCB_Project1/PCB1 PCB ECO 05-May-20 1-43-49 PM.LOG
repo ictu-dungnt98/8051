@@ -1,0 +1,8 @@
+Change Component Footprint: Designator=LED1 Old Footprint=SM-LED-0805-Blue New Footprint=LED-3
+Change Component Footprint: Designator=R2 Old Footprint=SM-RES-1206 New Footprint=R1/4W
+Change Component Comment : Designator=R2 Old Comment=220 New Comment=1k
+Change Component Comment : Designator=LED1 Old Comment=LED SMD New Comment=LED
+Change component parameters: Designator = "LED1"; Footprint = "LED-3"; UniqueID = "\QLTIMFHL"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Value"; Value = "LED 3 ly Single Colour"; VariantName = "[No Variations]"
+Added Room: Name=Sheet1

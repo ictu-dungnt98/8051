@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=VCC Pin=USB1-1
+Removed Pin From Net: NetName=GND Pin=USB1-5
+Removed Member From Class: ClassName=Sheet1 Member=USB1
+Added Component: Designator=JDC1(DC-IN)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "Jac DC"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=VCC Pin=JDC1-1
+Added Pin To Net: NetName=GND Pin=JDC1-2
+Added Member To Class: ClassName=Sheet1 Member=Component JDC1 Jac DC
+Added Room: Name=Sheet1
