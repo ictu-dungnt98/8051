@@ -24,9 +24,9 @@
 #define TIME_SLICE_TO_READ_BUTTON   10
 
 #define OS_BTN_IS_PRESS_TIME_MAX    200
-#define OS_BTN_IS_PRESS_TIME_MIN    50
+#define OS_BTN_IS_PRESS_TIME_MIN    30
 
 void led_button_init(void);
-void button_scanner(void);
+void button_handler(void);
 
 #endif
