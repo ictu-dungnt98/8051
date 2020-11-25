@@ -5,6 +5,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <time.h>
+
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+
+
+
+extern SoftwareSerial mySerial;
+
 
 typedef enum {
     CH1_ON  = 1,
@@ -17,8 +26,20 @@ typedef enum {
 
 typedef enum {
     CONTROL_IO = 0,
-    SET_ALARM = 1,
-    QUERY_INFOM = 2
+    SET_ALARM,
+    RESET_ALARM,
+    QUERY_INFOM
 } hc06_cmd_type_t;
+
+typedef struct {
+    struct tm m_time;
+    uint8_t m_cmd;
+} m_alarm_t;
+
+
+#define uno_respond_app(respond) \
+            do { \
+                Serial.print(respond); \
+            } while(0)
 
 #endif

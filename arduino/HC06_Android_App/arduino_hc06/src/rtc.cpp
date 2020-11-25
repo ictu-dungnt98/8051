@@ -1,7 +1,14 @@
 #include "rtc.h"
-
+#include <time.h>
+#include "m_typedef.h"
+#include "led_button.h"
 
 RTC_DS1307 rtc;
+DateTime now;
+struct tm m_time_local;
+m_alarm_t m_time_alarm[MAX_CMD_ALARM];
+uint8_t alarm_is_set = 0;
+
 char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
 void rtc_init(void)
@@ -21,59 +28,42 @@ void rtc_init(void)
     }
 }
 
+
+static void time_alarm() {
+    uint8_t i;
+
+    // for (i = 0; i < MAX_CMD_ALARM; i++) {
+    //     if (memcmp(&m_time_local, &m_time_alarm[i].m_time, sizeof(struct tm)) == 0)
+    //     {
+    //         control_device(m_time_alarm[i].m_cmd);
+    //     }
+    // }
+
+    for (i = 0; i < MAX_CMD_ALARM; i++) {
+        if (m_time_local.tm_hour == m_time_alarm[i].m_time.tm_hour
+            && m_time_local.tm_min == m_time_alarm[i].m_time.tm_min
+            && m_time_local.tm_sec == m_time_alarm[i].m_time.tm_sec)
+        {
+            control_device(m_time_alarm[i].m_cmd);
+        }
+    }
+}
+
 void rtc_hander(void)
 {
-    DateTime now = rtc.now();
-    if(now.hour()<=9)
-    {
-        Serial.print("0");
-        Serial.print(now.hour());
-    } else {
-        Serial.print(now.hour());
-    }
+    now = rtc.now();
 
-    Serial.print(':');
-    if(now.minute()<=9)
-    {
-        Serial.print("0");
-        Serial.print(now.minute());
-    } else {
-        Serial.print(now.minute());
-    }
+    m_time_local.tm_hour = now.hour();
+    m_time_local.tm_min = now.minute();
+    m_time_local.tm_sec = now.second();
+    m_time_local.tm_mday = now.day();
+    m_time_local.tm_mon = now.month();
+    m_time_local.tm_year = now.year();
 
-    Serial.print(':');
-    if(now.second()<=9)
-    {
-        Serial.print("0");
-        Serial.print(now.second());
-    } else {
-        Serial.print(now.second());
+    if (alarm_is_set) {
+        Serial.print("alarm_is_set!");
+        time_alarm();
     }
-    Serial.println();
-
-    Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
-    Serial.print(",");
-    if (now.day()<=9) {
-        Serial.print("0");
-        Serial.print(now.day());
-    } else {
-        Serial.print(now.day());
-    }
-    Serial.print('/');
-    if (now.month()<=9) {
-        Serial.print("0");
-        Serial.print(now.month());
-    } else {
-        Serial.print(now.month());
-    }
-    Serial.print('/');
-    if (now.year()<=9) {
-        Serial.print("0");
-        Serial.print(now.year());
-    } else {
-        Serial.print(now.year());
-    } 
-    Serial.println();
 }
 
 

@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 #include "RTClib.h"
+#include <time.h>
+
+#define MAX_CMD_ALARM       2
 
 extern RTC_DS1307 rtc;
 extern char daysOfTheWeek[7][12];
