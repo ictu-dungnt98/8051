@@ -12,7 +12,7 @@
 #define TIME_HANDLER_BUTTON     10
 #define TIME_HANDLER_LCD        10
 #define TIME_HANDLER_HC06       50
-#define TIME_HANDLER_RTC        10
+#define TIME_HANDLER_RTC        1000
 
 static uint32_t time_slice = 0;
 static uint32_t time_handler_button_before = 0;
@@ -24,7 +24,7 @@ void setup()
 {
     hc06_init();
     lcd_init();
-    // rtc_init();
+    rtc_init();
     led_button_init();
 }
 

@@ -23,7 +23,57 @@ void rtc_init(void)
 
 void rtc_hander(void)
 {
+    DateTime now = rtc.now();
+    if(now.hour()<=9)
+    {
+        Serial.print("0");
+        Serial.print(now.hour());
+    } else {
+        Serial.print(now.hour());
+    }
 
+    Serial.print(':');
+    if(now.minute()<=9)
+    {
+        Serial.print("0");
+        Serial.print(now.minute());
+    } else {
+        Serial.print(now.minute());
+    }
+
+    Serial.print(':');
+    if(now.second()<=9)
+    {
+        Serial.print("0");
+        Serial.print(now.second());
+    } else {
+        Serial.print(now.second());
+    }
+    Serial.println();
+
+    Serial.print(daysOfTheWeek[now.dayOfTheWeek()]);
+    Serial.print(",");
+    if (now.day()<=9) {
+        Serial.print("0");
+        Serial.print(now.day());
+    } else {
+        Serial.print(now.day());
+    }
+    Serial.print('/');
+    if (now.month()<=9) {
+        Serial.print("0");
+        Serial.print(now.month());
+    } else {
+        Serial.print(now.month());
+    }
+    Serial.print('/');
+    if (now.year()<=9) {
+        Serial.print("0");
+        Serial.print(now.year());
+    } else {
+        Serial.print(now.year());
+    } 
+    Serial.println();
 }
 
 
