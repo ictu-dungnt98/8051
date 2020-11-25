@@ -9,7 +9,7 @@ void uno_get_device_infor_jsonform(char *buff, uint16_t len)
                 "{\"cmd_type\":%d, \"time_on_out1\":%d, \"time_off_out1\":%d, \
 \"time_on_out2\":%d, \"time_off_out2\":%d, \
 \"time_on_out3\":%d, \"time_off_out3\":%d, \
-\"state_out1\":%d, \"state_out2\":%d, \"state_out3\":%d}", \
+\"state_out1\":%d, \"state_out2\":%d, \"state_out3\":%d}\n", \
                 QUERY_INFOM, m_device.time_on_out1, m_device.time_off_out1,
                 m_device.time_on_out2, m_device.time_off_out2,
                 m_device.time_on_out3, m_device.time_off_out3,

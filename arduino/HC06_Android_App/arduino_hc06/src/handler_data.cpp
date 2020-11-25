@@ -47,8 +47,11 @@ static void uno_handler_set_alarm(JsonDocument &_doc)
 {
     uint8_t t_on = _doc["t_on"];
     uint8_t t_off = _doc["t_off"];
+    char respond[256];
 
-    Serial.print("Alarm On at: %d, Alarm Off at: %d\n", t_on, t_off);
+    memset(respond, 0, sizeof(respond));
+    sprintf(respond, "{\"cmd_type\":1, \"t_on\":%d, \"t_off\":%d}\n", t_on, t_off);
+    Serial.print(respond);
     /* Do Alarm here */
 }
 
