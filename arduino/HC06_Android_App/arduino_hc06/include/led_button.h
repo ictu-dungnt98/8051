@@ -29,4 +29,8 @@
 void led_button_init(void);
 void button_handler(void);
 
+void gpio_on(uint8_t pin);
+void gpio_off(uint8_t pin);
+void gpio_toggle(uint8_t pin);
+
 #endif

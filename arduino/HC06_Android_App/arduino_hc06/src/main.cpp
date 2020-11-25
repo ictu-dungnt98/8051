@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h> 
+#include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h>
 #include "RTClib.h"
 
@@ -10,7 +11,7 @@
 
 #define TIME_HANDLER_BUTTON     10
 #define TIME_HANDLER_LCD        10
-#define TIME_HANDLER_HC06       10
+#define TIME_HANDLER_HC06       50
 #define TIME_HANDLER_RTC        10
 
 static uint32_t time_slice = 0;
@@ -21,10 +22,9 @@ static uint32_t time_handler_rtc_before = 0;
 
 void setup()
 {
-    Serial.begin(9600);
-
+    hc06_init();
     lcd_init();
-    rtc_init();
+    // rtc_init();
     led_button_init();
 }
 

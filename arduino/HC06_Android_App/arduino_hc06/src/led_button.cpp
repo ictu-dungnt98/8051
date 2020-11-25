@@ -1,5 +1,20 @@
 #include "led_button.h"
 
+void gpio_on(uint8_t pin)
+{
+    digitalWrite(pin, HIGH);
+}
+
+void gpio_off(uint8_t pin)
+{
+    digitalWrite(pin, LOW);
+}
+
+void gpio_toggle(uint8_t pin)
+{
+    digitalWrite(pin, !digitalRead(pin));
+}
+
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0, 0, 0};
 static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN, BUTTON4_PIN};
 static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
@@ -9,7 +24,6 @@ static void scan_button_handler(uint8_t button_index)
    if (!digitalRead(m_buttons[button_index])) /* press */
    {
         time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
-        detachInterrupt(digitalPinToInterrupt(m_buttons[button_index]));
    } else { /* realse */
         if (time_button_press[button_index] >= OS_BTN_IS_PRESS_TIME_MIN
             && time_button_press[button_index] <= OS_BTN_IS_PRESS_TIME_MAX)
@@ -17,7 +31,7 @@ static void scan_button_handler(uint8_t button_index)
             Serial.println("Button was press");
             if (button_index < 4 ) /* Just have 3 leds */ {
                 /* Control output */
-                digitalWrite(m_leds[button_index], digitalRead(digitalRead(m_leds[button_index])));
+                gpio_toggle(m_leds[button_index]);
 
                 /* Send message to bluetooth */
             } else { /* handler button remove alarm */

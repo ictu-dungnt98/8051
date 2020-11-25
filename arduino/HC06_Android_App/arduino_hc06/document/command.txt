@@ -1,0 +1,14 @@
+{cmd_type:0, cmd:1}
+{cmd_type:0, cmd:2}
+{cmd_type:0, cmd:3}
+{cmd_type:0, cmd:4}
+{cmd_type:0, cmd:5}
+{cmd_type:0, cmd:6}
+
+
+{cmd_type:2}
+
+{cmd_type:2, "time_on_out1":x1, "time_off_out1":x2,
+"time_on_out2":x3, "time_off_out2":x4,
+"time_on_out3":x5, "time_off_out3":x6,
+"state_out1":y1, "state_out2":y2, "state_out3":y3}
