@@ -1,6 +1,11 @@
 #include "led_button.h"
 #include "m_typedef.h"
 #include "rtc.h"
+#include "uno_database.h"
+#include "m_typedef.h"
+
+extern device_info_t m_device;
+
 
 void gpio_on(uint8_t pin)
 {
@@ -56,6 +61,9 @@ void control_device(uint8_t cmd)
         Serial.print("Control invalid pin\n");
     } break;
     }
+
+    /* Update information of this device */
+    os_update_current_state_switch((hc06_ctrl_t)cmd);
 
     char respond[128];
 
@@ -142,6 +150,6 @@ void button_handler(void)
 {
     scan_button_handler(BUTTON1);
     scan_button_handler(BUTTON2);
-    scan_button_handler(BUTTON3);
-    scan_button_handler(BUTTON4);
+    // scan_button_handler(BUTTON3);
+    // scan_button_handler(BUTTON4);
 }

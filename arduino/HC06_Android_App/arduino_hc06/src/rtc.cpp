@@ -9,8 +9,6 @@ struct tm m_time_local;
 m_alarm_t m_time_alarm[MAX_CMD_ALARM];
 uint8_t alarm_is_set = 0;
 
-char daysOfTheWeek[7][12] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-
 void rtc_init(void)
 {
     if (Serial) {

@@ -11,7 +11,7 @@
 
 #define TIME_HANDLER_BUTTON     20
 #define TIME_HANDLER_LCD        10
-#define TIME_HANDLER_HC06       100
+#define TIME_HANDLER_HC06       50
 #define TIME_HANDLER_RTC        1000
 
 static uint32_t time_slice = 0;

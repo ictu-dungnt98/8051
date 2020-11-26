@@ -20,5 +20,6 @@ typedef struct {
 } device_info_t;
 
 void uno_get_device_infor_jsonform(char *buff, uint16_t len);
+void os_update_current_state_switch(hc06_ctrl_t state);
 
 #endif
