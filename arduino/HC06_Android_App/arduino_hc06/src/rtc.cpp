@@ -56,12 +56,11 @@ void rtc_hander(void)
     m_time_local.tm_hour = now.hour();
     m_time_local.tm_min = now.minute();
     m_time_local.tm_sec = now.second();
-    m_time_local.tm_mday = now.day();
-    m_time_local.tm_mon = now.month();
-    m_time_local.tm_year = now.year();
+    // m_time_local.tm_mday = now.day();
+    // m_time_local.tm_mon = now.month();
+    // m_time_local.tm_year = now.year();
 
     if (alarm_is_set) {
-        Serial.print("alarm_is_set!");
         time_alarm();
     }
 }

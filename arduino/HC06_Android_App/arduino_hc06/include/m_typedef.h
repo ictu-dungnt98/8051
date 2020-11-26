@@ -39,7 +39,7 @@ typedef struct {
 
 #define uno_respond_app(respond) \
             do { \
-                Serial.print(respond); \
+                mySerial.print(respond); \
             } while(0)
 
 #endif

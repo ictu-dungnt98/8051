@@ -5,12 +5,12 @@
 char hc06_rx_queue[300];
 uint16_t p_hc06_rx_data = 0;
 
-SoftwareSerial mySerial(10, 11); // RX, TX
+SoftwareSerial mySerial(12, 13); // RX, TX
 
 void hc06_init(void)
 {
     Serial.begin(9600);
-    // mySerial.begin(115200);
+    mySerial.begin(9600);
 }
 
 void hc06_hander(void)
@@ -20,9 +20,9 @@ void hc06_hander(void)
     p_hc06_rx_data = 0;
     memset(hc06_rx_queue, 0, sizeof(hc06_rx_queue));
 
-    if (Serial.available() > 0) {
-        while (Serial.available() > 0) {
-            ch = Serial.read();
+    if (mySerial.available() > 0) {
+        while (mySerial.available() > 0) {
+            ch = mySerial.read();
             hc06_rx_queue[p_hc06_rx_data] = ch;
             p_hc06_rx_data ++;
 

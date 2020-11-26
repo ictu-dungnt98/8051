@@ -29,15 +29,16 @@ static void uno_handler_set_alarm(JsonDocument &_doc)
     uint8_t cmd = _doc["cmd"];
 
     /* Do set time alarm here */
-    m_time_alarm[alarm_is_set].m_time.tm_mday = _doc["day"];
-    m_time_alarm[alarm_is_set].m_time.tm_mon = _doc["month"];
-    m_time_alarm[alarm_is_set].m_time.tm_year = _doc["year"];
+    // m_time_alarm[alarm_is_set].m_time.tm_mday = _doc["day"];
+    // m_time_alarm[alarm_is_set].m_time.tm_mon = _doc["month"];
+    // m_time_alarm[alarm_is_set].m_time.tm_year = _doc["year"];
     m_time_alarm[alarm_is_set].m_time.tm_hour = _doc["hour"];
     m_time_alarm[alarm_is_set].m_time.tm_min = _doc["minutes"];
     m_time_alarm[alarm_is_set].m_time.tm_sec = _doc["second"];
     m_time_alarm[alarm_is_set].m_cmd = cmd;
 
     if (alarm_is_set < MAX_CMD_ALARM) {
+        Serial.print("alarm_is_set!");
         alarm_is_set ++;
     }
 
@@ -101,7 +102,7 @@ void handler_data(char* command)
     } break;
 
     case QUERY_INFOM: {
-        uno_handler_query_info();
+        // uno_handler_query_info();
 
     } break;
 

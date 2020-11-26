@@ -22,7 +22,7 @@ void gpio_toggle(uint8_t pin)
                                                 digitalRead(LED1_PIN),
                                                 digitalRead(LED2_PIN),
                                                 digitalRead(LED3_PIN));
-    mySerial.print(respond);
+    uno_respond_app(respond);
 
     Serial.println(respond);
 }
@@ -93,9 +93,7 @@ static void scan_button_handler(uint8_t button_index)
                 /* Send message to bluetooth */
                 gpio_toggle(m_leds[button_index]);
             }
-        }
-        /* BUTTON is Hold */
-        else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
+        } else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
         {
             /* handler button remove alarm */
             Serial.println("Button was hold");

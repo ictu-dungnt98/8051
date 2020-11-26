@@ -9,7 +9,7 @@
 #include "hc06.h"
 #include "rtc.h"
 
-#define TIME_HANDLER_BUTTON     10
+#define TIME_HANDLER_BUTTON     20
 #define TIME_HANDLER_LCD        10
 #define TIME_HANDLER_HC06       100
 #define TIME_HANDLER_RTC        1000
