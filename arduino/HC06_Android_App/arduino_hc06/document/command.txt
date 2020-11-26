@@ -15,7 +15,7 @@ typedef enum {
 {cmd_type:0, cmd:6}
 {"cmd_type":0, "state":[1, 0, 0]}
 
-{cmd_type:1, "cmd":1, "day":11, "month":11, "year":2020, "hour":10, "minutes":10, "second":0}
+{cmd_type:1, "cmd":1, "hour":17, "minutes":10, "second":0}
 {cmd_type:1, "res":"OK"}
 
 {cmd_type:2}

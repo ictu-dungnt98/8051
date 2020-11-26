@@ -74,5 +74,5 @@ void loop()
     button_loop();
     lcd_loop();
     hc06_loop();
-    rtc_loop();    
+    rtc_loop();
 }

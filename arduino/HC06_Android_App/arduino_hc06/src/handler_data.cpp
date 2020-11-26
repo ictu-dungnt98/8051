@@ -18,7 +18,7 @@ static void uno_handler_control_io(JsonDocument &_doc)
     control_device(m_cmd);
 }
 
-/* {cmd_type:1, "cmd":x, "day":11, "month":11, "year":2020, "hour":10, "minutes":10, "second":0} */
+/* {cmd_type:1, "cmd":1, "hour":10, "minutes":10, "second":0} */
 static void uno_handler_set_alarm(JsonDocument &_doc)
 {
     if (alarm_is_set >= MAX_CMD_ALARM) {
@@ -31,9 +31,6 @@ static void uno_handler_set_alarm(JsonDocument &_doc)
     uint8_t cmd = _doc["cmd"];
 
     /* Do set time alarm here */
-    // m_time_alarm[alarm_is_set].m_time.tm_mday = _doc["day"];
-    // m_time_alarm[alarm_is_set].m_time.tm_mon = _doc["month"];
-    // m_time_alarm[alarm_is_set].m_time.tm_year = _doc["year"];
     m_time_alarm[alarm_is_set].m_time.tm_hour = _doc["hour"];
     m_time_alarm[alarm_is_set].m_time.tm_min = _doc["minutes"];
     m_time_alarm[alarm_is_set].m_time.tm_sec = _doc["second"];
