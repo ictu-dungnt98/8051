@@ -33,8 +33,6 @@ void uno_get_device_infor_jsonform(char *buff, uint16_t len)
 {
     memset(buff, 0, len);
     sprintf(buff, \
-"{\"cmd_type\":3, \"state\":[%d, %d, %d], \"time_on\":[%d, %d, %d], \"time_off\":[%d, %d, %d]}\n", \
-            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN), \
-            0, 0 ,0, \
-            0, 0, 0);
+"{\"cmd_type\":3, \"state\":[%d, %d, %d], \"time_on\":[%d, %d, %d]}\n", \
+digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN), 0, 0 ,0);
 }
