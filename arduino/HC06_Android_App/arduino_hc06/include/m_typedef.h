@@ -28,7 +28,10 @@ typedef enum {
     CONTROL_IO = 0,
     SET_ALARM,
     RESET_ALARM,
-    QUERY_INFOM
+    QUERY_INFOM,
+    QUERY_TIME_DAY,
+    QUERY_TIME_WEEK,
+    QUERY_TIME_MONTH
 } hc06_cmd_type_t;
 
 typedef struct {
@@ -39,7 +42,7 @@ typedef struct {
 
 #define uno_respond_app(respond) \
             do { \
-                Serial.print(respond); \
+                mySerial.print(respond); \
             } while(0)
 
 #endif

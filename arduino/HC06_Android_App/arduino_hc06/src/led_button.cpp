@@ -1,6 +1,11 @@
 #include "led_button.h"
 #include "m_typedef.h"
 #include "rtc.h"
+#include "uno_database.h"
+#include "m_typedef.h"
+
+extern device_info_t m_device;
+
 
 void gpio_on(uint8_t pin)
 {
@@ -14,17 +19,12 @@ void gpio_off(uint8_t pin)
 
 void gpio_toggle(uint8_t pin)
 {
+    /* toggle value pin */
     digitalWrite(pin, !digitalRead(pin));
 
-    char respond[128];
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":0, \"state\":[%d, %d, %d]}\n",
-                                                digitalRead(LED1_PIN),
-                                                digitalRead(LED2_PIN),
-                                                digitalRead(LED3_PIN));
-    mySerial.print(respond);
-
-    Serial.println(respond);
+    /* Update state to report */
+    uno_update_current_state_switch();
+    report_current_state();    
 }
 
 void control_device(uint8_t cmd)
@@ -57,22 +57,14 @@ void control_device(uint8_t cmd)
     } break;
     }
 
-    char respond[128];
-
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":0, \"state\":[%d, %d, %d]}\n",
-                                                digitalRead(LED1_PIN),
-                                                digitalRead(LED2_PIN),
-                                                digitalRead(LED3_PIN));
-    uno_respond_app(respond);
-
-    Serial.println(respond);
+    /* Update information of this device */
+    uno_update_current_state_switch();
+    report_current_state();
 }
 
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
-static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN};
-static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN};
-
+static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
+static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
 extern uint8_t alarm_is_set;
 extern m_alarm_t m_time_alarm[MAX_CMD_ALARM];
@@ -93,9 +85,7 @@ static void scan_button_handler(uint8_t button_index)
                 /* Send message to bluetooth */
                 gpio_toggle(m_leds[button_index]);
             }
-        }
-        /* BUTTON is Hold */
-        else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
+        } else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
         {
             /* handler button remove alarm */
             Serial.println("Button was hold");
@@ -145,5 +135,4 @@ void button_handler(void)
     scan_button_handler(BUTTON1);
     scan_button_handler(BUTTON2);
     scan_button_handler(BUTTON3);
-    scan_button_handler(BUTTON4);
 }
