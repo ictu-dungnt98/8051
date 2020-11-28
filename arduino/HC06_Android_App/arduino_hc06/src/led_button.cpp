@@ -19,17 +19,12 @@ void gpio_off(uint8_t pin)
 
 void gpio_toggle(uint8_t pin)
 {
+    /* toggle value pin */
     digitalWrite(pin, !digitalRead(pin));
 
-    char respond[128];
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":0, \"state\":[%d, %d, %d]}\n",
-                                                digitalRead(LED1_PIN),
-                                                digitalRead(LED2_PIN),
-                                                digitalRead(LED3_PIN));
-    uno_respond_app(respond);
-
-    Serial.println(respond);
+    /* Update state to report */
+    uno_update_current_state_switch();
+    report_current_state();    
 }
 
 void control_device(uint8_t cmd)
@@ -63,24 +58,13 @@ void control_device(uint8_t cmd)
     }
 
     /* Update information of this device */
-    os_update_current_state_switch((hc06_ctrl_t)cmd);
-
-    char respond[128];
-
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":0, \"state\":[%d, %d, %d]}\n",
-                                                digitalRead(LED1_PIN),
-                                                digitalRead(LED2_PIN),
-                                                digitalRead(LED3_PIN));
-    uno_respond_app(respond);
-
-    Serial.println(respond);
+    uno_update_current_state_switch();
+    report_current_state();
 }
 
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
-static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN};
-static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN};
-
+static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
+static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
 extern uint8_t alarm_is_set;
 extern m_alarm_t m_time_alarm[MAX_CMD_ALARM];
@@ -150,6 +134,5 @@ void button_handler(void)
 {
     scan_button_handler(BUTTON1);
     scan_button_handler(BUTTON2);
-    // scan_button_handler(BUTTON3);
-    // scan_button_handler(BUTTON4);
+    scan_button_handler(BUTTON3);
 }

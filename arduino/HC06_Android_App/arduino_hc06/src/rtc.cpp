@@ -2,6 +2,10 @@
 #include <time.h>
 #include "m_typedef.h"
 #include "led_button.h"
+#include "uno_database.h"
+
+extern device_info_t m_device;
+
 
 RTC_DS1307 rtc;
 DateTime now;
@@ -47,6 +51,54 @@ static void time_alarm() {
     }
 }
 
+/* run each 10 second */
+void uno_caculate_time_device_active_loop(void)
+{
+    if (digitalRead(LED1_PIN)) {
+        m_device.time_active_on_day[0].tm_sec += 10; /* 10s */
+
+        if (m_device.time_active_on_day[0].tm_sec >= 60) {
+            m_device.time_active_on_day[0].tm_min ++;
+            m_device.time_active_on_day[0].tm_sec = 0;
+
+            if (m_device.time_active_on_day[0].tm_min >= 60) {
+                m_device.time_active_on_day[0].tm_hour ++;
+                m_device.time_active_on_day[0].tm_min = 0;
+            }
+        }
+    }
+
+    if (digitalRead(LED2_PIN)) {
+        m_device.time_active_on_day[1].tm_sec += 10; /* 10s */
+
+        if (m_device.time_active_on_day[1].tm_sec >= 60) {
+            m_device.time_active_on_day[1].tm_min ++;
+            m_device.time_active_on_day[1].tm_sec = 0;
+
+            if (m_device.time_active_on_day[1].tm_min >= 60) {
+                m_device.time_active_on_day[1].tm_hour ++;
+                m_device.time_active_on_day[1].tm_min = 0;
+            }
+        }
+    }
+
+    if (digitalRead(LED3_PIN)) {
+        m_device.time_active_on_day[2].tm_sec += 10; /* 10s */
+
+        if (m_device.time_active_on_day[2].tm_sec >= 60) {
+            m_device.time_active_on_day[2].tm_min ++;
+            m_device.time_active_on_day[2].tm_sec = 0;
+
+            if (m_device.time_active_on_day[2].tm_min >= 60) {
+                m_device.time_active_on_day[2].tm_hour ++;
+                m_device.time_active_on_day[2].tm_min = 0;
+            }
+        }
+    }
+
+    /* handler store and reset data day after day */
+}
+
 void rtc_hander(void)
 {
     now = rtc.now();
@@ -54,12 +106,46 @@ void rtc_hander(void)
     m_time_local.tm_hour = now.hour();
     m_time_local.tm_min = now.minute();
     m_time_local.tm_sec = now.second();
-    // m_time_local.tm_mday = now.day();
-    // m_time_local.tm_mon = now.month();
-    // m_time_local.tm_year = now.year();
+
+    m_time_local.tm_wday = now.dayOfTheWeek();
+    m_time_local.tm_mday = now.day();
+    m_time_local.tm_mon = now.month();
+    m_time_local.tm_year = now.year();
 
     if (alarm_is_set) {
         time_alarm();
+    }
+
+    /* Check End of day - 0h, update time active every day */
+    if ((now.hour() == 0) && (now.minute() == 0) && (now.second() == 0))
+    {
+        if (now.dayOfTheWeek() == 0) { /* End of the week */
+            m_device.time_active_in_week[0] += m_device.time_active_on_day[0].tm_hour;
+            m_device.time_active_in_week[1] += m_device.time_active_on_day[1].tm_hour;
+            m_device.time_active_in_week[2] += m_device.time_active_on_day[2].tm_hour;
+
+            /* Count time active on month */
+            m_device.time_active_in_month[0] += m_device.time_active_in_week[0];
+            m_device.time_active_in_month[1] += m_device.time_active_in_week[1];
+            m_device.time_active_in_month[2] += m_device.time_active_in_week[2];
+
+            /* Reset data of week to use for new week */
+            m_device.time_active_in_week[0] = 0;
+            m_device.time_active_in_week[1] = 0;
+            m_device.time_active_in_week[2] = 0;
+
+            /* Reset data to use for new month */
+            if (now.day() == 1) {
+                m_device.time_active_in_month[0] = 0;
+                m_device.time_active_in_month[1] = 0;
+                m_device.time_active_in_month[2] = 0;
+            }
+            
+        } else {
+            m_device.time_active_in_week[0] += m_device.time_active_on_day[0].tm_hour;
+            m_device.time_active_in_week[1] += m_device.time_active_on_day[1].tm_hour;
+            m_device.time_active_in_week[2] += m_device.time_active_on_day[2].tm_hour;
+        }
     }
 }
 

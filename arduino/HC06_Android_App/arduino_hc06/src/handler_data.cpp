@@ -63,13 +63,27 @@ void uno_handler_remove_alarm(JsonDocument &_doc)
 /* {"cmd_type":3} */
 void uno_handler_query_info(void)
 {
-    char m_device_info[200];
-    // Serial.print("uno_handler_query_info!");
+    report_current_state();
+}
 
-    /* Send device infor to app */
-    uno_get_device_infor_jsonform(m_device_info, sizeof(m_device_info));
-    Serial.print(m_device_info);
-    uno_respond_app(m_device_info);
+/* {"cmd_type":4, "dev":0} */
+static void uno_handler_query_time_active_one_day(JsonDocument &_doc)
+{
+    uint8_t dev = _doc["dev"];
+
+    uno_get_time_active_on_day(dev);
+}
+
+/* {"cmd_type":5} */
+static void uno_handler_query_time_active_one_week()
+{
+    uno_get_time_active_in_week();
+}
+
+/* {"cmd_type":6} */
+static void uno_handler_query_time_active_one_month()
+{
+    uno_get_time_active_in_month();
 }
 
 /* {"cmd_type":x; "cmd":y} */
@@ -79,7 +93,7 @@ void handler_data(char* command)
         return;
     }
 
-    StaticJsonDocument<256> doc;
+    DynamicJsonDocument doc(256);
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
@@ -106,6 +120,21 @@ void handler_data(char* command)
 
     case QUERY_INFOM: {
         uno_handler_query_info();
+
+    } break;
+
+    case QUERY_TIME_DAY: {
+        uno_handler_query_time_active_one_day(doc);
+
+    } break;
+
+    case QUERY_TIME_WEEK: {
+        uno_handler_query_time_active_one_week();
+
+    } break;
+
+    case QUERY_TIME_MONTH: {
+        uno_handler_query_time_active_one_month();
 
     } break;
 
