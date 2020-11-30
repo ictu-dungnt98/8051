@@ -1,7 +1,42 @@
 #include "uno_database.h"
+#include <EEPROM.h>
 #include "led_button.h"
+#include <stdlib.h>
 
 device_info_t m_device;
+uint8_t uno_sync_database_request = 0;
+
+static void eeprom_clear()
+{
+    for (int i = 0 ; i < sizeof(device_info_t) ; i++) {
+        EEPROM.write(i, 0);
+    }
+}
+
+void eeprom_database_loader(void)
+{
+    memset(&m_device, 0, sizeof(device_info_t));
+    // uno_get_time_active_on_day(0);
+
+    EEPROM.get(EEPROM_DB_ADDR, m_device);
+
+    uno_get_time_active_on_day(0);
+}
+
+void eeprom_sync_database(void)
+{
+    // uno_get_time_active_on_day(0);
+
+    Serial.println("Uno sync database");
+
+    eeprom_clear();
+    EEPROM.put(EEPROM_DB_ADDR, m_device);
+
+    // EEPROM.get(EEPROM_DB_ADDR, m_device);
+    uno_get_time_active_on_day(0);
+
+    uno_sync_database_request = 0;
+}
 
 void uno_update_current_state_switch(void)
 {
@@ -23,9 +58,6 @@ void uno_update_current_state_switch(void)
         m_device.m_state_out[2] = CH3_OFF;
     }
 }
-
-
-
 
 void report_current_state(void)
 {

@@ -5,9 +5,8 @@
 #include "uno_database.h"
 #include "rtc.h"
 
-extern struct tm m_time_alarm_on;
-extern m_alarm_t m_time_alarm[MAX_CMD_ALARM];
-extern uint8_t alarm_is_set;
+extern device_info_t m_device;
+extern uint8_t uno_sync_database_request;
 
 /* {"cmd_type":0; "cmd":y} */
 static void uno_handler_control_io(JsonDocument &_doc)
@@ -21,25 +20,25 @@ static void uno_handler_control_io(JsonDocument &_doc)
 /* {cmd_type:1, "cmd":1, "hour":10, "minutes":10, "second":0} */
 static void uno_handler_set_alarm(JsonDocument &_doc)
 {
-    if (alarm_is_set >= MAX_CMD_ALARM) {
+    if (m_device.alarm_is_set >= MAX_CMD_ALARM) {
         return;
     }
-
-    // Serial.print("uno_handler_set_alarm!\n");
 
     char respond[256];
     uint8_t cmd = _doc["cmd"];
 
     /* Do set time alarm here */
-    m_time_alarm[alarm_is_set].m_time.tm_hour = _doc["hour"];
-    m_time_alarm[alarm_is_set].m_time.tm_min = _doc["minutes"];
-    m_time_alarm[alarm_is_set].m_time.tm_sec = _doc["second"];
-    m_time_alarm[alarm_is_set].m_cmd = cmd;
+    m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_hour = _doc["hour"];
+    m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_min = _doc["minutes"];
+    m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_sec = _doc["second"];
+    m_device.m_time_alarm[m_device.alarm_is_set].m_cmd = cmd;
 
-    if (alarm_is_set < MAX_CMD_ALARM) {
+    if (m_device.alarm_is_set < MAX_CMD_ALARM) {
         Serial.print("alarm_is_set!");
-        alarm_is_set ++;
+        m_device.alarm_is_set ++;
     }
+
+    uno_sync_database_request = 1;
 
     memset(respond, 0, sizeof(respond));
     sprintf(respond, "{\"cmd_type\":%d, \"res\":OK}\n", SET_ALARM);
@@ -52,8 +51,10 @@ void uno_handler_remove_alarm(JsonDocument &_doc)
     char respond[256];
 
     /* clear alarm */
-    alarm_is_set = 0;
-    memset(&m_time_alarm, 0, sizeof(m_time_alarm));
+    m_device.alarm_is_set = 0;
+    memset(m_device.m_time_alarm, 0, sizeof(m_device.m_time_alarm));
+
+    uno_sync_database_request = 1;
 
     memset(respond, 0, sizeof(respond));
     sprintf(respond, "{\"cmd_type\":%d, \"res\":OK}\n", RESET_ALARM);

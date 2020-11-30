@@ -5,6 +5,7 @@
 #include "m_typedef.h"
 
 extern device_info_t m_device;
+extern uint8_t uno_sync_database_request;
 
 
 void gpio_on(uint8_t pin)
@@ -24,7 +25,9 @@ void gpio_toggle(uint8_t pin)
 
     /* Update state to report */
     uno_update_current_state_switch();
-    report_current_state();    
+    report_current_state();
+
+    uno_sync_database_request = 1;
 }
 
 void control_device(uint8_t cmd)
@@ -60,6 +63,8 @@ void control_device(uint8_t cmd)
     /* Update information of this device */
     uno_update_current_state_switch();
     report_current_state();
+
+    uno_sync_database_request = 1;
 }
 
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
@@ -68,6 +73,7 @@ static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
 extern uint8_t alarm_is_set;
 extern m_alarm_t m_time_alarm[MAX_CMD_ALARM];
+extern uint8_t uno_sync_database_request;
 
 static void scan_button_handler(uint8_t button_index)
 {
@@ -90,8 +96,8 @@ static void scan_button_handler(uint8_t button_index)
             /* handler button remove alarm */
             Serial.println("Button was hold");
             /* clear alarm */
-            alarm_is_set = 0;
-            memset(&m_time_alarm, 0, sizeof(m_time_alarm));
+            m_device.alarm_is_set = 0;
+            memset(m_device.m_time_alarm, 0, sizeof(m_device.m_time_alarm));
         }
 
         time_button_press[button_index] = 0;

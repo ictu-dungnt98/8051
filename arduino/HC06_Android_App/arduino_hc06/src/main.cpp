@@ -3,8 +3,8 @@
 #include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h>
 #include <PZEM004Tv30.h>
-#include "RTClib.h"
 
+#include "RTClib.h"
 #include "led_button.h"
 #include "lcd1602.h"
 #include "hc06.h"
@@ -17,8 +17,9 @@
 #define TIME_HANDLER_HC06           50
 #define TIME_HANDLER_RTC            1000
 #define TIME_COUNT_TIME_ACTIVE      10000 /* 10s */
+#define TIME_SYNC_DATABASE          10000 /* 10s */
 
-extern device_info_t m_device;
+extern uint8_t uno_sync_database_request;
 
 static uint32_t time_slice = 0;
 static uint32_t time_handler_button_before = 0;
@@ -26,13 +27,15 @@ static uint32_t time_handler_lcd_before = 0;
 static uint32_t time_handler_hc06_before = 0;
 static uint32_t time_handler_rtc_before = 0;
 static uint32_t time_count_time_active_before = 0;
+static uint32_t time_handler_sync_db_before = 0;
 
 void setup()
 {
     hc06_init();
+    eeprom_database_loader();
     lcd_init();
     rtc_init();
-    pzem_init();
+    // pzem_init();
     led_button_init();
     Serial.println("system init success");
 }
@@ -47,7 +50,7 @@ void button_loop()
     }
 }
 
-void lcd_loop()
+static void lcd_loop()
 {
     time_slice = millis();
 
@@ -57,7 +60,7 @@ void lcd_loop()
     }
 }
 
-void hc06_loop()
+static void hc06_loop()
 {
     time_slice = millis();
 
@@ -67,7 +70,7 @@ void hc06_loop()
     }
 }
 
-void rtc_loop()
+static void rtc_loop()
 {
     time_slice = millis();
 
@@ -77,13 +80,25 @@ void rtc_loop()
     }
 }
 
-void uno_count_time_device_active()
+static void uno_count_time_device_active()
 {
     time_slice = millis();
 
     if (time_slice - time_count_time_active_before > TIME_COUNT_TIME_ACTIVE) {
         uno_caculate_time_device_active_loop();
         time_count_time_active_before = time_slice;
+    }
+}
+
+static void uno_sync_database()
+{
+    time_slice = millis();
+
+    if (time_slice - time_handler_sync_db_before > TIME_SYNC_DATABASE) {
+        if (uno_sync_database_request != 0) {
+            eeprom_sync_database();
+            time_handler_sync_db_before = time_slice;
+        }
     }
 }
 
@@ -94,5 +109,5 @@ void loop()
     hc06_loop();
     rtc_loop();
     uno_count_time_device_active();
+    uno_sync_database();
 }
-

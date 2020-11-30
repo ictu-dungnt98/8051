@@ -10,7 +10,8 @@ extern device_info_t m_device;
 RTC_DS1307 rtc;
 DateTime now;
 struct tm m_time_local;
-m_alarm_t m_time_alarm[MAX_CMD_ALARM];
+m_alarm_t m_time_handler_user_habit[MAX_CMD_ALARM];
+
 uint8_t alarm_is_set = 0;
 
 void rtc_init(void)
@@ -42,14 +43,16 @@ static void time_alarm() {
     // }
 
     for (i = 0; i < MAX_CMD_ALARM; i++) {
-        if (m_time_local.tm_hour == m_time_alarm[i].m_time.tm_hour
-            && m_time_local.tm_min == m_time_alarm[i].m_time.tm_min
-            && m_time_local.tm_sec == m_time_alarm[i].m_time.tm_sec)
+        if (m_time_local.tm_hour == m_device.m_time_alarm[i].m_time.tm_hour
+            && m_time_local.tm_min == m_device.m_time_alarm[i].m_time.tm_min
+            && m_time_local.tm_sec == m_device.m_time_alarm[i].m_time.tm_sec)
         {
-            control_device(m_time_alarm[i].m_cmd);
+            control_device(m_device.m_time_alarm[i].m_cmd);
         }
     }
 }
+
+extern uint8_t uno_sync_database_request;
 
 /* run each 10 second */
 void uno_caculate_time_device_active_loop(void)
@@ -66,6 +69,8 @@ void uno_caculate_time_device_active_loop(void)
                 m_device.time_active_on_day[0].tm_min = 0;
             }
         }
+        /* sync database */
+        uno_sync_database_request = 1;
     }
 
     if (digitalRead(LED2_PIN)) {
@@ -80,6 +85,9 @@ void uno_caculate_time_device_active_loop(void)
                 m_device.time_active_on_day[1].tm_min = 0;
             }
         }
+        /* sync database */
+        uno_sync_database_request = 1;
+            
     }
 
     if (digitalRead(LED3_PIN)) {
@@ -94,9 +102,10 @@ void uno_caculate_time_device_active_loop(void)
                 m_device.time_active_on_day[2].tm_min = 0;
             }
         }
-    }
 
-    /* handler store and reset data day after day */
+            /* sync database */
+            uno_sync_database_request = 1;
+    }
 }
 
 void rtc_hander(void)
@@ -112,7 +121,7 @@ void rtc_hander(void)
     m_time_local.tm_mon = now.month();
     m_time_local.tm_year = now.year();
 
-    if (alarm_is_set) {
+    if (m_device.alarm_is_set) {
         time_alarm();
     }
 
@@ -147,6 +156,13 @@ void rtc_hander(void)
             m_device.time_active_in_week[2] += m_device.time_active_on_day[2].tm_hour;
         }
     }
+
+    /* Caculate user's habit */
+
+    /* Habit turn on device */
+    /* if () */
+
+    /* Habit turn off device */
 }
 
 
