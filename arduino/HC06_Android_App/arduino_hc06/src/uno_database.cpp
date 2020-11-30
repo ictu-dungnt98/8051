@@ -4,17 +4,20 @@
 #include <stdlib.h>
 
 device_info_t m_device;
+m_user_habit_trace_t user_habit[NUMBER_CHANNEL];
+
 uint8_t uno_sync_database_request = 0;
 
 static void eeprom_clear()
 {
-    for (int i = 0 ; i < sizeof(device_info_t) ; i++) {
+    for (uint8_t i = 0 ; i < (sizeof(device_info_t)+1); i++) {
         EEPROM.write(i, 0);
     }
 }
 
 void eeprom_database_loader(void)
 {
+    memset(&user_habit, 0, sizeof(user_habit));
     memset(&m_device, 0, sizeof(device_info_t));
     // uno_get_time_active_on_day(0);
 
@@ -76,7 +79,8 @@ void uno_get_time_active_on_day(uint8_t index)
 {
     char respond[128];
     memset(respond, 0, 128);
-    sprintf(respond, "{\"cmd_type\":4, \"time_active_day\":[%d, %d, %d]}\n", \
+    sprintf(respond, "{\"cmd_type\":4, \"dev\":%d, \"time_active_day\":[%d, %d, %d]}\n", \
+                            index, \
                             m_device.time_active_on_day[index].tm_hour, \
                             m_device.time_active_on_day[index].tm_min, \
                             m_device.time_active_on_day[index].tm_sec);

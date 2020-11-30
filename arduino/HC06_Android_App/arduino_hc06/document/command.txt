@@ -30,7 +30,7 @@ typedef enum {
 
 /* get time active one day */
 {cmd_type:4, "dev":0}
-{"cmd_type":4, "time_active_day":[0, 0, 0]}
+{"cmd_type":4, ,"dev":0, "time_active_day":[0, 0, 0]}
 
 /* get time active one week */
 {cmd_type:5}

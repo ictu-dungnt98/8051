@@ -5,13 +5,23 @@
 #include "led_button.h"
 #include "rtc.h"
 
-#define EEPROM_DB_ADDR      0
+#define EEPROM_DB_ADDR              0
+
+#define USER_HABIT_TRACE_DAYS       5 /* Tracking 5 days to get user's habit */
+#define USER_HABIT_HABIT_CMD        6
 
 #define time_count_t    uint8_t
 
 typedef struct {
+    struct tm time_start_previous[USER_HABIT_TRACE_DAYS];
+    struct tm time_start[USER_HABIT_TRACE_DAYS];
+    uint16_t total_time_active_previous[USER_HABIT_TRACE_DAYS]; /* minutes */
+    uint16_t total_time_active; /* minutes */
+    uint8_t is_tracking_time[NUMBER_CHANNEL]; /* 1 or 0 to identify that device is whether tracking process */
+} m_user_habit_trace_t;
+
+typedef struct {
     hc06_ctrl_t m_state_out[NUMBER_CHANNEL];
-    uint8_t user_habit[24]; /* 24 hours per day */
 
     /* Time active */
     struct tm time_active_on_day[NUMBER_CHANNEL];
@@ -21,6 +31,12 @@ typedef struct {
     m_alarm_t m_time_alarm[MAX_CMD_ALARM];
     uint8_t alarm_is_set;
 
+    uint8_t number_days_dev_active; /* count number of day device was active start from first day power up */
+
+    /* User's habit */
+    struct tm users_habit[NUMBER_CHANNEL];
+    uint8_t users_habit_is_set[NUMBER_CHANNEL]; /* true or flase */
+    m_alarm_t users_habit_alarm[USER_HABIT_HABIT_CMD];
 } device_info_t;
 
 void eeprom_database_loader(void);

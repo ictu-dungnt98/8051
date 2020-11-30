@@ -5,6 +5,9 @@
 #include "m_typedef.h"
 
 #define NUMBER_CHANNEL  3
+#define CHANNEL1         0
+#define CHANNEL2         1
+#define CHANNEL3         2
 
 #define NUMBER_BUTTON   NUMBER_CHANNEL
 
@@ -34,5 +37,7 @@ void gpio_on(uint8_t pin);
 void gpio_off(uint8_t pin);
 void gpio_toggle(uint8_t pin);
 void control_device(uint8_t cmd);
+
+hc06_ctrl_t uno_get_cmd_for_pin(uint8_t index, uint8_t is_turn_on);
 
 #endif

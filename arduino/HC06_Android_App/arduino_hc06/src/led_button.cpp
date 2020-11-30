@@ -7,6 +7,10 @@
 extern device_info_t m_device;
 extern uint8_t uno_sync_database_request;
 
+static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
+static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
+static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
+
 
 void gpio_on(uint8_t pin)
 {
@@ -67,9 +71,24 @@ void control_device(uint8_t cmd)
     uno_sync_database_request = 1;
 }
 
-static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
-static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
-static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
+hc06_ctrl_t uno_get_cmd_for_pin(uint8_t index, uint8_t is_turn_on)
+{
+    if (index == 0 && is_turn_on) {
+        return CH1_ON;
+    } else if (index == 0 && !is_turn_on) {
+        return CH1_OFF;
+    } else if (index == 1 && is_turn_on) {
+        return CH2_ON;
+    } else if (index == 1 && !is_turn_on) {
+        return CH2_OFF;
+    } else if (index == 2 && is_turn_on) {
+        return CH3_ON;
+    } else if (index == 2 && !is_turn_on) {
+        return CH3_OFF;
+    }
+}
+
+
 
 extern uint8_t alarm_is_set;
 extern m_alarm_t m_time_alarm[MAX_CMD_ALARM];
