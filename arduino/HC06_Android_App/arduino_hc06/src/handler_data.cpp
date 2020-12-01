@@ -92,7 +92,7 @@ void handler_data(char* command)
         return;
     }
 
-    DynamicJsonDocument doc(256);
+    DynamicJsonDocument doc(200);
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {

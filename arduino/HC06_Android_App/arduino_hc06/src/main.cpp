@@ -17,7 +17,7 @@
 #define TIME_HANDLER_HC06           50
 #define TIME_HANDLER_RTC            1000
 #define TIME_COUNT_TIME_ACTIVE      10000 /* 10s */
-#define TIME_SYNC_DATABASE          10000 /* 10s */
+#define TIME_SYNC_DATABASE          20000 /* 10s */
 
 extern uint8_t uno_sync_database_request;
 

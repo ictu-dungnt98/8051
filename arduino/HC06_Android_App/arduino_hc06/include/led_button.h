@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "m_typedef.h"
 
-#define NUMBER_CHANNEL  3
+#define NUMBER_CHANNEL   3
 #define CHANNEL1         0
 #define CHANNEL2         1
 #define CHANNEL3         2

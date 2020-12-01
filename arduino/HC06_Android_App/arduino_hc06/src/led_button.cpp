@@ -7,7 +7,7 @@
 extern device_info_t m_device;
 extern uint8_t uno_sync_database_request;
 
-static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0};
+static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0, 0};
 static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
 static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
@@ -86,6 +86,9 @@ hc06_ctrl_t uno_get_cmd_for_pin(uint8_t index, uint8_t is_turn_on)
     } else if (index == 2 && !is_turn_on) {
         return CH3_OFF;
     }
+
+    /* error */
+    return CH3_OFF;
 }
 
 
