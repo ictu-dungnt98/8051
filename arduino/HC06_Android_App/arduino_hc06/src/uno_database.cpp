@@ -8,7 +8,7 @@ uint8_t uno_sync_database_request = 0;
 
 static void eeprom_clear()
 {
-    for (int i = 0 ; i < sizeof(device_info_t) ; i++) {
+    for (uint8_t i = 0 ; i < sizeof(device_info_t) ; i++) {
         EEPROM.write(i, 0);
     }
 }
@@ -20,7 +20,7 @@ void eeprom_database_loader(void)
 
     EEPROM.get(EEPROM_DB_ADDR, m_device);
 
-    uno_get_time_active_on_day(0);
+    uno_get_time_active_on_day();
 }
 
 void eeprom_sync_database(void)
@@ -33,7 +33,7 @@ void eeprom_sync_database(void)
     EEPROM.put(EEPROM_DB_ADDR, m_device);
 
     // EEPROM.get(EEPROM_DB_ADDR, m_device);
-    uno_get_time_active_on_day(0);
+    // uno_get_time_active_on_day(0);
 
     uno_sync_database_request = 0;
 }
@@ -72,43 +72,50 @@ void report_current_state(void)
 }
 
 /* {cmd_type:4, "dev":0} */
-void uno_get_time_active_on_day(uint8_t index)
+void uno_get_time_active_on_day()
 {
     char respond[128];
-    memset(respond, 0, 128);
-    sprintf(respond, "{\"cmd_type\":4, \"time_active_day\":[%d, %d, %d]}\n", \
-                            m_device.time_active_on_day[index].tm_hour, \
-                            m_device.time_active_on_day[index].tm_min, \
-                            m_device.time_active_on_day[index].tm_sec);
+    uint8_t index;
 
-    uno_respond_app(respond);
-    Serial.println(respond);
+    for (index = 0; index < NUMBER_CHANNEL; index++) {
+        memset(respond, 0, 128);
+        sprintf(respond, "{\"cmd_type\":4, \"dev\":%d, \"time_active_day\":[%d, %d, %d]}\n", \
+                                index, \
+                                m_device.time_active_on_day[index].tm_hour, \
+                                m_device.time_active_on_day[index].tm_min, \
+                                m_device.time_active_on_day[index].tm_sec);
+
+        uno_respond_app(respond);
+        Serial.println(respond);
+    }
 }
 
 /* {"cmd_type":5} */
 void uno_get_time_active_in_week(void)
 {
     char respond[128];
-    memset(respond, 0, 128);
-    sprintf(respond, "{\"cmd_type\":5, \"time_active_week\":[%d, %d, %d]}\n", \
-                            m_device.time_active_in_week[0],
-                            m_device.time_active_in_week[1],
-                            m_device.time_active_in_week[2]);
+    uint8_t index;
 
-    uno_respond_app(respond);
-    Serial.println(respond);
+    for (index = 0; index < NUMBER_CHANNEL; index++) {
+        memset(respond, 0, 128);
+        sprintf(respond, "{\"cmd_type\":5, \"dev\":%d, \"time_active_week\":%d}\n", \
+                                index, m_device.time_active_in_week[index]);
+        uno_respond_app(respond);
+        Serial.println(respond);
+    }
 }
 
 /* {"cmd_type":6} */
 void uno_get_time_active_in_month(void)
 {
     char respond[128];
-    memset(respond, 0, 128);
-    sprintf(respond, "{\"cmd_type\":6, \"time_active_month\":[%d, %d, %d]}\n", \
-                            m_device.time_active_in_month[0],
-                            m_device.time_active_in_month[1],
-                            m_device.time_active_in_month[2]);
+    uint8_t index;
 
-    uno_respond_app(respond);
-    Serial.println(respond);
+    for (index = 0; index < NUMBER_CHANNEL; index++) {
+        memset(respond, 0, 128);
+        sprintf(respond, "{\"cmd_type\":6, \"dev\":%d, \"time_active_month\":%d}\n", \
+                                index, m_device.time_active_in_month[index]);
+        uno_respond_app(respond);
+        Serial.println(respond);
+    }
 }

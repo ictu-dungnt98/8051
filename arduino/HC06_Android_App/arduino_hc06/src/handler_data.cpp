@@ -67,12 +67,10 @@ void uno_handler_query_info(void)
     report_current_state();
 }
 
-/* {"cmd_type":4, "dev":0} */
+/* {"cmd_type":4} */
 static void uno_handler_query_time_active_one_day(JsonDocument &_doc)
 {
-    uint8_t dev = _doc["dev"];
-
-    uno_get_time_active_on_day(dev);
+    uno_get_time_active_on_day();
 }
 
 /* {"cmd_type":5} */
