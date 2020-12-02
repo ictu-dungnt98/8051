@@ -7,7 +7,7 @@
 
 #define EEPROM_DB_ADDR              0
 
-#define USER_HABIT_TRACE_DAYS       1 /* Tracking 5 days to get user's habit */
+#define USER_HABIT_TRACE_DAYS       5 /* Tracking 5 days to get user's habit */
 #define USER_HABIT_HABIT_CMD        6
 
 #define time_count_t    uint8_t

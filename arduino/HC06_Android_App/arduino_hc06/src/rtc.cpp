@@ -235,10 +235,6 @@ static void caculate_user_habit(uint8_t dev_index)
         }
     }
 
-    /* Select user's habit time use device */
-    // m_device.users_habit[dev_index].tm_hour = user_habit[dev_index].time_start_previous[habit_day_was_select].tm_hour;
-    // m_device.users_habit[dev_index].tm_min = user_habit[dev_index].time_start_previous[habit_day_was_select].tm_min;
-
     /* Set this device had alarm by user's habit */
     m_device.users_habit_is_set[dev_index] = 1;
 

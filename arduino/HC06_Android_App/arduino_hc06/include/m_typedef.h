@@ -8,11 +8,8 @@
 #include <time.h>
 
 #include <Arduino.h>
-#include <SoftwareSerial.h>
 
-
-
-extern SoftwareSerial mySerial;
+#define HC06    Serial1
 
 
 typedef enum {
@@ -42,7 +39,7 @@ typedef struct {
 
 #define uno_respond_app(respond) \
             do { \
-                mySerial.print(respond); \
+                HC06.print(respond); \
             } while(0)
 
 #endif
