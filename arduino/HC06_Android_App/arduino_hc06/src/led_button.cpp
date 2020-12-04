@@ -29,7 +29,7 @@ void gpio_toggle(uint8_t pin)
 
     /* Update state to report */
     uno_update_current_state_switch();
-    report_current_state();
+    report_current_state(0);
 
     uno_sync_database_request = 1;
 }
@@ -66,7 +66,7 @@ void control_device(uint8_t cmd)
 
     /* Update information of this device */
     uno_update_current_state_switch();
-    report_current_state();
+    report_current_state(0);
 
     uno_sync_database_request = 1;
 }

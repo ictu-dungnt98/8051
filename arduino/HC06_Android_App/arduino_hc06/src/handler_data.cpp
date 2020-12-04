@@ -64,7 +64,7 @@ void uno_handler_remove_alarm(JsonDocument &_doc)
 /* {"cmd_type":3} */
 void uno_handler_query_info(void)
 {
-    report_current_state();
+    report_current_state(3);
 }
 
 /* {"cmd_type":4} */
