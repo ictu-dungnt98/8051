@@ -1,53 +1,78 @@
 #include "pzem004t.h"
 
-PZEM004Tv30 pzem(10, 11); /* RX, TX */
+PZEM004Tv30 pzem(&Serial2); /* Cam Cheo Day */
+
+float voltage;
+float current;
+float power;
+float energy;
+float frequency;
+float pf;
 
 void pzem_init(void)
 {
-//     float voltage = pzem.voltage();
-//     if(!isnan(voltage)){
-//         Serial.print("Voltage: "); Serial.print(voltage); Serial.println("V");
-//     } else {
-//         Serial.println("Error reading voltage");
-//     }
+    pzem_reader();
+    pzem_show();
+}
 
-//     float current = pzem.current();
-//     if(!isnan(current)){
-//         Serial.print("Current: "); Serial.print(current); Serial.println("A");
-//     } else {
-//         Serial.println("Error reading current");
-//     }
+void pzem_reader(void)
+{
+    voltage = pzem.voltage();
+    current = pzem.current();
+    power = pzem.power();
+    energy = pzem.energy();
+    frequency = pzem.frequency();
+    pf = pzem.pf();
+}
 
-//     float power = pzem.power();
-//     if(!isnan(power)){
-//         Serial.print("Power: "); Serial.print(power); Serial.println("W");
-//     } else {
-//         Serial.println("Error reading power");
-//     }
+void pzem_show(void)
+{
+    pzem_reader();
 
-//     float energy = pzem.energy();
-//     if(!isnan(energy)){
-//         Serial.print("Energy: "); Serial.print(energy,3); Serial.println("kWh");
-//     } else {
-//         Serial.println("Error reading energy");
-//     }
+    if(voltage != NAN){
+        Serial.print("Voltage: "); 
+        Serial.print(voltage); 
+        Serial.println("V");
+    } else {
+        Serial.println("Error reading voltage");
+    }
 
-//     float frequency = pzem.frequency();
-//     if(!isnan(frequency)){
-//         Serial.print("Frequency: "); Serial.print(frequency, 1); Serial.println("Hz");
-//     } else {
-//         Serial.println("Error reading frequency");
-//     }
+    if(current != NAN){
+        Serial.print("Current: "); Serial.print(current); Serial.println("A");
+    } else {
+        Serial.println("Error reading current");
+    }
 
-//     float pf = pzem.pf();
-//     if(!isnan(pf)){
-//         Serial.print("PF: "); Serial.println(pf);
-//     } else {
-//         Serial.println("Error reading power factor");
-//     }
+    if(current != NAN){
+        Serial.print("Power: "); Serial.print(power); Serial.println("W");
+    } else {
+        Serial.println("Error reading power");
+    }
+
+    if(current != NAN){
+        Serial.print("Energy: "); Serial.print(energy,3); Serial.println("kWh");
+    } else {
+        Serial.println("Error reading energy");
+    }
+
+    if(current != NAN){
+        Serial.print("Frequency: ");
+        Serial.print(frequency, 1); Serial.println("Hz");
+    } else {
+        Serial.println("Error reading frequency");
+    }
+
+    if(current != NAN){
+        Serial.print("PF: ");
+        Serial.println(pf);
+    } else {
+        Serial.println("Error reading power factor");
+    }
+    Serial.println();
 }
 
 void pzem_hander(void)
 {
-
+    pzem_reader();
+    pzem_show();
 }
