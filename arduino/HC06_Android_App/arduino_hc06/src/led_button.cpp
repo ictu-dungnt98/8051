@@ -27,8 +27,7 @@ void gpio_toggle(uint8_t pin)
     /* toggle value pin */
     digitalWrite(pin, !digitalRead(pin));
 
-    /* Update state to report */
-    uno_update_current_state_switch();
+    /* Update state and report */
     report_current_state(0);
 
     uno_sync_database_request = 1;
@@ -64,8 +63,7 @@ void control_device(uint8_t cmd)
     } break;
     }
 
-    /* Update information of this device */
-    uno_update_current_state_switch();
+    /* Update and Report information of this device */
     report_current_state(0);
 
     uno_sync_database_request = 1;

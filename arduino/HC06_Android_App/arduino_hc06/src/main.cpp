@@ -14,9 +14,9 @@
 
 #define TIME_HANDLER_BUTTON         20
 #define TIME_HANDLER_LCD            10
-#define TIME_HANDLER_HC06           50
+#define TIME_HANDLER_HC06           40
 #define TIME_HANDLER_RTC            1000
-#define TIME_HANDLER_PZEM004T       1000
+#define TIME_HANDLER_PZEM004T       5000
 #define TIME_COUNT_TIME_ACTIVE      10000 /* 10s */
 #define TIME_SYNC_DATABASE          20000 /* 10s */
 

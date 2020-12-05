@@ -1,5 +1,8 @@
 #include "pzem004t.h"
 
+#include "led_button.h"
+#include "m_typedef.h"
+
 PZEM004Tv30 pzem(&Serial2); /* Cam Cheo Day */
 
 float voltage;
@@ -27,37 +30,56 @@ void pzem_reader(void)
 
 void pzem_show(void)
 {
-    pzem_reader();
+    char res[200];
 
-    if(voltage != NAN){
+    if (voltage != NAN) {
         Serial.print("Voltage: "); 
         Serial.print(voltage); 
         Serial.println("V");
+
+        memset(res, 0, sizeof(res));
+        sprintf(res, "{\"Voltage:\" %f}", voltage);
+        uno_respond_app(res);
     } else {
         Serial.println("Error reading voltage");
     }
 
     if(current != NAN){
-        Serial.print("Current: "); Serial.print(current); Serial.println("A");
+        Serial.print("Current: ");
+        Serial.print(current);
+        Serial.println("A");
+
+        memset(res, 0, sizeof(res));
+        sprintf(res, "{\"Current:\" %f}", current);
+        uno_respond_app(res);
     } else {
         Serial.println("Error reading current");
     }
 
     if(current != NAN){
-        Serial.print("Power: "); Serial.print(power); Serial.println("W");
+        Serial.print("Power: ");
+        Serial.print(power);
+        Serial.println("W");
+
+        memset(res, 0, sizeof(res));
+        sprintf(res, "{\"Power:\" %f}", power);
+        uno_respond_app(res);
     } else {
         Serial.println("Error reading power");
     }
 
     if(current != NAN){
-        Serial.print("Energy: "); Serial.print(energy,3); Serial.println("kWh");
+        Serial.print("Energy: ");
+        Serial.print(energy,3);
+        Serial.println("kWh");
     } else {
         Serial.println("Error reading energy");
     }
 
     if(current != NAN){
         Serial.print("Frequency: ");
-        Serial.print(frequency, 1); Serial.println("Hz");
+        Serial.print(frequency, 1);
+        Serial.println("Hz");
     } else {
         Serial.println("Error reading frequency");
     }
@@ -72,7 +94,9 @@ void pzem_show(void)
 }
 
 void pzem_hander(void)
-{
-    pzem_reader();
-    pzem_show();
+{  
+    if ((digitalRead(LED1_PIN) | digitalRead(LED2_PIN) | digitalRead(LED3_PIN))) {
+        pzem_reader();
+        // pzem_show();
+    }
 }

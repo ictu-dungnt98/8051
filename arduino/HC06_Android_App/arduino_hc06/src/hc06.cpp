@@ -29,7 +29,7 @@ void hc06_hander(void)
             hc06_rx_queue[p_hc06_rx_data] = ch;
             p_hc06_rx_data ++;
 
-            // delay(1); /* Delay for wait data ready on serial port */
+            delay(1); /* Delay for wait data ready on serial port */
         }
 
         Serial.print("recieved: ");

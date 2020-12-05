@@ -20,16 +20,17 @@ void eeprom_database_loader(void)
     memset(&user_habit, 0, sizeof(user_habit));
     memset(&m_device, 0, sizeof(device_info_t));
     
-    EEPROM.get(EEPROM_DB_ADDR, m_device);
+    // EEPROM.get(EEPROM_DB_ADDR, m_device);
 
     Serial.println("Uno load database:");
-    m_device.time_active_in_week[0] = 0;
-    m_device.time_active_in_week[1] = 0;
-    m_device.time_active_in_week[2] = 0;
 
-    m_device.time_active_in_month[0] = 0;
-    m_device.time_active_in_month[1] = 0;
-    m_device.time_active_in_month[2] = 0;
+    // m_device.time_active_in_week[0] = 0;
+    // m_device.time_active_in_week[1] = 0;
+    // m_device.time_active_in_week[2] = 0;
+
+    // m_device.time_active_in_month[0] = 0;
+    // m_device.time_active_in_month[1] = 0;
+    // m_device.time_active_in_month[2] = 0;
 }
 
 void eeprom_sync_database(void)
@@ -72,6 +73,8 @@ void report_current_state(uint8_t cmd)
 {
     char respond[128];
     memset(respond, 0, sizeof(respond));
+    
+    uno_update_current_state_switch();
     sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"res\":OK}\n",
                             cmd,
                             m_device.m_state_out[0],
