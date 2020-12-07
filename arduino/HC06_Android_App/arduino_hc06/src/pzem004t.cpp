@@ -20,12 +20,14 @@ void pzem_init(void)
 
 void pzem_reader(void)
 {
-    voltage = pzem.voltage();
-    current = pzem.current();
-    power = pzem.power();
-    energy = pzem.energy();
-    frequency = pzem.frequency();
-    pf = pzem.pf();
+    if ((digitalRead(LED1_PIN) | digitalRead(LED2_PIN) | digitalRead(LED3_PIN))) {
+        voltage = pzem.voltage();
+        current = pzem.current();
+        power = pzem.power();
+        energy = pzem.energy();
+        frequency = pzem.frequency();
+        pf = pzem.pf();
+    }
 }
 
 void pzem_show(void)
@@ -36,10 +38,6 @@ void pzem_show(void)
         Serial.print("Voltage: "); 
         Serial.print(voltage); 
         Serial.println("V");
-
-        memset(res, 0, sizeof(res));
-        sprintf(res, "{\"Voltage:\" %f}", voltage);
-        uno_respond_app(res);
     } else {
         Serial.println("Error reading voltage");
     }
@@ -48,10 +46,6 @@ void pzem_show(void)
         Serial.print("Current: ");
         Serial.print(current);
         Serial.println("A");
-
-        memset(res, 0, sizeof(res));
-        sprintf(res, "{\"Current:\" %f}", current);
-        uno_respond_app(res);
     } else {
         Serial.println("Error reading current");
     }
@@ -60,10 +54,6 @@ void pzem_show(void)
         Serial.print("Power: ");
         Serial.print(power);
         Serial.println("W");
-
-        memset(res, 0, sizeof(res));
-        sprintf(res, "{\"Power:\" %f}", power);
-        uno_respond_app(res);
     } else {
         Serial.println("Error reading power");
     }
@@ -94,9 +84,7 @@ void pzem_show(void)
 }
 
 void pzem_hander(void)
-{  
-    if ((digitalRead(LED1_PIN) | digitalRead(LED2_PIN) | digitalRead(LED3_PIN))) {
-        pzem_reader();
-        // pzem_show();
-    }
+{
+    pzem_reader();
+    // pzem_show();
 }

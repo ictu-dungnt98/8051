@@ -23,8 +23,10 @@ typedef struct {
 
     /* Time active */
     struct tm time_active_on_day[NUMBER_CHANNEL];
-    uint16_t time_active_in_week[NUMBER_CHANNEL];
-    uint16_t time_active_in_month[NUMBER_CHANNEL];
+    uint8_t time_active_in_week_tm_hour[NUMBER_CHANNEL];
+    uint8_t time_active_in_week_tm_min[NUMBER_CHANNEL];
+    uint8_t time_active_in_month_tm_hour[NUMBER_CHANNEL];
+    uint8_t time_active_in_month_tm_min[NUMBER_CHANNEL];
 
     m_alarm_t m_time_alarm[MAX_CMD_ALARM];
     uint8_t alarm_is_set;

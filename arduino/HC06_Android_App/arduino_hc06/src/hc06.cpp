@@ -33,9 +33,12 @@ void hc06_hander(void)
         }
 
         Serial.print("recieved: ");
-        Serial.println(hc06_rx_queue);
+        // Serial.println(hc06_rx_queue);
 
         /* Handler data recieved */
         handler_data(hc06_rx_queue);
+
+        p_hc06_rx_data = 0;
+        memset(hc06_rx_queue, 0, sizeof(hc06_rx_queue));
     }
 }

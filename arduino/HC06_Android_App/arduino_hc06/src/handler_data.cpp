@@ -68,7 +68,7 @@ void uno_handler_query_info(void)
 }
 
 /* {"cmd_type":4} */
-static void uno_handler_query_time_active_one_day(JsonDocument &_doc)
+static void uno_handler_query_time_active_one_day()
 {
     uno_get_time_active_on_day();
 }
@@ -92,13 +92,16 @@ void handler_data(char* command)
         return;
     }
 
-    DynamicJsonDocument doc(200);
+    DynamicJsonDocument doc(180);
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
         Serial.print(F("Dungnt98 deserializeJson() failed\n"));
+        Serial.println(error.c_str());
         return;
     }
+
+    Serial.println(command);
 
     uint8_t cmd_type = (uint8_t)doc["cmd_type"];
     Serial.print("cmd_type: ");
@@ -123,7 +126,7 @@ void handler_data(char* command)
     } break;
 
     case QUERY_TIME_DAY: {
-        uno_handler_query_time_active_one_day(doc);
+        uno_handler_query_time_active_one_day();
 
     } break;
 
@@ -138,6 +141,7 @@ void handler_data(char* command)
     } break;
 
     default:
+        Serial.println("Cmd_type was not match!");
         break;
     }
 }

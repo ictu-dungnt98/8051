@@ -88,16 +88,20 @@ void uno_caculate_time_device_active_loop(void)
         m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
             m_device.time_active_on_day[dev_index].tm_min ++;
+            m_device.time_active_in_week_tm_min[dev_index] ++;
+            m_device.time_active_in_month_tm_min[dev_index] ++;
+            
             m_device.time_active_on_day[dev_index].tm_sec = 0;
             
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
+                /* Count time active on day */
+                m_device.time_active_on_day[dev_index].tm_hour ++;
                 /* Count time active on week */
-                m_device.time_active_in_week[0] += m_device.time_active_on_day[0].tm_hour;
+                m_device.time_active_in_week_tm_hour[dev_index] ++;
                 /* Count time active on month */
-                m_device.time_active_in_month[0] += m_device.time_active_in_week[0];
+                m_device.time_active_in_month_tm_hour[dev_index] ++;
             }
 
             /* Count time for tracking user's habit */
@@ -137,16 +141,20 @@ void uno_caculate_time_device_active_loop(void)
         m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
             m_device.time_active_on_day[dev_index].tm_min ++;
+            m_device.time_active_in_week_tm_min[dev_index] ++;
+            m_device.time_active_in_month_tm_min[dev_index] ++;
+            
             m_device.time_active_on_day[dev_index].tm_sec = 0;
             
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
+                /* Count time active on day */
+                m_device.time_active_on_day[dev_index].tm_hour ++;
                 /* Count time active on week */
-                m_device.time_active_in_week[1] += m_device.time_active_on_day[1].tm_hour;
+                m_device.time_active_in_week_tm_hour[dev_index] ++;
                 /* Count time active on month */
-                m_device.time_active_in_month[1] += m_device.time_active_in_week[1];
+                m_device.time_active_in_month_tm_hour[dev_index] ++;
             }
 
             /* Count time for tracking user's habit */
@@ -186,16 +194,20 @@ void uno_caculate_time_device_active_loop(void)
         m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
             m_device.time_active_on_day[dev_index].tm_min ++;
+            m_device.time_active_in_week_tm_min[dev_index] ++;
+            m_device.time_active_in_month_tm_min[dev_index] ++;
+            
             m_device.time_active_on_day[dev_index].tm_sec = 0;
             
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
+                /* Count time active on day */
+                m_device.time_active_on_day[dev_index].tm_hour ++;
                 /* Count time active on week */
-                m_device.time_active_in_week[2] += m_device.time_active_on_day[2].tm_hour;
+                m_device.time_active_in_week_tm_hour[dev_index] ++;
                 /* Count time active on month */
-                m_device.time_active_in_month[2] += m_device.time_active_in_week[2];
+                m_device.time_active_in_month_tm_hour[dev_index] ++;
             }
 
             /* Count time for tracking user's habit */
@@ -300,20 +312,14 @@ void rtc_hander(void)
 
         if (now.dayOfTheWeek() == 0) { /* End of the week */
             /* Reset data of week to use for new week */
-            m_device.time_active_in_week[0] = 0;
-            m_device.time_active_in_week[1] = 0;
-            m_device.time_active_in_week[2] = 0;
+            memset(m_device.time_active_in_week_tm_hour, 0, sizeof(m_device.time_active_in_week_tm_hour));
+            memset(m_device.time_active_in_week_tm_min, 0, sizeof(m_device.time_active_in_week_tm_min));
 
             /* Reset data to use for new month */
             if (now.day() == 1) {
-                m_device.time_active_in_month[0] = 0;
-                m_device.time_active_in_month[1] = 0;
-                m_device.time_active_in_month[2] = 0;
+                memset(m_device.time_active_in_month_tm_hour, 0, sizeof(m_device.time_active_in_week_tm_hour));
+                memset(m_device.time_active_in_month_tm_min, 0, sizeof(m_device.time_active_in_week_tm_min));
             }
-        } else {
-            m_device.time_active_in_week[0] += m_device.time_active_on_day[0].tm_hour;
-            m_device.time_active_in_week[1] += m_device.time_active_on_day[1].tm_hour;
-            m_device.time_active_in_week[2] += m_device.time_active_on_day[2].tm_hour;
         }
 
         /* clear daily data */
