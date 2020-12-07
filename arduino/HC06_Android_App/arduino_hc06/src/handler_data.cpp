@@ -27,16 +27,22 @@ static void uno_handler_set_alarm(JsonDocument &_doc)
     char respond[256];
     uint8_t cmd = _doc["cmd"];
 
+    if (m_device.alarm_is_set < MAX_CMD_ALARM) {
+        Serial.print("alarm_is_set!");
+    } else {
+        memset(respond, 0, sizeof(respond));
+        sprintf(respond, "{\"cmd_type\":%d, \"res\":Fail}\n", SET_ALARM);
+        uno_respond_app(respond);
+
+        return;
+    }
+
     /* Do set time alarm here */
     m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_hour = _doc["hour"];
     m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_min = _doc["minutes"];
     m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_sec = _doc["second"];
     m_device.m_time_alarm[m_device.alarm_is_set].m_cmd = cmd;
-
-    if (m_device.alarm_is_set < MAX_CMD_ALARM) {
-        Serial.print("alarm_is_set!");
-        m_device.alarm_is_set ++;
-    }
+    m_device.alarm_is_set ++;
 
     uno_sync_database_request = 1;
 

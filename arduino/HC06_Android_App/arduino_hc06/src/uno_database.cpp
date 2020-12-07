@@ -86,9 +86,16 @@ void report_current_state(uint8_t cmd)
 
     uno_update_current_state_switch();
 
+    voltage = (int)voltage;
+    // current = (int)current;
+    power = (int)power;
+
     dtostrf(voltage, 4, 2, str_vol);
     dtostrf(current, 4, 2, str_current);
     dtostrf(power, 4, 2, str_power);
+
+
+
     sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"Voltage\": %s, \"Current\": %s, \"Power\": %s, \"res\":OK}\n",
                             cmd,
                             m_device.m_state_out[0],
