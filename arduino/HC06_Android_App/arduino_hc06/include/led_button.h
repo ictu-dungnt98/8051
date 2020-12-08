@@ -25,6 +25,8 @@
 #define LED2_PIN        6
 #define LED3_PIN        7
 
+#define LED_STATUS      13
+
 #define TIME_SLICE_TO_READ_BUTTON   10
 
 #define OS_BTN_IS_PRESS_TIME_MAX    5000
