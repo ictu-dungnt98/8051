@@ -37,15 +37,10 @@ void eeprom_database_loader(void)
 
 void eeprom_sync_database(void)
 {
-    // uno_get_time_active_on_day(0);
-
     Serial.println("Uno sync database");
 
     eeprom_clear();
     EEPROM.put(EEPROM_DB_ADDR, m_device);
-
-    // EEPROM.get(EEPROM_DB_ADDR, m_device);
-    // uno_get_time_active_on_day(0);
 
     uno_sync_database_request = 0;
 }

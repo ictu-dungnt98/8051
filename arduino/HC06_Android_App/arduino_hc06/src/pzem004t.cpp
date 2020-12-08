@@ -32,8 +32,6 @@ void pzem_reader(void)
 
 void pzem_show(void)
 {
-    char res[200];
-
     if (voltage != NAN) {
         Serial.print("Voltage: "); 
         Serial.print(voltage); 

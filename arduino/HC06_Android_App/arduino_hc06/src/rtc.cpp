@@ -32,27 +32,19 @@ void rtc_init(void)
     }
 }
 
-
 static void time_alarm() {
     uint8_t i;
 
-    // for (i = 0; i < MAX_CMD_ALARM; i++) {
-    //     if (memcmp(&m_time_local, &m_time_alarm[i].m_time, sizeof(struct tm)) == 0)
-    //     {
-    //         control_device(m_time_alarm[i].m_cmd);
-    //     }
-    // }
-
-    for (i = 0; i < MAX_CMD_ALARM; i++) {
-        if (m_time_local.tm_hour == m_device.m_time_alarm[i].m_time.tm_hour
-            && m_time_local.tm_min == m_device.m_time_alarm[i].m_time.tm_min
-            && m_time_local.tm_sec == m_device.m_time_alarm[i].m_time.tm_sec)
+    for (i = 0; i < m_device.alarm_is_set; i++) {
+        if (now.hour() == m_device.m_time_alarm[i].m_time.tm_hour
+            && now.minute() == m_device.m_time_alarm[i].m_time.tm_min)
         {
+            Serial.print("Do Alarm Hanlder with cmd: ");
+            Serial.println(m_device.m_time_alarm[i].m_cmd);
             control_device(m_device.m_time_alarm[i].m_cmd);
         }
     }
 }
-
 
 static void control_with_users_habit() {
 
@@ -65,8 +57,8 @@ static void control_with_users_habit() {
 
     for (i = 0; i < NUMBER_CHANNEL; i++) {
         if (m_device.users_habit_is_set[i]) {
-            if (m_time_local.tm_hour == m_device.users_habit_alarm[i].m_time.tm_hour
-                && m_time_local.tm_min == m_device.users_habit_alarm[i].m_time.tm_min)
+            if (now.hour() == m_device.users_habit_alarm[i].m_time.tm_hour
+                && now.minute() == m_device.users_habit_alarm[i].m_time.tm_min)
             {
                 control_device(m_device.users_habit_alarm[i].m_cmd); /* turn on channel */
             }
@@ -281,22 +273,16 @@ void uno_set_user_habit(void)
     caculate_user_habit(CHANNEL3);
 }
 
-void rtc_hander(void)
+void alarm_handler()
 {
-    now = rtc.now();
-
-    m_time_local.tm_hour = now.hour();
-    m_time_local.tm_min = now.minute();
-    m_time_local.tm_sec = now.second();
-
-    m_time_local.tm_wday = now.dayOfTheWeek();
-    m_time_local.tm_mday = now.day();
-    m_time_local.tm_mon = now.month();
-    m_time_local.tm_year = now.year();
-
     if (m_device.alarm_is_set) {
         time_alarm();
     }
+}
+
+void rtc_hander(void)
+{
+    now = rtc.now();
 
     /* Check End of day - 0h, update time active every day */
     if ((now.hour() == 0) && (now.minute() == 0) && (now.second() == 0))

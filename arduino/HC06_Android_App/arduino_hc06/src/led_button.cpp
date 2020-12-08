@@ -118,6 +118,7 @@ static void scan_button_handler(uint8_t button_index)
             /* clear alarm */
             m_device.alarm_is_set = 0;
             memset(m_device.m_time_alarm, 0, sizeof(m_device.m_time_alarm));
+            Serial.println("clear alarm!");
         }
 
         time_button_press[button_index] = 0;
