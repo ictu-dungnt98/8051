@@ -39,3 +39,7 @@ typedef enum {
 /* get time active one month */
 {cmd_type:6}
 {"cmd_type": 6, "dev":0, "time_active_month": [10, 20], "res":OK}
+
+/* Get time Alarm */
+{cmd_type:7}
+{"cmd_type":7, "index": %d, "cmd":%d, "time_alarm":[%d, %d], "res":OK}

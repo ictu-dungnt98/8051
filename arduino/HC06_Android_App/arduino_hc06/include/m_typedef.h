@@ -28,7 +28,8 @@ typedef enum {
     QUERY_INFOM,
     QUERY_TIME_DAY,
     QUERY_TIME_WEEK,
-    QUERY_TIME_MONTH
+    QUERY_TIME_MONTH,
+    GET_TIME_ALARM
 } hc06_cmd_type_t;
 
 typedef struct {

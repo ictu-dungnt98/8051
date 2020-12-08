@@ -77,21 +77,17 @@ void report_current_state(uint8_t cmd)
 {
     char respond[200];
     memset(respond, 0, sizeof(respond));
-    char str_vol[5], str_current[5], str_power[5];
+    char str_vol[6], str_current[5], str_power[5];
 
     uno_update_current_state_switch();
 
-    voltage = (int)voltage;
-    // current = (int)current;
-    power = (int)power;
-
-    dtostrf(voltage, 4, 2, str_vol);
+    dtostrf(voltage, 4, 2, str_vol); str_vol[5] = '\0';
     dtostrf(current, 4, 2, str_current);
     dtostrf(power, 4, 2, str_power);
 
 
 
-    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"Voltage\": %s, \"Current\": %s, \"Power\": %s, \"res\":OK}\n",
+    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"Voltage\": %5s, \"Current\": %s, \"Power\": %s, \"res\":\"OK\"}\n",
                             cmd,
                             m_device.m_state_out[0],
                             m_device.m_state_out[1],
@@ -102,15 +98,48 @@ void report_current_state(uint8_t cmd)
     Serial.println(respond);
 }
 
+/* {cmd_type:7} */
+void uno_get_time_alarm_was_set(void)
+{
+    char respond[300];
+    char alarms_str[200];
+    char format_alarm[20];
+    uint8_t index;
+
+    memset(alarms_str, 0, sizeof(alarms_str));
+
+    for (index = 0; index < m_device.alarm_is_set; index++) {
+        /* Get Alarm */
+        memset(format_alarm, 0, sizeof(format_alarm));
+        sprintf(format_alarm, "[%d, %d, %d]", \
+                    m_device.m_time_alarm[index].m_cmd, \
+                    m_device.m_time_alarm[index].m_time.tm_hour, \
+                    m_device.m_time_alarm[index].m_time.tm_min);
+
+        strcat(alarms_str, format_alarm);
+
+        /* Create Format to make Json */
+        if (index != m_device.alarm_is_set - 1) {
+            strcat(alarms_str, ", ");
+        }
+    }
+
+    memset(respond, 0, sizeof(respond));
+    sprintf(respond, "{\"cmd_type\":7, \"alarms\":[%s], \"res\":\"OK\"}\n", alarms_str);
+
+    uno_respond_app(respond);
+    Serial.println(respond);
+}
+
 /* {cmd_type:4, "dev":0} */
-void uno_get_time_active_on_day()
+void uno_get_time_active_on_day(void)
 {
     char respond[128];
     uint8_t index;
 
     for (index = 0; index < NUMBER_CHANNEL; index++) {
         memset(respond, 0, 128);
-        sprintf(respond, "{\"cmd_type\":4, \"dev\":%d, \"time_active_day\":[%d, %d], \"res\":OK}\n", \
+        sprintf(respond, "{\"cmd_type\":4, \"dev\":%d, \"time_active_day\":[%d, %d], \"res\":\"OK\"}\n", \
                                 index, \
                                 m_device.time_active_on_day[index].tm_hour, \
                                 m_device.time_active_on_day[index].tm_min);
@@ -128,7 +157,7 @@ void uno_get_time_active_in_week(void)
 
     for (index = 0; index < NUMBER_CHANNEL; index++) {
         memset(respond, 0, 128);
-        sprintf(respond, "{\"cmd_type\":5, \"dev\":%d, \"time_active_week\":[%d, %d], \"res\":OK}\n", \
+        sprintf(respond, "{\"cmd_type\":5, \"dev\":%d, \"time_active_week\":[%d, %d], \"res\":\"OK\"}\n", \
                                 index, \
                                 m_device.time_active_in_week_tm_hour[index], \
                                 m_device.time_active_in_week_tm_min[index]);
@@ -145,7 +174,7 @@ void uno_get_time_active_in_month(void)
 
     for (index = 0; index < NUMBER_CHANNEL; index++) {
         memset(respond, 0, 128);
-        sprintf(respond, "{\"cmd_type\":6, \"dev\":%d, \"time_active_month\":[%d, %d], \"res\":OK}\n", \
+        sprintf(respond, "{\"cmd_type\":6, \"dev\":%d, \"time_active_month\":[%d, %d], \"res\":\"OK\"}\n", \
                                 index, \
                                 m_device.time_active_in_month_tm_hour[index], \
                                 m_device.time_active_in_month_tm_min[index]);

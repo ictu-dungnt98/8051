@@ -12,8 +12,7 @@ extern uint8_t uno_sync_database_request;
 static void uno_handler_control_io(JsonDocument &_doc)
 {
     uint8_t m_cmd = _doc["cmd"];
-    // Serial.print("uno_handler_control_io!\n");
-
+    
     control_device(m_cmd);
 }
 
@@ -27,7 +26,7 @@ static void uno_handler_set_alarm(JsonDocument &_doc)
         memset(respond, 0, sizeof(respond));
         sprintf(respond, "{\"cmd_type\":%d, \"res\":Fail}\n", SET_ALARM);
         uno_respond_app(respond);
-        
+
         return;
     }
 
@@ -93,6 +92,12 @@ static void uno_handler_query_time_active_one_month()
     uno_get_time_active_in_month();
 }
 
+/* {"cmd_type":7} */
+static void uno_handler_get_time_alarm()
+{
+    uno_get_time_alarm_was_set();
+}
+
 /* {"cmd_type":x; "cmd":y} */
 void handler_data(char* command)
 {
@@ -146,6 +151,10 @@ void handler_data(char* command)
     case QUERY_TIME_MONTH: {
         uno_handler_query_time_active_one_month();
 
+    } break;
+
+    case GET_TIME_ALARM: {
+        uno_handler_get_time_alarm();
     } break;
 
     default:

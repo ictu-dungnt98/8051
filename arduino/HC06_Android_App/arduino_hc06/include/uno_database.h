@@ -47,12 +47,11 @@ void uno_update_current_state_switch(void);
 void uno_caculate_time_device_active_loop(void);
 
 void report_current_state(uint8_t cmd);
+void uno_get_time_alarm_was_set(void);
 
 void uno_get_time_active_in_day(void);
 void uno_get_time_active_in_week(void);
 void uno_get_time_active_in_month(void);
-
-void report_current_state(void);
 
 void uno_get_time_active_on_day(void);
 void uno_get_time_active_in_week(void);
