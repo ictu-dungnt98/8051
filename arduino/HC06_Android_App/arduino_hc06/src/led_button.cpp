@@ -33,6 +33,32 @@ void gpio_toggle(uint8_t pin)
     uno_sync_database_request = 1;
 }
 
+static void blink_led_status()
+{
+    uint8_t time_delay = 100;
+    uint8_t pin = LED_STATUS;
+
+    digitalWrite(LED_STATUS, HIGH);
+    delay(time_delay);
+    digitalWrite(pin, LOW);
+    delay(time_delay);
+
+    digitalWrite(pin, HIGH);
+    delay(time_delay);
+    digitalWrite(pin, LOW);
+    delay(time_delay);
+
+    digitalWrite(pin, HIGH);
+    delay(time_delay);
+    digitalWrite(pin, LOW);
+    delay(time_delay);
+
+    digitalWrite(pin, HIGH);
+    delay(time_delay);
+    digitalWrite(pin, LOW);
+    delay(time_delay);
+}
+
 void control_device(uint8_t cmd)
 {
     switch (cmd)
@@ -100,6 +126,10 @@ static void scan_button_handler(uint8_t button_index)
    if (!digitalRead(m_buttons[button_index])) /* press */
    {
         time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
+
+        if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX) {
+            blink_led_status();
+        }
    } else { /* realse */
         if (time_button_press[button_index] >= OS_BTN_IS_PRESS_TIME_MIN
             && time_button_press[button_index] <= OS_BTN_IS_PRESS_TIME_MAX)
@@ -143,12 +173,14 @@ static void led_init(void)
     {
         pinMode(m_leds[i], OUTPUT);
     }
-
+    pinMode(LED_STATUS, OUTPUT);
+    
     /* Turn off all */
     for (i=0; i < NUMBER_LED; i++)
     {
         digitalWrite(m_leds[i], LOW);
     }
+    digitalWrite(LED_STATUS, LOW);
 }
 
 void led_button_init()
