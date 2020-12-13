@@ -35,13 +35,16 @@ void rtc_init(void)
 static void time_alarm() {
     uint8_t i;
 
-    for (i = 0; i < m_device.alarm_is_set; i++) {
+    for (i = 0; i < MAX_CMD_ALARM; i++) {
         if (now.hour() == m_device.m_time_alarm[i].m_time.tm_hour
             && now.minute() == m_device.m_time_alarm[i].m_time.tm_min)
         {
             Serial.print("Do Alarm Hanlder with cmd: ");
             Serial.println(m_device.m_time_alarm[i].m_cmd);
             control_device(m_device.m_time_alarm[i].m_cmd);
+        } else {
+            Serial.println(m_device.m_time_alarm[i].m_time.tm_hour);
+            Serial.println(m_device.m_time_alarm[i].m_time.tm_min);
         }
     }
 }

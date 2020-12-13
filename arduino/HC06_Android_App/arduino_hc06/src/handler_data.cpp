@@ -109,7 +109,7 @@ void handler_data(char* command)
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
-        Serial.print(F("Dungnt98 deserializeJson() failed\n"));
+        Serial.print(F("DeserializeJson() failed\n"));
         Serial.println(error.c_str());
         return;
     }
