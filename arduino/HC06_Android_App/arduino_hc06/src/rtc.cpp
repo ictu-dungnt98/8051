@@ -1,7 +1,9 @@
 #include "rtc.h"
+
 #include <time.h>
-#include "m_typedef.h"
+
 #include "led_button.h"
+#include "m_typedef.h"
 #include "uno_database.h"
 
 extern device_info_t m_device;
@@ -18,9 +20,10 @@ uint16_t temp_time_start_total_time_active[NUMBER_CHANNEL]; /* minutes */
 void rtc_init(void)
 {
     if (Serial) {
-        if (! rtc.begin()) {
+        if (!rtc.begin()) {
             Serial.print("Couldn't find RTC");
-            while (1);
+            while (1)
+                ;
         }
 
         if (!rtc.isrunning()) {
@@ -32,13 +35,13 @@ void rtc_init(void)
     }
 }
 
-static void time_alarm() {
+static void time_alarm()
+{
     uint8_t i;
 
     for (i = 0; i < MAX_CMD_ALARM; i++) {
-        if (now.hour() == m_device.m_time_alarm[i].m_time.tm_hour
-            && now.minute() == m_device.m_time_alarm[i].m_time.tm_min)
-        {
+        if (now.hour() == m_device.m_time_alarm[i].m_time.tm_hour &&
+            now.minute() == m_device.m_time_alarm[i].m_time.tm_min) {
             Serial.print("Do Alarm Hanlder with cmd: ");
             Serial.println(m_device.m_time_alarm[i].m_cmd);
             control_device(m_device.m_time_alarm[i].m_cmd);
@@ -49,10 +52,10 @@ static void time_alarm() {
     }
 }
 
-static void control_with_users_habit() {
-
+static void control_with_users_habit()
+{
     /* If device active time was not pass time to get user's habit */
-    if  (m_device.number_days_dev_active < USER_HABIT_TRACE_DAYS) {
+    if (m_device.number_days_dev_active < USER_HABIT_TRACE_DAYS) {
         return;
     }
 
@@ -60,9 +63,8 @@ static void control_with_users_habit() {
 
     for (i = 0; i < NUMBER_CHANNEL; i++) {
         if (m_device.users_habit_is_set[i]) {
-            if (now.hour() == m_device.users_habit_alarm[i].m_time.tm_hour
-                && now.minute() == m_device.users_habit_alarm[i].m_time.tm_min)
-            {
+            if (now.hour() == m_device.users_habit_alarm[i].m_time.tm_hour &&
+                now.minute() == m_device.users_habit_alarm[i].m_time.tm_min) {
                 control_device(m_device.users_habit_alarm[i].m_cmd); /* turn on channel */
             }
         }
@@ -80,28 +82,28 @@ void uno_caculate_time_device_active_loop(void)
     dev_index = CHANNEL1;
     if (digitalRead(LED1_PIN)) {
         /* Count total time active on day */
-        m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
+        m_device.time_active_on_day[dev_index].tm_sec += 10;       /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
-            m_device.time_active_on_day[dev_index].tm_min ++;
-            m_device.time_active_in_week_tm_min[dev_index] ++;
-            m_device.time_active_in_month_tm_min[dev_index] ++;
-            
+            m_device.time_active_on_day[dev_index].tm_min++;
+            m_device.time_active_in_week_tm_min[dev_index]++;
+            m_device.time_active_in_month_tm_min[dev_index]++;
+
             m_device.time_active_on_day[dev_index].tm_sec = 0;
-            
+
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
                 /* Count time active on day */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
+                m_device.time_active_on_day[dev_index].tm_hour++;
                 /* Count time active on week */
-                m_device.time_active_in_week_tm_hour[dev_index] ++;
+                m_device.time_active_in_week_tm_hour[dev_index]++;
                 /* Count time active on month */
-                m_device.time_active_in_month_tm_hour[dev_index] ++;
+                m_device.time_active_in_month_tm_hour[dev_index]++;
             }
 
             /* Count time for tracking user's habit */
             if (user_habit[dev_index].is_tracking_time[dev_index]) {
-                temp_time_start_total_time_active[dev_index] ++; /* 1 minutes */
+                temp_time_start_total_time_active[dev_index]++; /* 1 minutes */
             }
         }
 
@@ -111,21 +113,24 @@ void uno_caculate_time_device_active_loop(void)
 
             /* Get time device turn on */
             temp_time_start[dev_index].tm_hour = now.hour();
-            temp_time_start[dev_index].tm_min = now.minute(); 
+            temp_time_start[dev_index].tm_min = now.minute();
         }
 
         /* sync database */
         uno_sync_database_request = 1;
-    }
-    else {
+    } else {
         user_habit[dev_index].is_tracking_time[dev_index] = 0; /* stop tracking */
 
         /* Check time device was used to get user's habit */
-        if (temp_time_start_total_time_active[dev_index] > user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
+        if (temp_time_start_total_time_active[dev_index] >
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
             /* Store user's using device time */
-            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] = temp_time_start_total_time_active[dev_index];
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour = temp_time_start[dev_index].tm_hour;
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min = temp_time_start[dev_index].tm_min;
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] =
+                temp_time_start_total_time_active[dev_index];
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour =
+                temp_time_start[dev_index].tm_hour;
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min =
+                temp_time_start[dev_index].tm_min;
         }
     }
 
@@ -133,28 +138,28 @@ void uno_caculate_time_device_active_loop(void)
     dev_index = CHANNEL2;
     if (digitalRead(LED2_PIN)) {
         /* Count total time active on day */
-        m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
+        m_device.time_active_on_day[dev_index].tm_sec += 10;       /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
-            m_device.time_active_on_day[dev_index].tm_min ++;
-            m_device.time_active_in_week_tm_min[dev_index] ++;
-            m_device.time_active_in_month_tm_min[dev_index] ++;
-            
+            m_device.time_active_on_day[dev_index].tm_min++;
+            m_device.time_active_in_week_tm_min[dev_index]++;
+            m_device.time_active_in_month_tm_min[dev_index]++;
+
             m_device.time_active_on_day[dev_index].tm_sec = 0;
-            
+
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
                 /* Count time active on day */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
+                m_device.time_active_on_day[dev_index].tm_hour++;
                 /* Count time active on week */
-                m_device.time_active_in_week_tm_hour[dev_index] ++;
+                m_device.time_active_in_week_tm_hour[dev_index]++;
                 /* Count time active on month */
-                m_device.time_active_in_month_tm_hour[dev_index] ++;
+                m_device.time_active_in_month_tm_hour[dev_index]++;
             }
 
             /* Count time for tracking user's habit */
             if (user_habit[dev_index].is_tracking_time[dev_index]) {
-                temp_time_start_total_time_active[dev_index] ++; /* 1 minutes */
+                temp_time_start_total_time_active[dev_index]++; /* 1 minutes */
             }
         }
 
@@ -164,21 +169,24 @@ void uno_caculate_time_device_active_loop(void)
 
             /* Get time device turn on */
             temp_time_start[dev_index].tm_hour = now.hour();
-            temp_time_start[dev_index].tm_min = now.minute(); 
+            temp_time_start[dev_index].tm_min = now.minute();
         }
 
         /* sync database */
         uno_sync_database_request = 1;
-    }
-    else {
+    } else {
         user_habit[dev_index].is_tracking_time[dev_index] = 0; /* stop tracking */
 
         /* Check time device was used to get user's habit */
-        if (temp_time_start_total_time_active[dev_index] > user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
+        if (temp_time_start_total_time_active[dev_index] >
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
             /* Store user's using device time */
-            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] = temp_time_start_total_time_active[dev_index];
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour = temp_time_start[dev_index].tm_hour;
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min = temp_time_start[dev_index].tm_min;
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] =
+                temp_time_start_total_time_active[dev_index];
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour =
+                temp_time_start[dev_index].tm_hour;
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min =
+                temp_time_start[dev_index].tm_min;
         }
     }
 
@@ -186,28 +194,28 @@ void uno_caculate_time_device_active_loop(void)
     dev_index = CHANNEL3;
     if (digitalRead(LED3_PIN)) {
         /* Count total time active on day */
-        m_device.time_active_on_day[dev_index].tm_sec += 10; /* 10s */
+        m_device.time_active_on_day[dev_index].tm_sec += 10;       /* 10s */
         if (m_device.time_active_on_day[dev_index].tm_sec >= 60) { /* minutes */
-            m_device.time_active_on_day[dev_index].tm_min ++;
-            m_device.time_active_in_week_tm_min[dev_index] ++;
-            m_device.time_active_in_month_tm_min[dev_index] ++;
-            
+            m_device.time_active_on_day[dev_index].tm_min++;
+            m_device.time_active_in_week_tm_min[dev_index]++;
+            m_device.time_active_in_month_tm_min[dev_index]++;
+
             m_device.time_active_on_day[dev_index].tm_sec = 0;
-            
+
             if (m_device.time_active_on_day[dev_index].tm_min >= 60) { /* hours */
                 m_device.time_active_on_day[dev_index].tm_min = 0;
 
                 /* Count time active on day */
-                m_device.time_active_on_day[dev_index].tm_hour ++;
+                m_device.time_active_on_day[dev_index].tm_hour++;
                 /* Count time active on week */
-                m_device.time_active_in_week_tm_hour[dev_index] ++;
+                m_device.time_active_in_week_tm_hour[dev_index]++;
                 /* Count time active on month */
-                m_device.time_active_in_month_tm_hour[dev_index] ++;
+                m_device.time_active_in_month_tm_hour[dev_index]++;
             }
 
             /* Count time for tracking user's habit */
             if (user_habit[dev_index].is_tracking_time[dev_index]) {
-                temp_time_start_total_time_active[dev_index] ++; /* 1 minutes */
+                temp_time_start_total_time_active[dev_index]++; /* 1 minutes */
             }
         }
 
@@ -217,21 +225,24 @@ void uno_caculate_time_device_active_loop(void)
 
             /* Get time device turn on */
             temp_time_start[dev_index].tm_hour = now.hour();
-            temp_time_start[dev_index].tm_min = now.minute(); 
+            temp_time_start[dev_index].tm_min = now.minute();
         }
 
         /* sync database */
         uno_sync_database_request = 1;
-    }
-    else {
+    } else {
         user_habit[dev_index].is_tracking_time[dev_index] = 0; /* stop tracking */
 
         /* Check time device was used to get user's habit */
-        if (temp_time_start_total_time_active[dev_index] > user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
+        if (temp_time_start_total_time_active[dev_index] >
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active]) {
             /* Store user's using device time */
-            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] = temp_time_start_total_time_active[dev_index];
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour = temp_time_start[dev_index].tm_hour;
-            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min = temp_time_start[dev_index].tm_min;
+            user_habit[dev_index].total_time_active_previous[m_device.number_days_dev_active] =
+                temp_time_start_total_time_active[dev_index];
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_hour =
+                temp_time_start[dev_index].tm_hour;
+            user_habit[dev_index].time_start_previous[m_device.number_days_dev_active].tm_min =
+                temp_time_start[dev_index].tm_min;
         }
     }
 }
@@ -250,8 +261,7 @@ static void caculate_user_habit(uint8_t dev_index)
     time_active_longest = user_habit[dev_index].total_time_active_previous[habit_day_was_select];
     /* Caculating longest time active in 5 days */
     for (i = 1; i < USER_HABIT_TRACE_DAYS; i++) {
-        if (user_habit[dev_index].total_time_active_previous[i] > time_active_longest)
-        {
+        if (user_habit[dev_index].total_time_active_previous[i] > time_active_longest) {
             time_active_longest = user_habit[dev_index].total_time_active_previous[i];
             habit_day_was_select = i;
         }
@@ -262,11 +272,15 @@ static void caculate_user_habit(uint8_t dev_index)
 
     /* Set time ALARM for User's Habit */
     m_device.users_habit_alarm[dev_index].m_cmd = uno_get_cmd_for_pin(dev_index, 1); /* turn on */
-    m_device.users_habit_alarm[dev_index].m_time.tm_hour = user_habit[dev_index].time_start_previous[habit_day_was_select].tm_hour;
-    m_device.users_habit_alarm[dev_index].m_time.tm_min = user_habit[dev_index].time_start_previous[habit_day_was_select].tm_min;
-    m_device.users_habit_alarm[dev_index+1].m_cmd = uno_get_cmd_for_pin(dev_index, 0); /* turn off */
-    m_device.users_habit_alarm[dev_index+1].m_time.tm_hour = m_device.users_habit_alarm[dev_index].m_time.tm_hour + (time_active_longest / 60);
-    m_device.users_habit_alarm[dev_index+1].m_time.tm_min = m_device.users_habit_alarm[dev_index].m_time.tm_min + (time_active_longest % 60);
+    m_device.users_habit_alarm[dev_index].m_time.tm_hour =
+        user_habit[dev_index].time_start_previous[habit_day_was_select].tm_hour;
+    m_device.users_habit_alarm[dev_index].m_time.tm_min =
+        user_habit[dev_index].time_start_previous[habit_day_was_select].tm_min;
+    m_device.users_habit_alarm[dev_index + 1].m_cmd = uno_get_cmd_for_pin(dev_index, 0); /* turn off */
+    m_device.users_habit_alarm[dev_index + 1].m_time.tm_hour =
+        m_device.users_habit_alarm[dev_index].m_time.tm_hour + (time_active_longest / 60);
+    m_device.users_habit_alarm[dev_index + 1].m_time.tm_min =
+        m_device.users_habit_alarm[dev_index].m_time.tm_min + (time_active_longest % 60);
 }
 
 void uno_set_user_habit(void)
@@ -287,12 +301,15 @@ void rtc_hander(void)
 {
     now = rtc.now();
 
+    Serial.println(now.hour());
+    Serial.println(now.minute());
+    Serial.println(now.second());
+
     /* Check End of day - 0h, update time active every day */
-    if ((now.hour() == 0) && (now.minute() == 0) && (now.second() == 0))
-    {
+    if ((now.hour() == 0) && (now.minute() == 0) && (now.second() == 0)) {
         /* Count number of day device was active, just count first five days */
         if (m_device.number_days_dev_active < USER_HABIT_TRACE_DAYS) {
-            m_device.number_days_dev_active ++;
+            m_device.number_days_dev_active++;
 
             if (m_device.number_days_dev_active == USER_HABIT_TRACE_DAYS) {
                 uno_set_user_habit();
@@ -318,5 +335,3 @@ void rtc_hander(void)
     /* Caculate user's habit */
     control_with_users_habit();
 }
-
-
