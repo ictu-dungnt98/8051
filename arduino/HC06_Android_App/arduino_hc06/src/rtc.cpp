@@ -19,20 +19,15 @@ uint16_t temp_time_start_total_time_active[NUMBER_CHANNEL]; /* minutes */
 
 void rtc_init(void)
 {
-    if (Serial) {
         if (!rtc.begin()) {
-            Serial.print("Couldn't find RTC");
-            while (1)
-                ;
+            while (1);
         }
 
         if (!rtc.isrunning()) {
-            Serial.print("RTC is NOT running!");
             Serial.println();
         }
 
         rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-    }
 }
 
 static void time_alarm()
