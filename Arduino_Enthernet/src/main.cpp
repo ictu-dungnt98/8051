@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <BlynkSimpleEthernet.h>
 #include <Ethernet.h>
+#include <LiquidCrystal_I2C.h>
 #include <SPI.h>
 #include <Wire.h>
-#include <LiquidCrystal_I2C.h>
 
 #include "DHT.h"
 
@@ -19,7 +19,7 @@
 #define W5100_CS 10
 
 // LiquidCrystal_I2C lcd(0x27, 16, 2);
-LiquidCrystal_I2C lcd(0x3F,16,2);
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 char auth[] = "5SsX9k6e7WrNcSEXx6gxIpHexKH5tRSJ";
 
@@ -67,13 +67,25 @@ void setup()
     timer.setInterval(100L, checkPhysicalButton);
 }
 
+void lcd_loop()
+{
+    lcd.clear();
+
+    lcd.setCursor(0, 0);
+    lcd.write("Nhiet do: ");
+    lcd.write(dht11_temperature);
+
+    lcd.setCursor(1, 0) lcd.write("do am: ");
+    lcd.write(dht11_humidity);
+}
+
 void loop()
 {
     Blynk.run();
     // timer.run();
     dht11_read();
     checkPhysicalButton();
-    lcd.clear();
+    lcd_loop();
 }
 void checkPhysicalButton()
 {
