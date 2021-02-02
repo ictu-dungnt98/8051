@@ -1,22 +1,25 @@
 #include <Arduino.h>
-
-
-
-#include <SPI.h>
-#include <Ethernet.h>
 #include <BlynkSimpleEthernet.h>
+#include <Ethernet.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 #include "DHT.h"
 
 #define RELAY1_PIN 11
-#define RELAY2_PIN 12   
+#define RELAY2_PIN 12
 
 #define BUTTON1_PIN 6
 #define BUTTON2_PIN 7
 
-#define DHT11_PIN       2
+#define DHT11_PIN 2
 #define DHTTYPE DHT11
 
-#define W5100_CS        10
+#define W5100_CS 10
+
+// LiquidCrystal_I2C lcd(0x27, 16, 2);
+LiquidCrystal_I2C lcd(0x3F,16,2);
 
 char auth[] = "5SsX9k6e7WrNcSEXx6gxIpHexKH5tRSJ";
 
@@ -51,6 +54,9 @@ void setup()
     pinMode(RELAY1_PIN, OUTPUT);
     pinMode(RELAY2_PIN, OUTPUT);
 
+    lcd.init();  // initialize the lcd
+    lcd.backlight();
+
     pinMode(BUTTON1_PIN, INPUT_PULLUP);
     pinMode(BUTTON2_PIN, INPUT_PULLUP);
 
@@ -67,14 +73,13 @@ void loop()
     // timer.run();
     dht11_read();
     checkPhysicalButton();
+    lcd.clear();
 }
 void checkPhysicalButton()
 {
-    if (digitalRead(BUTTON1_PIN) == LOW)
-    {
+    if (digitalRead(BUTTON1_PIN) == LOW) {
         // btnState is used to avoid sequential toggles
-        if (btn1State != LOW)
-        {
+        if (btn1State != LOW) {
             Serial.println("BUTTON1_PIN handler");
 
             // Toggle LED state
@@ -85,17 +90,13 @@ void checkPhysicalButton()
             Blynk.virtualWrite(relay1_virtual_pin, relay1_state);
         }
         btn1State = LOW;
-    }
-    else
-    {
+    } else {
         btn1State = HIGH;
     }
 
-    if (digitalRead(BUTTON2_PIN) == LOW)
-    {
+    if (digitalRead(BUTTON2_PIN) == LOW) {
         // btnState is used to avoid sequential toggles
-        if (btn2State != LOW)
-        {
+        if (btn2State != LOW) {
             Serial.println("BUTTON2_PIN handler");
 
             // Toggle LED state
@@ -106,9 +107,7 @@ void checkPhysicalButton()
             Blynk.virtualWrite(relay2_virtual_pin, relay2_state);
         }
         btn2State = LOW;
-    }
-    else
-    {
+    } else {
         btn2State = HIGH;
     }
 }
@@ -118,47 +117,33 @@ void dht11_read()
     dht11_humidity = dht.readHumidity();
     dht11_temperature = dht.readTemperature();
 
-    // Serial.print("Nhiet do: ");
-    // Serial.println(dht11_temperature);
-    // Serial.print("Do am: ");
-    // Serial.println(dht11_humidity);
-
     Blynk.virtualWrite(dht11_huminity_virtual_pin, dht11_humidity);
     Blynk.virtualWrite(dht11_temperature_virtual_pin, dht11_temperature);
 }
 
 void control_relay(uint8_t relay, uint8_t value)
 {
-    switch (relay)
-    {
-    case RELAY1_PIN:
-    {
-        Blynk.virtualWrite(relay1_virtual_pin, value);
-        digitalWrite(RELAY1_PIN, value);
-        break;
-    }
+    switch (relay) {
+        case RELAY1_PIN: {
+            Blynk.virtualWrite(relay1_virtual_pin, value);
+            digitalWrite(RELAY1_PIN, value);
+            break;
+        }
 
-    case RELAY2_PIN:
-    {
-        Blynk.virtualWrite(relay2_virtual_pin, value);
-        digitalWrite(RELAY2_PIN, value);
-        break;
-    }
+        case RELAY2_PIN: {
+            Blynk.virtualWrite(relay2_virtual_pin, value);
+            digitalWrite(RELAY2_PIN, value);
+            break;
+        }
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-BLYNK_WRITE(dht11_huminity_threshold_virtual_pin)
-{
-    dht11_humidity_threshold = param.asInt();
-}
+BLYNK_WRITE(dht11_huminity_threshold_virtual_pin) { dht11_humidity_threshold = param.asInt(); }
 
-BLYNK_WRITE(dht11_temperature_threshold_virtual_pin)
-{
-    dht11_temperature_threshold = param.asInt();
-}
+BLYNK_WRITE(dht11_temperature_threshold_virtual_pin) { dht11_temperature_threshold = param.asInt(); }
 
 BLYNK_WRITE(relay1_virtual_pin)
 {
@@ -167,13 +152,10 @@ BLYNK_WRITE(relay1_virtual_pin)
     Serial.print("relay1_virtual_pin: ");
     Serial.println(relay1_state);
 
-    if (relay1_state == 0)
-    {
+    if (relay1_state == 0) {
         Serial.println("relay1_virtual_pin: LOW");
         digitalWrite(RELAY1_PIN, LOW);
-    }
-    else
-    {
+    } else {
         Serial.println("relay1_virtual_pin: HIGH");
         digitalWrite(RELAY1_PIN, HIGH);
     }
@@ -186,24 +168,15 @@ BLYNK_WRITE(relay2_virtual_pin)
     Serial.print("relay2_virtual_pin: ");
     Serial.println(relay2_state);
 
-    if (relay2_state == 0)
-    {
+    if (relay2_state == 0) {
         Serial.println("relay2_virtual_pin: LOW");
         digitalWrite(RELAY2_PIN, LOW);
-    }
-    else
-    {
+    } else {
         Serial.println("relay2_virtual_pin: HIGH");
         digitalWrite(RELAY2_PIN, HIGH);
     }
 }
 
-BLYNK_CONNECTED()
-{
-    Serial.println("BLYNK_CONNECTED");
-}
+BLYNK_CONNECTED() { Serial.println("BLYNK_CONNECTED"); }
 
-BLYNK_DISCONNECTED()
-{
-    Serial.println("BLYNK_DISCONNECTED");
-}
+BLYNK_DISCONNECTED() { Serial.println("BLYNK_DISCONNECTED"); }
