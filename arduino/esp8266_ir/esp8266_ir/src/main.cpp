@@ -3,8 +3,10 @@
 #include <IRremoteESP8266.h>
 #include <IRutils.h>
 #include <string.h>
-
+#include <EEPROM.h>
 #include "IRsend.h"
+
+#define EEPROM_DB_ADDR      0
 
 #define NUMBER_KEY 5
 #define F_IR 38 /* Tan so hoat dong cua IR */
@@ -30,7 +32,7 @@ const int yellowPin = 2;  // connected to GPIO pin 2 (D4 on a NodeMCU board).
 IRrecv irrecv(kRecvPin);
 IRsend irsend(kIrLed);
 
-typedef enum { LEARN_IR_1 = 0, LEARN_IR_2, LEARN_IR_3, LEARN_IR_4, LEARN_IR_5, DEVICE_ACTIVE } state_machine_t;
+typedef enum { LEARN_IR_1 = 0, LEARN_IR_2 = 1, LEARN_IR_3 = 2, LEARN_IR_4 = 3, LEARN_IR_5 = 4, DEVICE_ACTIVE = 5 } state_machine_t;
 
 state_machine_t state_machine;
 
@@ -41,13 +43,66 @@ typedef struct {
     decode_results keyMap[NUMBER_KEY];
     String name_button[NUMBER_KEY];
     uint8_t number_key = 0;
+    state_machine_t _state_machine;
 } remote_t;
 
 remote_t m_remote;
 
+void eeprom_database_loader(void)
+{
+    Serial.println("Uno load database:");
+    
+    memset(&m_remote, 0, sizeof(m_remote));
+    EEPROM.get(EEPROM_DB_ADDR, m_remote);
+
+    Serial.print("number_key: ");
+    Serial.println(m_remote.number_key);
+    Serial.print("keyMap: ");
+    serialPrintUint64(m_remote.keyMap[m_remote.number_key-1].value, HEX);
+    Serial.println();
+    Serial.print("name_button: ");
+    Serial.println(m_remote.name_button[m_remote.number_key-1]);
+    Serial.print("_state_machine: ");
+    Serial.println(m_remote._state_machine);
+
+    state_machine = m_remote._state_machine;
+
+    Serial.println("Success!!!");
+}
+
+static void eeprom_clear()
+{
+    for (uint32_t i = 0 ; i < (sizeof(remote_t)+1); i++) {
+        EEPROM.write(i, 0);
+        Serial.println(i);
+    }
+}
+void eeprom_sync_database(void)
+{
+    Serial.println("Uno sync database");
+
+    eeprom_clear();
+
+    Serial.print("number_key: ");
+    Serial.println(m_remote.number_key);
+    Serial.print("keyMap: ");
+    serialPrintUint64(m_remote.keyMap[m_remote.number_key-1].value, HEX);
+    Serial.println();
+    Serial.print("name_button: ");
+    Serial.println(m_remote.name_button[m_remote.number_key-1]);
+    Serial.print("_state_machine: ");
+    Serial.println(m_remote._state_machine);
+
+    EEPROM.put(EEPROM_DB_ADDR, m_remote);
+
+    Serial.println("Success!!!");
+}
+
+
 void setup()
 {
     Serial.begin(115200);
+    EEPROM.begin(sizeof(remote_t)+1);
 
     while (!Serial)  // Wait for the serial connection to be establised.
         delay(50);
@@ -58,7 +113,7 @@ void setup()
     irsend.begin();
     irrecv.enableIRIn();  // Start the receiver
 
-    memset(&m_remote, 0, sizeof(m_remote));
+    eeprom_database_loader();
 }
 
 uint16_t *p_Raw = NULL;
@@ -84,6 +139,10 @@ void loop()
                 if (name_key == "exit" || name_key == "EXIT") {
                     Serial.println("Exit IR Application!");
                     state_machine = LEARN_IR_5;
+                    
+                    /* Store data to EEPROM */
+                    m_remote._state_machine = state_machine;
+                    eeprom_sync_database();
                 } else {
                     m_remote.name_button[m_remote.number_key] = name_key;
                     Serial.println("Push key on your remote.");
@@ -135,7 +194,7 @@ void loop()
                 cmd_control -= 48;
                 Serial.println(cmd_control);
 
-                if (cmd_control > m_remote.number_key) {
+                if (cmd_control > m_remote.number_key || cmd_control <= 0) {
                     Serial.println("Command was not exist.");
                     break;
                 }
@@ -149,7 +208,7 @@ void loop()
         } break;
 
         default: {
-
+            state_machine = LEARN_IR_1;
         } break;
     }
 }
