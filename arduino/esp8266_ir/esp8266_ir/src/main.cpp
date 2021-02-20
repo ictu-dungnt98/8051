@@ -135,12 +135,12 @@ void loop()
                 cmd_control -= 48;
                 Serial.println(cmd_control);
 
-                if (cmd_control > NUMBER_KEY) {
+                if (cmd_control > m_remote.number_key) {
                     Serial.println("Command was not exist.");
                     break;
                 }
 
-                p_Raw = resultToRawArray(&m_remote.keyMap[cmd_control]);
+                p_Raw = resultToRawArray(&m_remote.keyMap[cmd_control-1]);
                 irsend.sendRaw(p_Raw, strlen((char *)p_Raw), F_IR);
 
                 state_machine = LEARN_IR_5;
