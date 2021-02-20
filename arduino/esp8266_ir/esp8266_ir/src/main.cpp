@@ -59,6 +59,8 @@ void loop()
         p_Raw = resultToRawArray(&results);
         irsend.sendRaw(p_Raw, strlen((char*)p_Raw), 38);
 
+        // Serial.println(p_Raw);
+
         _BUGF_(resultToSourceCode(&results).c_str());
 
         irrecv.resume();  // Receive the next value
