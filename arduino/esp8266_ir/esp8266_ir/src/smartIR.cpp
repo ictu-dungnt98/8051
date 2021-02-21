@@ -44,6 +44,7 @@
 #define jsonPower "power"
 #define jsonTemp "temp"
 #define jsonMode "mode"
+#define jsonModel "model"
 #define jsonFan "fan"
 #define jsonSwing "swing"
 #define jsonBrand "brand"
@@ -315,6 +316,7 @@ void AC_Electra_Callback(JsonDocument &root)
 void AC_Fujisu_Callback(JsonDocument &root)
 {
     fujisuAc.setTemp(root[jsonTemp]);
+    fujisuAc.setModel(root[jsonModel]);
     fujisuAc.setMode(root[jsonMode]);
     fujisuAc.setFanSpeed(root[jsonFan]);
     fujisuAc.setPower(root[jsonPower] ? 1 : 0);

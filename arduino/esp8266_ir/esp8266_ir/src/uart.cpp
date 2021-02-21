@@ -33,7 +33,7 @@ void handler_data(char* command)
 
     ir_control_AC(doc);
 }
-
+/* {"brand":12, "power":0, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4}  */
 void uart_handler(void)
 {
     char ch;
