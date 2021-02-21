@@ -1,122 +1,21 @@
 #include <Arduino.h>
 #include <IRrecv.h>
 #include <IRremoteESP8266.h>
+#include <IRsend.h>
 #include <IRutils.h>
 #include <string.h>
-#include <EEPROM.h>
-#include "IRsend.h"
 
-#define EEPROM_DB_ADDR      0
-
-#define NUMBER_KEY 5
-#define F_IR 38 /* Tan so hoat dong cua IR */
-
-#define _BUG_(...)                                        \
-    do {                                                  \
-        Serial.printf("%u\t  %s\t:", __LINE__, __FILE__); \
-        Serial.println(__VA_ARGS__);                      \
-    } while (0);
-#define _BUGF_(...)                                       \
-    do {                                                  \
-        Serial.printf("%u\t  %s\t:", __LINE__, __FILE__); \
-        Serial.printf(__VA_ARGS__);                       \
-    } while (0);
-
-const uint16_t kRecvPin = D1; /*Chân mắt thu hồng ngoại của esp8266  (pin 5) */
-const uint8_t kIrLed = D2;    /*Chân mắt phát hồng ngoại của esp8266  (pin 5) */
-unsigned long key_value = 0;
-
-const int greenPin = 0;   // connected to GPIO pin 0 (D3 on a NodeMCU board).
-const int yellowPin = 2;  // connected to GPIO pin 2 (D4 on a NodeMCU board).
-
-IRrecv irrecv(kRecvPin);
-IRsend irsend(kIrLed);
-
-typedef enum { LEARN_IR_1 = 0, LEARN_IR_2 = 1, LEARN_IR_3 = 2, LEARN_IR_4 = 3, LEARN_IR_5 = 4, DEVICE_ACTIVE = 5 } state_machine_t;
+#include "database.h"
+#include "smartIR.h"
+#include "uart.h"
 
 state_machine_t state_machine;
-
-decode_results results;
-String name_key;
-
-typedef struct {
-    decode_results keyMap[NUMBER_KEY];
-    String name_button[NUMBER_KEY];
-    uint8_t number_key = 0;
-    state_machine_t _state_machine;
-} remote_t;
-
 remote_t m_remote;
-
-void eeprom_database_loader(void)
-{
-    Serial.println("Uno load database:");
-    
-    memset(&m_remote, 0, sizeof(m_remote));
-    EEPROM.get(EEPROM_DB_ADDR, m_remote);
-
-    Serial.print("number_key: ");
-    Serial.println(m_remote.number_key);
-    Serial.print("keyMap: ");
-    serialPrintUint64(m_remote.keyMap[m_remote.number_key-1].value, HEX);
-    Serial.println();
-    Serial.print("name_button: ");
-    Serial.println(m_remote.name_button[m_remote.number_key-1]);
-    Serial.print("_state_machine: ");
-    Serial.println(m_remote._state_machine);
-
-    state_machine = m_remote._state_machine;
-
-    Serial.println("Success!!!");
-}
-
-static void eeprom_clear()
-{
-    remote_t tmp_remote;
-    memset(&tmp_remote, 0, sizeof(tmp_remote));
-    EEPROM.put(EEPROM_DB_ADDR, tmp_remote);
-    // for (uint32_t i = 0 ; i < (sizeof(remote_t)+1); i++) {
-    //     EEPROM.write(i, 0);
-    //     Serial.println(i);
-    // }
-    EEPROM.commit();
-}
-void eeprom_sync_database(void)
-{
-    Serial.println("Uno sync database");
-
-    eeprom_clear();
-
-    Serial.print("number_key: ");
-    Serial.println(m_remote.number_key);
-    Serial.print("keyMap: ");
-    serialPrintUint64(m_remote.keyMap[m_remote.number_key-1].value, HEX);
-    Serial.println();
-    Serial.print("name_button: ");
-    Serial.println(m_remote.name_button[m_remote.number_key-1]);
-    Serial.print("_state_machine: ");
-    Serial.println(m_remote._state_machine);
-
-    EEPROM.put(EEPROM_DB_ADDR, m_remote);
-    EEPROM.commit();
-
-    Serial.println("Success!!!");
-}
-
 
 void setup()
 {
-    Serial.begin(115200);
-    EEPROM.begin(sizeof(remote_t)+1);
-
-    while (!Serial)  // Wait for the serial connection to be establised.
-        delay(50);
-
-    pinMode(greenPin, OUTPUT);
-    pinMode(yellowPin, OUTPUT);
-
-    irsend.begin();
-    irrecv.enableIRIn();  // Start the receiver
+    uart_init();
+    eeprom_init();
 
     eeprom_database_loader();
 }
@@ -126,103 +25,6 @@ uint8_t yes_no;
 uint8_t cmd_control;
 
 void loop()
-{
-    switch (state_machine) {
-        case LEARN_IR_1: {
-            Serial.println("Type name of button for learn or type EXIT for done learning task.");
-            state_machine = LEARN_IR_2;
-        } break;
-
-        case LEARN_IR_2: {
-            Serial.flush();
-            if (Serial.available()) {
-                name_key = Serial.readStringUntil('\n');
-                Serial.println(name_key);
-
-                name_key.trim();
-
-                if (name_key == "exit" || name_key == "EXIT") {
-                    Serial.println("Exit IR Application!");
-                    state_machine = LEARN_IR_5;
-                    
-                    /* Store data to EEPROM */
-                    m_remote._state_machine = state_machine;
-                    eeprom_sync_database();
-                } else {
-                    m_remote.name_button[m_remote.number_key] = name_key;
-                    Serial.println("Push key on your remote.");
-                    state_machine = LEARN_IR_3;
-                }
-            }
-
-        } break;
-
-        case LEARN_IR_3: {
-            Serial.flush();
-            if (irrecv.decode(&results)) {
-                serialPrintUint64(results.value, HEX);
-
-                p_Raw = resultToRawArray(&results);
-                irsend.sendRaw(p_Raw, strlen((char *)p_Raw), F_IR);
-                _BUGF_(resultToSourceCode(&results).c_str());
-                irrecv.resume();
-                Serial.println("Do you want to save this button (1/0)?");
-                state_machine = LEARN_IR_4;
-            }
-        } break;
-
-        case LEARN_IR_4: {
-            Serial.flush();
-            if (Serial.available()) {
-                yes_no = Serial.read() - 48;
-                Serial.flush();
-                Serial.println(yes_no);
-
-                if (yes_no) {
-                    m_remote.keyMap[m_remote.number_key] = results;
-                    m_remote.number_key++;
-                    state_machine = LEARN_IR_1;
-                    break;
-                } else {
-                    state_machine = LEARN_IR_3;
-                    Serial.println("Push key on your remote to learn.");
-                }
-            }
-        } break;
-
-        case LEARN_IR_5: {
-            Serial.println("Type your command you want to use:");
-            state_machine = DEVICE_ACTIVE;
-        } break;
-
-        case DEVICE_ACTIVE: {
-            Serial.flush();
-            if (Serial.available()) {
-                cmd_control = Serial.read();
-                cmd_control -= 48;
-                Serial.println(cmd_control);
-
-                if (cmd_control > m_remote.number_key || cmd_control < 0) {
-                    Serial.println("Command was not exist.");
-                    break;
-                }
-
-                if (cmd_control == 0) {
-                    eeprom_clear();
-                    state_machine = LEARN_IR_1;
-                    break;
-                }
-
-                p_Raw = resultToRawArray(&m_remote.keyMap[cmd_control-1]);
-                irsend.sendRaw(p_Raw, strlen((char *)p_Raw), F_IR);
-                _BUGF_(resultToSourceCode(&m_remote.keyMap[cmd_control-1]).c_str());
-                state_machine = LEARN_IR_5;
-            }
-
-        } break;
-
-        default: {
-            state_machine = LEARN_IR_1;
-        } break;
-    }
+{ /* {"brand":21, "power":1, "temp":18, "mode":1, "fan":1, "swing":1} */
+    uart_handler();
 }
