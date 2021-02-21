@@ -72,10 +72,14 @@ void eeprom_database_loader(void)
 
 static void eeprom_clear()
 {
-    for (uint32_t i = 0 ; i < (sizeof(remote_t)+1); i++) {
-        EEPROM.write(i, 0);
-        Serial.println(i);
-    }
+    remote_t tmp_remote;
+    memset(&tmp_remote, 0, sizeof(tmp_remote));
+    EEPROM.put(EEPROM_DB_ADDR, tmp_remote);
+    // for (uint32_t i = 0 ; i < (sizeof(remote_t)+1); i++) {
+    //     EEPROM.write(i, 0);
+    //     Serial.println(i);
+    // }
+    EEPROM.commit();
 }
 void eeprom_sync_database(void)
 {
@@ -94,6 +98,7 @@ void eeprom_sync_database(void)
     Serial.println(m_remote._state_machine);
 
     EEPROM.put(EEPROM_DB_ADDR, m_remote);
+    EEPROM.commit();
 
     Serial.println("Success!!!");
 }
@@ -129,9 +134,9 @@ void loop()
         } break;
 
         case LEARN_IR_2: {
+            Serial.flush();
             if (Serial.available()) {
                 name_key = Serial.readStringUntil('\n');
-                Serial.flush();
                 Serial.println(name_key);
 
                 name_key.trim();
@@ -153,6 +158,7 @@ void loop()
         } break;
 
         case LEARN_IR_3: {
+            Serial.flush();
             if (irrecv.decode(&results)) {
                 serialPrintUint64(results.value, HEX);
 
@@ -166,6 +172,7 @@ void loop()
         } break;
 
         case LEARN_IR_4: {
+            Serial.flush();
             if (Serial.available()) {
                 yes_no = Serial.read() - 48;
                 Serial.flush();
@@ -189,19 +196,26 @@ void loop()
         } break;
 
         case DEVICE_ACTIVE: {
+            Serial.flush();
             if (Serial.available()) {
                 cmd_control = Serial.read();
                 cmd_control -= 48;
                 Serial.println(cmd_control);
 
-                if (cmd_control > m_remote.number_key || cmd_control <= 0) {
+                if (cmd_control > m_remote.number_key || cmd_control < 0) {
                     Serial.println("Command was not exist.");
+                    break;
+                }
+
+                if (cmd_control == 0) {
+                    eeprom_clear();
+                    state_machine = LEARN_IR_1;
                     break;
                 }
 
                 p_Raw = resultToRawArray(&m_remote.keyMap[cmd_control-1]);
                 irsend.sendRaw(p_Raw, strlen((char *)p_Raw), F_IR);
-
+                _BUGF_(resultToSourceCode(&m_remote.keyMap[cmd_control-1]).c_str());
                 state_machine = LEARN_IR_5;
             }
 
