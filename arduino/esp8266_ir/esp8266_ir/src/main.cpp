@@ -16,6 +16,7 @@ void setup()
 {
     uart_init();
     eeprom_init();
+    SmartIR_begin();
 
     eeprom_database_loader();
 }
