@@ -35,7 +35,7 @@ void handler_data(char* command)
         return;
     }
 
-    DynamicJsonDocument doc(512);
+    DynamicJsonDocument doc(256);
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
@@ -44,16 +44,17 @@ void handler_data(char* command)
         return;
     }
 
+    Serial.println("received:");
     Serial.println(command);
 
-    if (doc[jsonCmd] == LEARN_IR) {
+    if ((uint8_t)doc[jsonCmd] == LEARN_IR) {
         learn_ir = true;
         irrecv.enableIRIn();
-    } else if (doc[jsonCmd] == SEND_IR_BUFF) {
+    } else if ((uint8_t)doc[jsonCmd] == SEND_IR_BUFF) {
         learn_ir = false;
         irrecv.disableIRIn();
-        ir_control_AC(doc);
-    } else if (doc[jsonCmd] == IR_NORMAL) {
+        irTestLearnedData();
+    } else if ((uint8_t)doc[jsonCmd] == IR_NORMAL) {
         learn_ir = false;
         irrecv.disableIRIn();
         ir_control_AC(doc);
@@ -72,7 +73,7 @@ void uart_handler(void)
             hc06_rx_queue[p_hc06_rx_data] = ch;
             p_hc06_rx_data++;
 
-            delay(1);
+            delay(10);
         }
 
         Serial.print("recieved: ");

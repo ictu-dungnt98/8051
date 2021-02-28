@@ -12,34 +12,34 @@
 #include "database.h"
 
 /* lib for IR */
-#include <ir_Amcor.h>        //ok
-#include <ir_Argo.h>         //ok
-#include <ir_Carrier.h>      //ok
-#include <ir_Coolix.h>       //ok
-#include <ir_Corona.h>       //ok
-#include <ir_Daikin.h>       //ok
-#include <ir_Delonghi.h>     //ok
-#include <ir_Electra.h>      //ok
-#include <ir_Fujitsu.h>      //ok
-#include <ir_Goodweather.h>  //ok
-#include <ir_Gree.h>         //ok
-#include <ir_Haier.h>        //ok
-#include <ir_Hitachi.h>      //ok
-#include <ir_Kelvinator.h>   //ok
-#include <ir_LG.h>           //ok
-#include <ir_Magiquest.h>    //error
-#include <ir_Midea.h>        //ok
-#include <ir_Mitsubishi.h>   //ok
-#include <ir_Neoclima.h>     //ok
-#include <ir_Panasonic.h>    //ok
-#include <ir_Samsung.h>      //ok
-#include <ir_Sharp.h>        //ok
-#include <ir_Tcl.h>          //ok
-#include <ir_Teco.h>         //ok
-#include <ir_Toshiba.h>      //ok
-#include <ir_Trotec.h>       //ok
-#include <ir_Vestel.h>       //ok
-#include <ir_Whirlpool.h>    //ok
+#include <ir_Amcor.h>       //ok
+#include <ir_Argo.h>        //ok
+#include <ir_Carrier.h>     //ok
+#include <ir_Coolix.h>      //ok
+#include <ir_Corona.h>      //ok
+#include <ir_Daikin.h>      //ok
+#include <ir_Delonghi.h>    //ok
+#include <ir_Electra.h>     //ok
+#include <ir_Fujitsu.h>     //ok
+#include <ir_Goodweather.h> //ok
+#include <ir_Gree.h>        //ok
+#include <ir_Haier.h>       //ok
+#include <ir_Hitachi.h>     //ok
+#include <ir_Kelvinator.h>  //ok
+#include <ir_LG.h>          //ok
+#include <ir_Magiquest.h>   //error
+#include <ir_Midea.h>       //ok
+#include <ir_Mitsubishi.h>  //ok
+#include <ir_Neoclima.h>    //ok
+#include <ir_Panasonic.h>   //ok
+#include <ir_Samsung.h>     //ok
+#include <ir_Sharp.h>       //ok
+#include <ir_Tcl.h>         //ok
+#include <ir_Teco.h>        //ok
+#include <ir_Toshiba.h>     //ok
+#include <ir_Trotec.h>      //ok
+#include <ir_Vestel.h>      //ok
+#include <ir_Whirlpool.h>   //ok
 
 #define jsonPower "power"
 #define jsonTemp "temp"
@@ -50,7 +50,7 @@
 #define jsonBrand "brand"
 
 const uint16_t kRecvPin = D1; /*Chân mắt thu hồng ngoại của esp8266  (pin 5) */
-const uint8_t kIrLed = D2; /*Chân mắt phát hồng ngoại của esp8266  (pin 5) */
+const uint8_t kIrLed = D2;    /*Chân mắt phát hồng ngoại của esp8266  (pin 5) */
 
 IRrecv irrecv(kRecvPin);
 IRsend irsend(kIrLed);
@@ -90,44 +90,42 @@ IRDaikin216 daikinAc216(kIrLed);
 IRDaikin2 daikinAc2(kIrLed);
 IRDaikin64 daikinAc64(kIrLed);
 
-
 brandToCallBack_t fnOfBrand[] =
-{
-    AC_DaiKin_Callback,  // 0
-    AC_daikinAc2_Callback,
-    AC_daikinAc64_Callback,
-    AC_daikinAc128_Callback,
-    AC_daikinAc152_Callback,
-    AC_daikinAc160_Callback,
-    AC_daikinAc176_Callback,
-    AC_daikinAc216_Callback,
-    AC_SAMSUNG_Callback,
-    AC_LG_Callback,
-    AC_Toshiba_Callback,
-    AC_Panasonic_Callback,
-    AC_Fujisu_Callback,
-    AC_AmcorAc_Callback,
-    AC_Argo_Callback,
-    AC_Carrier_Callback,
-    AC_Coolix_Callback,
-    AC_Corona_Callback,
-    AC_Delonghi_Callback,
-    AC_Electra_Callback,
-    AC_Goodweather_Callback,
-    AC_Gree_Callback,
-    AC_Haier_Callback,
-    AC_Hitachi_Callback,
-    AC_Kelvinator_Callback,
-    AC_Mitshu_Callback,
-    AC_Neo_Callback,
-    AC_Shap_Callback,
-    AC_Tcl_Callback,
-    AC_Teco_Callback,
-    AC_Trotec_Callback,
-    AC_Vestel_Callback,
-    AC_whirlpool_Callback,
-    AC_Midea_Callback
-};
+    {
+        AC_DaiKin_Callback, // 0
+        AC_daikinAc2_Callback,
+        AC_daikinAc64_Callback,
+        AC_daikinAc128_Callback,
+        AC_daikinAc152_Callback,
+        AC_daikinAc160_Callback,
+        AC_daikinAc176_Callback,
+        AC_daikinAc216_Callback,
+        AC_SAMSUNG_Callback,
+        AC_LG_Callback,
+        AC_Toshiba_Callback,
+        AC_Panasonic_Callback,
+        AC_Fujisu_Callback,
+        AC_AmcorAc_Callback,
+        AC_Argo_Callback,
+        AC_Carrier_Callback,
+        AC_Coolix_Callback,
+        AC_Corona_Callback,
+        AC_Delonghi_Callback,
+        AC_Electra_Callback,
+        AC_Goodweather_Callback,
+        AC_Gree_Callback,
+        AC_Haier_Callback,
+        AC_Hitachi_Callback,
+        AC_Kelvinator_Callback,
+        AC_Mitshu_Callback,
+        AC_Neo_Callback,
+        AC_Shap_Callback,
+        AC_Tcl_Callback,
+        AC_Teco_Callback,
+        AC_Trotec_Callback,
+        AC_Vestel_Callback,
+        AC_whirlpool_Callback,
+        AC_Midea_Callback};
 
 void SmartIR_begin(void)
 {
@@ -182,10 +180,13 @@ bool ir_control_AC(JsonDocument &doc)
         doc[jsonMode].isNull() || doc[jsonFan].isNull())
         return result;
 
-    if (brand >= 0 && brand < ARRAY_SIZE(fnOfBrand)) {
+    if (brand >= 0 && brand < ARRAY_SIZE(fnOfBrand))
+    {
         fnOfBrand[brand](doc);
         result = true;
-    } else {
+    }
+    else
+    {
         _BUGF_("brand invalid\n");
     }
 
@@ -199,6 +200,7 @@ void AC_LG_Callback(JsonDocument &root)
     lgAc.setMode(root[jsonMode]);
     lgAc.setFan(root[jsonFan]);
     lgAc.setPower(root[jsonPower] ? 1 : 0);
+    lgAc.setModel(root[jsonModel]);
     lgAc.send();
 
     _BUG_("AC_LG");
@@ -604,15 +606,14 @@ void AC_daikinAc64_Callback(JsonDocument &root)
     daikinAc64.send();
 
     _BUG_("DaiKin 64");
-    _BUG_(daikinAc2.toString());
+    _BUG_(daikinAc64.toString());
 }
-
 
 decode_results results;
 uint8_t learn_ir = false;
 uint16_t *p_Raw = NULL;
 uint16_t RawLength = 0;
-#define    F_IR    38 /* MHz */
+#define F_IR 38 /* MHz */
 
 void learnIR()
 {
@@ -625,28 +626,20 @@ void learnIR()
         p_Raw = resultToRawArray(&results);
         RawLength = getCorrectedRawLength(&results);
 
-        irrecv.disableIRIn();
-        irsend.sendRaw(p_Raw, RawLength, F_IR);
-
-        irrecv.enableIRIn();
         irrecv.resume();
     }
 }
 
-void irTestLearnedData()
+void irTestLearnedData(void)
 {
-    /*function  learn IR from remote to server */
-    if (irrecv.decode(&results))
-    {
-        Serial.print(F("learnIR\n"));
-        _BUGF_(resultToSourceCode(&results).c_str());
+    Serial.print(F("test learn\n"));
+    _BUGF_(resultToSourceCode(&results).c_str());
 
-        p_Raw = resultToRawArray(&results);
-        RawLength = getCorrectedRawLength(&results);
-        
-        // irsend.sendRaw(p_Raw, strlen((char*)p_Raw), 38);
-        irsend.sendRaw(p_Raw, RawLength, F_IR);
-    }
+    // p_Raw = resultToRawArray(&results);
+    // RawLength = getCorrectedRawLength(&results);
+
+    // irsend.sendRaw(p_Raw, strlen((char*)p_Raw), 38);
+    irsend.sendRaw(p_Raw, RawLength, F_IR);
 }
 
 void SmartIR_loop_handler(void)
@@ -654,7 +647,5 @@ void SmartIR_loop_handler(void)
     if (true == learn_ir)
     {
         learnIR();
-    } else {
-        irrecv.disableIRIn();
     }
 }
