@@ -168,7 +168,7 @@ void SmartIR_begin(void)
     whirlpooAc.begin();
 
     /* start receiver */
-    irrecv.enableIRIn();
+    // irrecv.enableIRIn();
 }
 
 /* {"brand":21, "power":1, "temp":18, "mode":1, "fan":1, "swing":1} */
@@ -605,4 +605,45 @@ void AC_daikinAc64_Callback(JsonDocument &root)
 
     _BUG_("DaiKin 64");
     _BUG_(daikinAc2.toString());
+}
+
+
+decode_results results;
+uint8_t learn_ir = false;
+uint16_t *p_Raw = NULL;
+#define    F_IR    38 /* MHz */
+
+void learnIR()
+{
+    /*function  learn IR from remote to server */
+    if (irrecv.decode(&results))
+    {
+        uint16_t RawLength = 0;
+        
+
+        Serial.print(F("learnIR\n"));
+        _BUGF_(resultToSourceCode(&results).c_str());
+
+        p_Raw = resultToRawArray(&results);
+        RawLength = getCorrectedRawLength(&results);
+        
+        // irrecv.disableIRIn();
+        // irsend.sendRaw(p_Raw, strlen((char*)p_Raw), 38);
+        // irsend.sendRaw(p_Raw, RawLength, F_IR);
+        // irrecv.enableIRIn();
+        
+        irrecv.resume();
+
+        delete (p_Raw);
+    }
+}
+
+void SmartIR_loop_handler(void)
+{
+    if (true == learn_ir)
+    {
+        learnIR();
+    } else {
+        irrecv.disableIRIn();
+    }
 }

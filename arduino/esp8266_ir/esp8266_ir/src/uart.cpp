@@ -14,6 +14,12 @@ void uart_init(void)
     while (!Serial);  // Wait for the serial connection to be establised.}
 }
 
+#include <IRrecv.h>
+#include <IRremoteESP8266.h>
+#include <IRutils.h>
+extern uint8_t learn_ir;
+extern IRrecv irrecv;
+
 void handler_data(char* command)
 {
     if (command == NULL) {
@@ -24,7 +30,19 @@ void handler_data(char* command)
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
-        Serial.print(F("DeserializeJson() failed\n"));
+        
+
+        if (strstr(command, "learn_ir=1")) {
+            learn_ir = true;
+            irrecv.enableIRIn();
+            return;
+        } else if (strstr(command, "learn_ir=0")) {
+            learn_ir = false;
+            irrecv.disableIRIn();
+            return;
+        }
+
+        Serial.print(F("learn_ir = false;\n"));
         Serial.println(error.c_str());
         return;
     }

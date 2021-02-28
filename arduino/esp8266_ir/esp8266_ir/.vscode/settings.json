@@ -9,6 +9,7 @@
         "utility": "cpp",
         "sstream": "cpp",
         "string": "c",
-        "arduinojson.h": "c"
+        "arduinojson.h": "c",
+        "new": "cpp"
     }
 }

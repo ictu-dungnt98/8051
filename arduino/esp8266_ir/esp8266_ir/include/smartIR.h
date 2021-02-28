@@ -80,8 +80,7 @@ typedef enum {
     AC_Midea
 } id_AC_brand_t;
 
-
-
+void SmartIR_loop_handler(void);
 void SmartIR_begin(void);
 bool ir_control_AC(JsonDocument &doc);
 

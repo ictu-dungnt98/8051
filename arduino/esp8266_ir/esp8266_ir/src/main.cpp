@@ -28,4 +28,5 @@ uint8_t cmd_control;
 void loop()
 { /* {"brand":21, "power":1, "temp":18, "mode":1, "fan":1, "swing":1} */
     uart_handler();
+    SmartIR_loop_handler();
 }
