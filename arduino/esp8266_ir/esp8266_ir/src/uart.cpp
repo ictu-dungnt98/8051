@@ -11,12 +11,21 @@ uint16_t p_hc06_rx_data = 0;
 void uart_init(void)
 {
     Serial.begin(115200);
-    while (!Serial);  // Wait for the serial connection to be establised.}
+    while (!Serial)
+        ;  // Wait for the serial connection to be establised.}
 }
 
 #include <IRrecv.h>
 #include <IRremoteESP8266.h>
 #include <IRutils.h>
+
+#define jsonCmd "cmd_type"
+
+#define LEARN_IR        0
+#define SEND_IR_BUFF    1
+#define IR_NORMAL       2
+
+
 extern uint8_t learn_ir;
 extern IRrecv irrecv;
 
@@ -30,28 +39,27 @@ void handler_data(char* command)
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
-        
-
-        if (strstr(command, "learn_ir=1")) {
-            learn_ir = true;
-            irrecv.enableIRIn();
-            return;
-        } else if (strstr(command, "learn_ir=0")) {
-            learn_ir = false;
-            irrecv.disableIRIn();
-            return;
-        }
-
-        Serial.print(F("learn_ir = false;\n"));
+        Serial.print(F("Decode fail\n"));
         Serial.println(error.c_str());
         return;
     }
 
     Serial.println(command);
 
-    ir_control_AC(doc);
+    if (doc[jsonCmd] == LEARN_IR) {
+        learn_ir = true;
+        irrecv.enableIRIn();
+    } else if (doc[jsonCmd] == SEND_IR_BUFF) {
+        learn_ir = false;
+        irrecv.disableIRIn();
+        ir_control_AC(doc);
+    } else if (doc[jsonCmd] == IR_NORMAL) {
+        learn_ir = false;
+        irrecv.disableIRIn();
+        ir_control_AC(doc);
+    }
 }
-/* {"brand":12, "power":0, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4}  */
+/* {"cmd_type":0, brand":12, "power":0, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4}  */
 void uart_handler(void)
 {
     char ch;

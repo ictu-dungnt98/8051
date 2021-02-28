@@ -611,6 +611,7 @@ void AC_daikinAc64_Callback(JsonDocument &root)
 decode_results results;
 uint8_t learn_ir = false;
 uint16_t *p_Raw = NULL;
+uint16_t RawLength = 0;
 #define    F_IR    38 /* MHz */
 
 void learnIR()
@@ -618,23 +619,33 @@ void learnIR()
     /*function  learn IR from remote to server */
     if (irrecv.decode(&results))
     {
-        uint16_t RawLength = 0;
-        
+        Serial.print(F("learnIR\n"));
+        _BUGF_(resultToSourceCode(&results).c_str());
 
+        p_Raw = resultToRawArray(&results);
+        RawLength = getCorrectedRawLength(&results);
+
+        irrecv.disableIRIn();
+        irsend.sendRaw(p_Raw, RawLength, F_IR);
+
+        irrecv.enableIRIn();
+        irrecv.resume();
+    }
+}
+
+void irTestLearnedData()
+{
+    /*function  learn IR from remote to server */
+    if (irrecv.decode(&results))
+    {
         Serial.print(F("learnIR\n"));
         _BUGF_(resultToSourceCode(&results).c_str());
 
         p_Raw = resultToRawArray(&results);
         RawLength = getCorrectedRawLength(&results);
         
-        // irrecv.disableIRIn();
         // irsend.sendRaw(p_Raw, strlen((char*)p_Raw), 38);
-        // irsend.sendRaw(p_Raw, RawLength, F_IR);
-        // irrecv.enableIRIn();
-        
-        irrecv.resume();
-
-        delete (p_Raw);
+        irsend.sendRaw(p_Raw, RawLength, F_IR);
     }
 }
 
