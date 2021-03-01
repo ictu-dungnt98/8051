@@ -615,16 +615,35 @@ uint16_t *p_Raw = NULL;
 uint16_t RawLength = 0;
 #define F_IR 38 /* MHz */
 
+// void learnIR()
+// {
+//     /*function  learn IR from remote to server */
+//     if (irrecv.decode(&results))
+//     {
+//         Serial.print(F("learnIR\n"));
+//         _BUGF_(resultToSourceCode(&results).c_str());
+
+//         p_Raw = resultToRawArray(&results);
+//         RawLength = getCorrectedRawLength(&results);
+
+//         irrecv.resume();
+//     }
+// }
+
+
 void learnIR()
 {
     /*function  learn IR from remote to server */
     if (irrecv.decode(&results))
     {
-        Serial.print(F("learnIR\n"));
-        _BUGF_(resultToSourceCode(&results).c_str());
-
-        p_Raw = resultToRawArray(&results);
-        RawLength = getCorrectedRawLength(&results);
+        uint16_t tempLen = getCorrectedRawLength(&results);
+        
+        if (results.decode_type != UNKNOWN) {
+            Serial.print(F("learnIR\n"));
+            _BUGF_(resultToSourceCode(&results).c_str());
+            p_Raw = resultToRawArray(&results);
+            RawLength = getCorrectedRawLength(&results);
+        }
 
         irrecv.resume();
     }

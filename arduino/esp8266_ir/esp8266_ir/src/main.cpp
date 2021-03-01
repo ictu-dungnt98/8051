@@ -22,7 +22,7 @@ void setup()
 }
 
 void loop()
-{ /* {"cmd_type":0, "brand":0, "power":1, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4} */
+{ /* {"cmd_type":0, "brand":12, "power":0, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4} */
     uart_handler();
     SmartIR_loop_handler();
 }
