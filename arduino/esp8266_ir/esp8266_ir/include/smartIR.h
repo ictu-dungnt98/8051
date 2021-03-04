@@ -85,4 +85,6 @@ void SmartIR_begin(void);
 bool ir_control_AC(JsonDocument &doc);
 void irTestLearnedData(void);
 
+void send_command_learnt(String name);
+
 #endif /* _SMARTIR_H_ */

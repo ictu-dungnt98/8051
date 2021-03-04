@@ -14,20 +14,11 @@
 
 #define NUMBER_KEY 5
 
-typedef enum {
-    LEARN_IR_1 = 0,
-    LEARN_IR_2 = 1,
-    LEARN_IR_3 = 2,
-    LEARN_IR_4 = 3,
-    LEARN_IR_5 = 4,
-    DEVICE_ACTIVE = 5
-} state_machine_t;
-
 typedef struct {
-    decode_results keyMap[NUMBER_KEY];
-    String name_button[NUMBER_KEY];
-    uint8_t number_key = 0;
-    state_machine_t _state_machine;
+    uint16_t *command_array[NUMBER_KEY];
+    uint16_t RawLengthCommand[NUMBER_KEY];
+    String name[NUMBER_KEY];
+    uint8_t index;
 } remote_t;
 
 void eeprom_init(void);

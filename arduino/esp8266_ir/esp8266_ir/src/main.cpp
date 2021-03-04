@@ -9,20 +9,27 @@
 #include "smartIR.h"
 #include "uart.h"
 
-state_machine_t state_machine;
-remote_t m_remote;
+remote_t my_ir;
 
 void setup()
 {
     uart_init();
-    eeprom_init();
     SmartIR_begin();
+    eeprom_init();
+    
+    memset(&my_ir, 0, sizeof(my_ir));
 
     eeprom_database_loader();
 }
-
+/**
+ * Luu lenh sau khi da hoc
+ * step1: hoc
+ * step2: check lenh vua nhan dc
+ * step3: save 
+ * step4: dung lai
+ */
 void loop()
-{ /* {"cmd_type":0, "brand":12, "power":0, "temp":18, "mode":1, "fan":1, "swing":1, "model": 4} */
+{ /* {"brand":21, "power":1, "temp":18, "mode":1, "fan":1, "swing":1} */
     uart_handler();
     SmartIR_loop_handler();
 }
