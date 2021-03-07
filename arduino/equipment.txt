@@ -1,0 +1,19 @@
+Hiếu:
+	1. Cảm biến ACS712
+	2. Cảm Biến Lưu Lượng Nước S201
+	3. LCD 16x2
+	4. nodemcu 32S
+
+Khải:
+	1. Node MCU
+	2. DHT11.
+	3. Quang trở
+	4. Rơ le
+	5. nút nhấn
+	
+Hà:
+	1. Node MCU
+	2. DHT11.
+	3. Rơ le
+	4. nút nhấn.
+	5. Động cơ phun sương.
