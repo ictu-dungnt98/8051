@@ -10,7 +10,7 @@ const char* ssid = "Dungnt98";
 const char* password = "Peppe123";
 
 const char* mqtt_client_id = "ir_controller";
-const char* mqtt_server_ip = "163.44.206.105";
+const char* mqtt_server_ip = "broker.hivemq.com";
 const char* mqtt_user = "admin";
 const char* mqtt_password = "admin";
 int mqtt_port = 1883;
@@ -59,7 +59,18 @@ void send_system_state(void)
     char respond[100];
     memset(respond, 0, sizeof(respond));
 
-    sprintf(respond, "{\"cmd_type\":105, \"state\":[%d, %d, %d], \"sensor\":[%f,%f], \"res\":OK}", digitalRead(led1),
+    sprintf(respond, "{\"cmd_type\":105, \"state\":[%d, %d, %d], \"temp\":%f, \"humi\":%f, \"res\":OK}", digitalRead(led1),
+            digitalRead(led2), digitalRead(led3), temperature_value, humidity_value);
+
+    client.publish(mqtt_topic_pub, respond);
+}
+
+void send_system_startup_state(void)
+{
+    char respond[100];
+    memset(respond, 0, sizeof(respond));
+
+    sprintf(respond, "{\"cmd_type\":105, \"state\":[%d, %d, %d], \"temp\":%f, \"humi\":%f, \"res\":OK}", digitalRead(led1),
             digitalRead(led2), digitalRead(led3), temperature_value, humidity_value);
 
     client.publish(mqtt_topic_pub, respond);
@@ -213,7 +224,7 @@ void setup()
     pinMode(button1, INPUT);
 }
 
-int dem = 0;
+int is_startup = 1;
 void loop()
 {
     if (!client.connected()) {
@@ -221,6 +232,10 @@ void loop()
     }
 
     client.loop();
+
+    if (is_startup) {
+
+    }
 
     /* read sensor */
     read_sensor();

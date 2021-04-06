@@ -15,7 +15,7 @@ typedef enum {
 
 /* Get device info */
 {cmd_type:105}
-{"cmd_type":105, "state":[1, 0, 0], "sensor":[50.25 , 50.55], "res":OK}
+{"cmd_type":105, "state":[1, 0, 0], "temp":50.25, "humi": 50.55, "res":OK}
 
 /* Start up send device info */
-{"cmd_type":100, "state":[1, 0, 0], "sensor":[50.25 , 50.55], "res":OK}
+{"cmd_type":100, "state":[1, 0, 0], "temp":50.25, "humi": 50.55, "res":OK}
