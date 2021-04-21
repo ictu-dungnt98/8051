@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "esp8266wifi.h": "c",
+        "arduino.h": "c",
+        "pubsubclient.h": "c",
+        "arduinojson.h": "c"
+    }
+}
