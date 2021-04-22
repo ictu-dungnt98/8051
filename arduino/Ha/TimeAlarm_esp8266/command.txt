@@ -1,0 +1,33 @@
+typedef enum {
+    CH1_ON  = 1,
+    CH1_OFF = 2,
+    CH2_ON  = 3,
+    CH2_OFF = 4,
+    CH3_ON  = 5,
+    CH3_OFF = 6,
+} hc06_ctrl_t;
+
+typedef enum {
+    CONTROL_IO = 0,
+    QUERY_INFOM,
+    SET_ALARM,
+    GET_TIME_ALARM,
+    RESET_ALARM,
+} hc06_cmd_type_t;
+
+/* Control Device */
+{"cmd_type":0, "cmd":1}
+/* Respond */
+{"cmd_type":0, "state":[1, 0, 0], "res":1}
+
+/* Set Alarm */
+{cmd_type:1, "cmd":1, "hour":17, "minutes":10}
+{cmd_type:1, "res":1}
+
+/* Deactive Alarm */
+{cmd_type:2}
+{cmd_type:2, "res":1}
+
+/* Get time Alarm */
+{cmd_type:7}
+{"cmd_type":7, "index": %d, "cmd":%d, "time_alarm":[%d, %d], "res":1}
