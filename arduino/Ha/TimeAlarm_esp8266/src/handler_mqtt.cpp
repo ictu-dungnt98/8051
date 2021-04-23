@@ -95,7 +95,7 @@ void handler_get_time_alarm_was_set(void)
     memset(alarms_str, 0, sizeof(alarms_str));
 
     for (index = 0; index < MAX_CMD_ALARM; index++) {
-        if (m_device.m_time_alarm[index].m_cmd != 0 && m_device.m_time_alarm[index].m_cmd < CH3_OFF) {
+        if (m_device.m_time_alarm[index].m_cmd != 0 && m_device.m_time_alarm[index].m_cmd <= CH3_OFF) {
             /* Get Alarm */
             memset(format_alarm, 0, sizeof(format_alarm));
             sprintf(format_alarm, "{\"id\":%d, \"cmd\":%d, \"hours\":%d, \"min\":%d}",
@@ -131,6 +131,7 @@ void handler_remove_alarm(JsonDocument& _doc)
         m_device.m_time_alarm[id].m_time.tm_hour = 0;
         m_device.m_time_alarm[id].m_time.tm_min = 0;
         m_device.m_time_alarm[id].m_cmd = 0; /* do nothing */
+        m_device.alarm_is_set --; /* do nothing */
 
         sync_database_request = 1;
 
