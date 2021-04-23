@@ -9,11 +9,11 @@
 #include "rtc.h"
 #include "database.h"
 
-// const char* ssid = "Dungnt98";
-// const char* password = "Peppe123";
+const char* ssid = "Dungnt98";
+const char* password = "Peppe123";
 
-const char* ssid = "Hunonic";
-const char* password = "66668888";
+// const char* ssid = "Hunonic";
+// const char* password = "66668888";
 
 void setup()
 {
@@ -35,6 +35,7 @@ void setup()
 
     eeprom_init();
 
+    rtc_init();
     mqtt_init();
     led_button_init();
     eeprom_database_loader();
@@ -51,6 +52,6 @@ void loop()
     }
 
     button_loop();
-    // alarm_loop();
+    alarm_loop();
     sync_database();
 }
