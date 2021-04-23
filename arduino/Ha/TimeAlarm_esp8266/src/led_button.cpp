@@ -77,6 +77,8 @@ static void scan_button_handler(uint8_t button_index)
    {
         if (time_button_press[button_index]<= OS_BTN_IS_PRESS_TIME_MAX)
             time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
+        else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
+            reset_database();
    } else { /* realse */
         if (time_button_press[button_index] >= OS_BTN_IS_PRESS_TIME_MIN
             && time_button_press[button_index] <= OS_BTN_IS_PRESS_TIME_MAX)
@@ -87,8 +89,6 @@ static void scan_button_handler(uint8_t button_index)
                 /* Send message to bluetooth */
                 gpio_toggle(m_leds[button_index]);
             }
-        } else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX) {
-            reset_database();
         }
 
         time_button_press[button_index] = 0;
