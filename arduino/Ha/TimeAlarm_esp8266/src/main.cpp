@@ -48,6 +48,6 @@ void loop()
     }
 
     button_loop();
-    // alarm_loop();
+    alarm_loop();
     sync_database();
 }
