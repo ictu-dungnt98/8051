@@ -57,7 +57,7 @@ static void handler_set_alarm(JsonDocument& _doc)
 
     if (m_device.alarm_is_set >= MAX_CMD_ALARM) {
         memset(respond, 0, sizeof(respond));
-        sprintf(respond, "{\"cmd_type\":%d, \"res\":0}\n", SET_ALARM);
+        sprintf(respond, "{\"cmd_type\":%d, \"res\":2}\n", SET_ALARM);
         publish_msg(respond);
         return;
     }
