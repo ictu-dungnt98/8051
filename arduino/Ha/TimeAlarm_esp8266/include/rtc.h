@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <time.h>
 
-#define MAX_CMD_ALARM      3
+#define MAX_CMD_ALARM      6
 
 void rtc_init(void);
 void rtc_hander(void);
