@@ -80,7 +80,7 @@ static void handler_set_alarm(JsonDocument& _doc)
     m_device.alarm_is_set++;
 
     memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"res\":OK}\n", SET_ALARM);
+    sprintf(respond, "{\"cmd_type\":%d, \"res\":1}\n", SET_ALARM);
     publish_msg(respond);
 }
 
@@ -110,7 +110,7 @@ void handler_get_time_alarm_was_set(void)
     }
 
     memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"alarms\":[%s], \"res\":\"OK\"}\n", GET_TIME_ALARM, alarms_str);
+    sprintf(respond, "{\"cmd_type\":%d, \"alarms\":[%s], \"res\":1}\n", GET_TIME_ALARM, alarms_str);
 
     publish_msg(respond);
     Serial.println(respond);
@@ -170,7 +170,7 @@ void parse_data(JsonDocument& root)
 void mqtt_callback(char* p_toppic, uint8_t* p_data, unsigned int length)
 {
     /* parse data */
-    Serial.println((char*)p_data);
+    Serial.printf("[%s]\n", (char*)p_data);
 
     DynamicJsonDocument doc(256);
     DeserializationError error = deserializeJson(doc, p_data);

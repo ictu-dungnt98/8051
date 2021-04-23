@@ -9,8 +9,11 @@
 #include "rtc.h"
 #include "database.h"
 
-const char* ssid = "Dungnt98";
-const char* password = "Peppe123";
+// const char* ssid = "Dungnt98";
+// const char* password = "Peppe123";
+
+const char* ssid = "Hunonic";
+const char* password = "66668888";
 
 void setup()
 {
