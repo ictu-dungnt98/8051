@@ -21,13 +21,21 @@ typedef enum {
 {"cmd_type":0, "state":[1, 0, 0], "res":1}
 
 /* Set Alarm */
-{cmd_type:1, "cmd":1, "hour":17, "minutes":10}
-{cmd_type:1, "res":1}
-
-/* Deactive Alarm */
-{cmd_type:2}
+/* {cmd_type:2, "cmd":1, "index": 0, "hour":10, "minutes":10} */
 {cmd_type:2, "res":1}
 
+
 /* Get time Alarm */
-{cmd_type:7}
-{"cmd_type":7, "index": %d, "cmd":%d, "time_alarm":[%d, %d], "res":1}
+{cmd_type:3}
+{"cmd_type":3,
+"cmd":%d, 
+"time_alarm":[
+	[%d, %d, %d],[%d, %d, %d],
+	[%d, %d, %d],[%d, %d, %d],
+	[%d, %d, %d],[%d, %d, %d],
+	],
+"res":1}
+
+/* Deactive Alarm */
+{cmd_type:4, "cmd":1}
+{cmd_type:4, "res":1}

@@ -115,7 +115,7 @@ static void led_init(void)
     /* Turn off all */
     for (i=0; i < NUMBER_LED; i++)
     {
-        digitalWrite(m_leds[i], HIGH);
+        digitalWrite(m_leds[i], LOW);
     }
 
     Serial.println("Led init sucess");

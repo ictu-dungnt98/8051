@@ -44,7 +44,7 @@ void send_system_state(void)
     char respond[100];
     memset(respond, 0, sizeof(respond));
 
-    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d]\"res\":1}", QUERY_INFOM,
+    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"res\":1}", QUERY_INFOM,
             digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN));
     publish_msg(respond);
 }
@@ -52,7 +52,7 @@ void send_system_state(void)
 /* {cmd_type:2, "cmd":1, "hour":10, "minutes":10} */
 static void handler_set_alarm(JsonDocument& _doc)
 {
-    char respond[256];
+    char respond[512];
     uint8_t cmd = _doc["cmd"];
 
     if (m_device.alarm_is_set >= MAX_CMD_ALARM) {
@@ -80,12 +80,12 @@ static void handler_set_alarm(JsonDocument& _doc)
     m_device.alarm_is_set++;
 
     memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"res\":1}\n", SET_ALARM);
+    sprintf(respond, "{\"cmd_type\":%d, \"id\":%d, \"res\":1}\n",
+                    SET_ALARM, m_device.alarm_is_set);
     publish_msg(respond);
 }
 
-
-/* {cmd_type:3} */
+/* {\"cmd_type\":3, \"time_alarm\":[{\"id\":%d, \"cmd\":%d, \"hours\":%d, \"min\":[%d]},{},{}], \"res\":1} */
 void handler_get_time_alarm_was_set(void)
 {
     char respond[300];
@@ -95,42 +95,52 @@ void handler_get_time_alarm_was_set(void)
 
     memset(alarms_str, 0, sizeof(alarms_str));
 
-    for (index = 0; index < m_device.alarm_is_set; index++) {
-        /* Get Alarm */
-        memset(format_alarm, 0, sizeof(format_alarm));
-        sprintf(format_alarm, "[%d, %d, %d]", m_device.m_time_alarm[index].m_cmd,
-                m_device.m_time_alarm[index].m_time.tm_hour, m_device.m_time_alarm[index].m_time.tm_min);
+    for (index = 0; index < MAX_CMD_ALARM; index++) {
+        if (m_device.m_time_alarm[index].m_cmd != 0) {
+            /* Get Alarm */
+            memset(format_alarm, 0, sizeof(format_alarm));
+            sprintf(format_alarm, "{\"id\":%d, \"cmd\":%d, \"hours\":%d, \"min\":%d}",
+                                index,
+                                m_device.m_time_alarm[index].m_cmd,
+                                m_device.m_time_alarm[index].m_time.tm_hour,
+                                m_device.m_time_alarm[index].m_time.tm_min);
 
-        strcat(alarms_str, format_alarm);
+            strcat(alarms_str, format_alarm);
 
-        /* Create Format to make Json */
-        if (index != m_device.alarm_is_set - 1) {
-            strcat(alarms_str, ", ");
+            /* Create Format to make Json */
+            if (index != m_device.alarm_is_set - 1) {
+                strcat(alarms_str, ", ");
+            }
         }
     }
 
     memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"alarms\":[%s], \"res\":1}\n", GET_TIME_ALARM, alarms_str);
+    sprintf(respond, "{\"cmd_type\":%d, \"time_alarm\":[%s], \"res\":1}\n",
+                        GET_TIME_ALARM, alarms_str);
 
     publish_msg(respond);
     Serial.println(respond);
 }
 
-
-/* {cmd_type:4} */
-void handler_remove_alarm(void)
+/* {cmd_type:4, "id":1} */
+void handler_remove_alarm(JsonDocument& _doc)
 {
+    uint8_t id = _doc["id"];
+
     char respond[256];
 
-    /* clear alarm */
-    m_device.alarm_is_set = 0;
-    memset(m_device.m_time_alarm, 0, sizeof(m_device.m_time_alarm));
+    /* disable alarm */
+    if (id > 0 && id < MAX_CMD_ALARM) {
+        m_device.m_time_alarm[id].m_time.tm_hour = 0;
+        m_device.m_time_alarm[id].m_time.tm_min = 0;
+        m_device.m_time_alarm[id].m_cmd = 0; /* do nothing */
 
-    sync_database_request = 1;
+        sync_database_request = 1;
 
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"res\":1}\n", RESET_ALARM);
-    publish_msg(respond);
+        memset(respond, 0, sizeof(respond));
+        sprintf(respond, "{\"cmd_type\":%d, \"res\":1}\n", RESET_ALARM);
+        publish_msg(respond);
+    }
 }
 
 
@@ -158,7 +168,7 @@ void parse_data(JsonDocument& root)
         } break;
 
         case RESET_ALARM: {
-            handler_remove_alarm();
+            handler_remove_alarm(root);
         } break;
 
         default:
