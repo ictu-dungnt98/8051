@@ -59,7 +59,6 @@ static void handler_set_alarm(JsonDocument& _doc)
         memset(respond, 0, sizeof(respond));
         sprintf(respond, "{\"cmd_type\":%d, \"res\":0}\n", SET_ALARM);
         publish_msg(respond);
-
         return;
     }
 
@@ -71,13 +70,13 @@ static void handler_set_alarm(JsonDocument& _doc)
     m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_hour = _doc["hour"];
     m_device.m_time_alarm[m_device.alarm_is_set].m_time.tm_min = _doc["minutes"];
     m_device.m_time_alarm[m_device.alarm_is_set].m_cmd = cmd;
+    m_device.alarm_is_set++;
 
-    sync_database_request = 1;
     Serial.print("alarm_is_set!");
     Serial.print("cmd: ");
     Serial.println(m_device.m_time_alarm[m_device.alarm_is_set].m_cmd);
 
-    m_device.alarm_is_set++;
+    sync_database_request = 1;
 
     memset(respond, 0, sizeof(respond));
     sprintf(respond, "{\"cmd_type\":%d, \"id\":%d, \"res\":1}\n",
@@ -88,8 +87,8 @@ static void handler_set_alarm(JsonDocument& _doc)
 /* {\"cmd_type\":3, \"time_alarm\":[{\"id\":%d, \"cmd\":%d, \"hours\":%d, \"min\":[%d]},{},{}], \"res\":1} */
 void handler_get_time_alarm_was_set(void)
 {
-    char respond[300];
-    char alarms_str[200];
+    char respond[1024];
+    char alarms_str[1024];
     char format_alarm[20];
     uint8_t index;
 
@@ -105,13 +104,11 @@ void handler_get_time_alarm_was_set(void)
                                 m_device.m_time_alarm[index].m_time.tm_hour,
                                 m_device.m_time_alarm[index].m_time.tm_min);
 
-            strcat(alarms_str, format_alarm);
-
             /* Create Format to make Json */
+            strcat(alarms_str, format_alarm);
             strcat(alarms_str, ", ");
         }
     }
-
     alarms_str[strlen(alarms_str)-2] = '\0';
 
     memset(respond, 0, sizeof(respond));

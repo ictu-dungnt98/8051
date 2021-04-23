@@ -2,6 +2,7 @@
 #include "led_button.h"
 #include "handler_mqtt.h"
 #include "m_typedef.h"
+#include "database.h"
 
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0, 0};
 static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
@@ -74,7 +75,8 @@ static void scan_button_handler(uint8_t button_index)
 {
    if (!digitalRead(m_buttons[button_index])) /* press */
    {
-        time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
+        if (time_button_press[button_index]<= OS_BTN_IS_PRESS_TIME_MAX)
+            time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
    } else { /* realse */
         if (time_button_press[button_index] >= OS_BTN_IS_PRESS_TIME_MIN
             && time_button_press[button_index] <= OS_BTN_IS_PRESS_TIME_MAX)
@@ -85,6 +87,8 @@ static void scan_button_handler(uint8_t button_index)
                 /* Send message to bluetooth */
                 gpio_toggle(m_leds[button_index]);
             }
+        } else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX) {
+            reset_database();
         }
 
         time_button_press[button_index] = 0;

@@ -27,8 +27,11 @@ typedef struct {
 extern device_info_t m_device;
 extern uint8_t sync_database_request;
 
+
+void eeprom_init(void);
 void eeprom_database_loader(void);
 void sync_database(void);
+void reset_database(void);
 #endif
 
 

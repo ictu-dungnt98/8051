@@ -33,8 +33,11 @@ void setup()
     Serial.print("INFO: IP address: ");
     Serial.println(WiFi.localIP());
 
+    eeprom_init();
+
     mqtt_init();
     led_button_init();
+    eeprom_database_loader();
 }
 
 int is_startup = 1;
@@ -48,6 +51,6 @@ void loop()
     }
 
     button_loop();
-    alarm_loop();
+    // alarm_loop();
     sync_database();
 }
