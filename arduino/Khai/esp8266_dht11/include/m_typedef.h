@@ -21,25 +21,15 @@ typedef enum {
 } hc06_ctrl_t;
 
 typedef enum {
-    CONTROL_IO = 1,
-    SET_ALARM,
-    RESET_ALARM,
-    QUERY_INFOM,
-    QUERY_TIME_DAY,
-    QUERY_TIME_WEEK,
-    QUERY_TIME_MONTH,
-    GET_TIME_ALARM
+    CONTROL_IO = 0,
+    QUERY_INFOM = 1,
+    SET_ALARM = 2,
+    GET_TIME_ALARM = 3,
+    RESET_ALARM = 4,
+    SET_SENSOR_THRESH_HOLD
 } hc06_cmd_type_t;
 
-typedef struct {
-    struct tm m_time;
-    uint8_t m_cmd;
-} m_alarm_t;
 
-
-#define uno_respond_app(respond) \
-            do { \
-                HC06.print(respond); \
-            } while(0)
+#define os_trace    Serial.println
 
 #endif

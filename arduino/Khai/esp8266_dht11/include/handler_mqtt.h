@@ -11,6 +11,7 @@
 
 void mqtt_init(void);
 void mqtt_handler(void);
+void publish_msg(char* msg);
 
 void report_current_state();
 void send_system_startup_state(void);

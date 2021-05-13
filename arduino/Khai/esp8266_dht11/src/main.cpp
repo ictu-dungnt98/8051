@@ -4,17 +4,17 @@
 #include <string.h>
 
 #include "PubSubClient.h"
-#include "DHT.h"
-
 #include "led_button.h"
 #include "handler_mqtt.h"
+#include "rtc.h"
+#include "database.h"
+#include "sensor.h"
 
 const char* ssid = "Dungnt98";
 const char* password = "Peppe123";
 
-#define DHT11_PIN       D7          
-#define LIGHT_SENSOR    A0
-#define LIGHT_THRESHOLD     1000 /* adc value threshold */
+// const char* ssid = "Hunonic";
+// const char* password = "66668888";
 
 void setup()
 {
@@ -34,8 +34,14 @@ void setup()
     Serial.print("INFO: IP address: ");
     Serial.println(WiFi.localIP());
 
+    eeprom_init();
+
+    rtc_init();
     mqtt_init();
     led_button_init();
+    eeprom_database_loader();
+
+    sensor_init();
 }
 
 int is_startup = 1;
@@ -49,4 +55,7 @@ void loop()
     }
 
     button_loop();
+    alarm_loop();
+    sync_database();
+    sensor_read();
 }

@@ -1,11 +1,23 @@
+
 #include "led_button.h"
+#include "handler_mqtt.h"
 #include "m_typedef.h"
+#include "database.h"
 
 static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0, 0};
 static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
 static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
-extern void report_current_state(void);
+
+void report_current_state()
+{
+    char respond[100];
+    memset(respond, 0, sizeof(respond));
+
+    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"res\":1}", CONTROL_IO,
+            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN));
+    publish_msg(respond);
+}
 
 void gpio_on(uint8_t pin)
 {
@@ -19,19 +31,15 @@ void gpio_off(uint8_t pin)
 
 void gpio_toggle(uint8_t pin)
 {
-    Serial.printf("gpio_toggle %d\n", pin);
-
     /* toggle value pin */
     digitalWrite(pin, !digitalRead(pin));
 
     /* Update state and report */
-    // report_current_state();
+    report_current_state();
 }
 
 void control_pin(uint8_t cmd)
 {
-    Serial.printf("control_pin %d\n", cmd);
-
     switch (cmd)
     {
     case CH1_ON: {
@@ -60,15 +68,17 @@ void control_pin(uint8_t cmd)
     }
 
     /* Update and Report information of this device */
-    // report_current_state();
+    report_current_state();
 }
 
 static void scan_button_handler(uint8_t button_index)
 {
    if (!digitalRead(m_buttons[button_index])) /* press */
    {
-        Serial.printf("Button %d is press\n", button_index+1);
-        time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
+        if (time_button_press[button_index]<= OS_BTN_IS_PRESS_TIME_MAX)
+            time_button_press[button_index] += TIME_SLICE_TO_READ_BUTTON;
+        else if (time_button_press[button_index] > OS_BTN_IS_PRESS_TIME_MAX)
+            reset_database();
    } else { /* realse */
         if (time_button_press[button_index] >= OS_BTN_IS_PRESS_TIME_MIN
             && time_button_press[button_index] <= OS_BTN_IS_PRESS_TIME_MAX)
@@ -109,7 +119,7 @@ static void led_init(void)
     /* Turn off all */
     for (i=0; i < NUMBER_LED; i++)
     {
-        digitalWrite(m_leds[i], HIGH);
+        digitalWrite(m_leds[i], LOW);
     }
 
     Serial.println("Led init sucess");
