@@ -16,7 +16,7 @@ void eeprom_init()
 
 void eeprom_clear()
 {
-    for (uint8_t i = 0 ; i < (sizeof(device_info_t)+1); i++) {
+    for (uint16_t i = 0 ; i < (sizeof(device_info_t)+1); i++) {
         EEPROM.write(i, 0);
     }
     EEPROM.commit();

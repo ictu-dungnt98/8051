@@ -21,9 +21,9 @@ typedef struct {
 
 typedef struct {
     uint8_t threshold_type; /* 1 - 2 is over, 3 - 4  is lower for each humi and temper */
+    uint8_t action;
     float huminity_threshold;
     float temperature_threshold;
-    uint8_t action;
 } sensor_t;
 
 typedef struct {
