@@ -8,14 +8,17 @@ static uint16_t time_button_press[NUMBER_BUTTON] = {0, 0, 0};
 static uint8_t m_buttons[NUMBER_BUTTON] = {BUTTON1_PIN, BUTTON2_PIN, BUTTON3_PIN};
 static uint8_t m_leds[NUMBER_LED] = {LED1_PIN, LED2_PIN, LED3_PIN};
 
+extern float temperature, huminity;
 
 void report_current_state()
 {
     char respond[100];
     memset(respond, 0, sizeof(respond));
 
-    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"res\":1}", CONTROL_IO,
-            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN));
+    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \
+\"temp\":%.2f, \"humi\":%.2f, \"res\":1}", CONTROL_IO,
+            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN),
+            temperature, huminity);
     publish_msg(respond);
 }
 

@@ -48,14 +48,13 @@ int is_startup = 1;
 void loop()
 {
     mqtt_handler();
+    button_loop();
+    alarm_loop();
+    sync_database();
+    sensor_read();
 
     if (is_startup) {
         send_system_state();
         is_startup = 0;
     }
-
-    button_loop();
-    alarm_loop();
-    sync_database();
-    sensor_read();
 }

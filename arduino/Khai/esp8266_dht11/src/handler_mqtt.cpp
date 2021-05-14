@@ -39,13 +39,16 @@ static void control_device(JsonDocument& root)
 }
 
 // {cmd_type:1}
+extern float temperature, huminity;
 void send_system_state(void)
 {
     char respond[100];
     memset(respond, 0, sizeof(respond));
 
-    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \"res\":1}", QUERY_INFOM,
-            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN));
+    sprintf(respond, "{\"cmd_type\":%d, \"state\":[%d, %d, %d], \
+\"temp\":%.2f, \"humi\":%.2f, \"res\":1}", QUERY_INFOM,
+            digitalRead(LED1_PIN), digitalRead(LED2_PIN), digitalRead(LED3_PIN),
+            temperature, huminity);
     publish_msg(respond);
 }
 
