@@ -22,7 +22,7 @@ void rtc_init(void)
 {
     dateTime = NTPch.getNTPtime(7.0, 0);
 }
-void alarm_loop()
+void rtc_loop()
 {
     static uint32_t time_handler_alarm_before = 0;
     
@@ -31,9 +31,9 @@ void alarm_loop()
     time_handler_alarm_before = millis();
 
     dateTime = NTPch.getNTPtime(7.0, 0);
-    Serial.printf("%d:%d:%d %d/%d/%d\n",
-                dateTime.hour, dateTime.minute, dateTime.second,
-                dateTime.day, dateTime.month, dateTime.year);
+    // Serial.printf("%d:%d:%d %d/%d/%d\n",
+    //             dateTime.hour, dateTime.minute, dateTime.second,
+    //             dateTime.day, dateTime.month, dateTime.year);
 
     if (dateTime.month > 0 && dateTime.month <= 12 &&
         dateTime.day > 0 && dateTime.day < 31)

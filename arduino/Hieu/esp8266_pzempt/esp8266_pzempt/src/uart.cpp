@@ -5,8 +5,6 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 
-
-
 char hc06_rx_queue[512];
 uint16_t p_hc06_rx_data = 0;
 
@@ -47,6 +45,7 @@ void uart_handler(void)
     }
 }
 
+extern void update_database(JsonDocument &doc);
 
 void handler_data(char* command)
 {
@@ -54,7 +53,7 @@ void handler_data(char* command)
         return;
     }
 
-    DynamicJsonDocument doc(256);
+    DynamicJsonDocument doc(512);
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
@@ -66,20 +65,4 @@ void handler_data(char* command)
     if ((uint8_t)doc["cmd"] == CMD_POST_DATA) {
         update_database(doc);
     }
-}
-extern uint8_t current_month;
-
-uint32_t current_water_used = 0;
-String current_energy;
-
-void update_database(JsonDocument &doc)
-{
-    current_energy = doc["energy"].as<String>();
-    current_water_used = doc["water"].as<int16_t>();
-
-    Serial.printf("dateTime.month : %d\n", m_device.current_month);
-    memset(m_device.data[m_device.current_month-1].energy, 0, 100);
-    sprintf(m_device.data[m_device.current_month-1].energy, "%s", current_energy.c_str());
-    m_device.data[m_device.current_month-1].water = current_water_used;
-    sync_database_request = 1;
 }

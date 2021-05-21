@@ -16,6 +16,6 @@ extern strDateTime dateTime;
 
 void rtc_init(void);
 void rtc_hander(void);
-void alarm_loop(void);
+void rtc_loop(void);
 
 #endif

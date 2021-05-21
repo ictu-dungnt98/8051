@@ -26,6 +26,7 @@ void loop() {
     pzem004t_loop();
     read_water_loop();
     post_inform_to_server();
+    uart_handler();
 }
 
 /************** PZEM004T **************/
@@ -89,17 +90,14 @@ void pzem_show(void)
 
 void pzem_reader(void)
 {
-//     if (digitalRead(OUTPUT_PIN)) {
         voltage = _pzem.voltage();
         current = _pzem.current();
         power = _pzem.power();
         energy = _pzem.energy();
         frequency = _pzem.frequency();
         pf = _pzem.pf();
-//     }
-
-//   pzem_show();
 }
+
 
 static uint32_t time_handler_pzem004t_before = 0;
 void pzem004t_loop(void)
@@ -107,12 +105,13 @@ void pzem004t_loop(void)
     if (millis() - time_handler_pzem004t_before > 1000) {
         time_handler_pzem004t_before = millis();
         pzem_reader();
+//        pzem_show();
     }
 }
 
 /*************** WARTER SENSOR ***************/
 
-#define SENSOR 4
+#define SENSOR 2
 
 static uint32_t previousMillis = 0;
 static float calibrationFactor = 4.5;
@@ -141,7 +140,7 @@ void water_sensor_setup(void)
     previousMillis = 0;
 
     Serial.println("attachInterrupt");
-    attachInterrupt(digitalPinToInterrupt(SENSOR), pulseCounter, FALLING);
+    attachInterrupt(0, pulseCounter, FALLING);
 }
 
 void read_water_loop(void)
@@ -149,18 +148,10 @@ void read_water_loop(void)
     if (millis() - previousMillis > 5000) {
         pulse1Sec = pulseCount;
         pulseCount = 0;
-
-        // Because this loop may not complete in exactly 1 second intervals we calculate
-        // the number of milliseconds that have passed since the last execution and use
-        // that to scale the output. We also apply the calibrationFactor to scale the output
-        // based on the number of pulses per second per units of measure (litres/minute in
-        // this case) coming from the sensor.
+        
         flowRate = ((1000.0 / (millis() - previousMillis)) * pulse1Sec) / calibrationFactor;
         previousMillis = millis();
 
-        // Divide the flow rate in litres/minute by 60 to determine how many litres have
-        // passed through the sensor in this 1 second interval, then multiply by 1000 to
-        // convert to millilitres.
         flowMilliLitres = (flowRate / 60) * 1000;
         flowLitres = (flowRate / 60);
 
@@ -173,8 +164,7 @@ void read_water_loop(void)
 //        Serial.print(float(flowRate));  // Print the integer part of the variable
 //        Serial.print("L/min");
 //        Serial.print("\t");  // Print tab space
-
-//         Print the cumulative total of litres flowed since starting
+//
 //        Serial.print("Output Liquid Quantity: ");
 //        Serial.print(totalMilliLitres);
 //        Serial.print("mL / ");
@@ -182,7 +172,6 @@ void read_water_loop(void)
 //        Serial.println("L");
     }
 }
-
 
 void post_inform_to_server(void)
 {
@@ -211,12 +200,6 @@ void post_inform_to_server(void)
 char hc06_rx_queue[300];
 uint16_t p_hc06_rx_data = 0;
 
-void uart_init(void)
-{
-    Serial.begin(115200);
-    while (!Serial);  // Wait for the serial connection to be establised.}
-}
-
 void uart_handler(void)
 {
     char ch;
@@ -234,34 +217,22 @@ void uart_handler(void)
             delay(1); /*1ms */
         }
 
-//        Serial.print("recieved: ");
-//        Serial.println(hc06_rx_queue);
-
         /* Handler data recieved */
-        handler_data(hc06_rx_queue);
+        DynamicJsonDocument doc(256);
+        DeserializationError error = deserializeJson(doc, hc06_rx_queue);
+        if (error) {
+//            Serial.print(F("Decode fail\n"));
+//            Serial.println(error.c_str());
+            return;
+        }
+    
+        if ((uint8_t)doc["cmd"] == CMD_RESET_DATA) {
+            uno_handler_reset_data_new_month();
+        }
+        
 
         p_hc06_rx_data = 0;
         memset(hc06_rx_queue, 0, sizeof(hc06_rx_queue));
-    }
-}
-
-void handler_data(char* command)
-{
-    if (command == NULL) {
-        return;
-    }
-
-    DynamicJsonDocument doc(256);
-    DeserializationError error = deserializeJson(doc, command);
-
-    if (error) {
-        Serial.print(F("Decode fail\n"));
-        Serial.println(error.c_str());
-        return;
-    }
-
-    if ((uint8_t)doc["cmd"] == CMD_RESET_DATA) {
-        uno_handler_reset_data_new_month();
     }
 }
 
