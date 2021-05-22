@@ -23,7 +23,7 @@ void eeprom_clear()
 
 void reset_database()
 {
-    Serial.println("reset_database");
+    // Serial.println("reset_database");
     eeprom_clear();
     memset(&m_device, 0, sizeof(device_info_t));
 }
@@ -47,7 +47,7 @@ void database_load(void)
     show_database();
 }
 
-#define TIME_SYNC_DATABASE          1 /* 100ms */
+#define TIME_SYNC_DATABASE          10 /* 100ms */
 static uint32_t time_handler_sync_db_before = 0;
 
 void sync_database(void)
@@ -57,7 +57,7 @@ void sync_database(void)
 
         if (sync_database_request != 0) {
  
-            Serial.println("sync_database");
+            // Serial.println("sync_database");
 
             eeprom_clear();
             EEPROM.put(EEPROM_DB_ADDR, m_device);

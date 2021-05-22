@@ -34,8 +34,8 @@ void uart_handler(void)
             delay(1); /*1ms */
         }
 
-        Serial.print("recieved: ");
-        Serial.println(hc06_rx_queue);
+        // Serial.print("recieved: ");
+        // Serial.println(hc06_rx_queue);
 
         /* Handler data recieved */
         handler_data(hc06_rx_queue);
@@ -57,8 +57,8 @@ void handler_data(char* command)
     DeserializationError error = deserializeJson(doc, command);
 
     if (error) {
-        Serial.print(F("Decode fail\n"));
-        Serial.println(error.c_str());
+        // Serial.print(F("Decode fail\n"));
+        // Serial.println(error.c_str());
         return;
     }
 

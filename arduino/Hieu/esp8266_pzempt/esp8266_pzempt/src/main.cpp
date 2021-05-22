@@ -4,12 +4,12 @@
 #include "handler_mqtt.h"
 #include "rtc.h"
 #include "uart.h"
-/* BLYNK */
-#include <BlynkSimpleEsp8266.h>
 
-#define water_sensor_blynk_pin            V5
-#define power_sensor_blynk_pin                 V4
-char auth[] = "AK_mtAJMVhL3ceBBnt63QWJZ1DY-7qBi";
+// /* BLYNK */
+// #include <BlynkSimpleEsp8266.h>
+// #define water_sensor_blynk_pin            V5
+// #define power_sensor_blynk_pin                 V4
+// char auth[] = "AK_mtAJMVhL3ceBBnt63QWJZ1DY-7qBi";
 
 const char* ssid = "Dungnt98";
 const char* password = "Peppe123";
@@ -21,13 +21,13 @@ void setup()
 {
     uart_init();
     
-    // WiFi.begin(ssid, password);
-    // while (WiFi.status() != WL_CONNECTED) {
-    //     delay(100);
-    // }
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(100);
+    }
 
-    // Serial.print("INFO: IP address: ");
-    // Serial.println(WiFi.localIP());
+    Serial.print("INFO: IP address: ");
+    Serial.println(WiFi.localIP());
 
     rtc_init();
 
@@ -35,13 +35,13 @@ void setup()
     database_load();
 
     mqtt_init();
-    Blynk.begin(auth, ssid, password);
+    // Blynk.begin(auth, ssid, password);
 }
 
 void loop()
 {
-    Blynk.run();
-    // mqtt_handler();
+    rtc_loop();
+    mqtt_handler();
 
     uart_handler();
     sync_database();
@@ -63,13 +63,13 @@ void update_database(JsonDocument &doc)
 
     m_device.data[m_device.current_month-1].water = current_water_used;
 
-    Serial.printf("water: %d\n", m_device.data[m_device.current_month-1].water);
-    Serial.printf("engergy: %f\n", atof(m_device.data[m_device.current_month-1].energy));
+    // Serial.printf("water: %d\n", m_device.data[m_device.current_month-1].water);
+    // Serial.printf("engergy: %f\n", atof(m_device.data[m_device.current_month-1].energy));
 
-    Blynk.virtualWrite(water_sensor_blynk_pin,
-                        m_device.data[m_device.current_month-1].water);
-    Blynk.virtualWrite(power_sensor_blynk_pin,
-                        atof(m_device.data[m_device.current_month-1].energy));
+    // Blynk.virtualWrite(water_sensor_blynk_pin,
+    //                     m_device.data[m_device.current_month-1].water);
+    // Blynk.virtualWrite(power_sensor_blynk_pin,
+    //                     atof(m_device.data[m_device.current_month-1].energy));
     
     sync_database_request = 1;
 }

@@ -9,9 +9,9 @@
 #include "database.h"
 #include "rtc.h"
 
-#define CMD_USER_READ_DATA  2
-#define CMD_USER_READ_CUR_DATA  3
-#define CMD_RESET_FACTORY       4
+#define CMD_USER_READ_DATA  5
+#define CMD_USER_READ_CUR_DATA  6
+#define CMD_RESET_FACTORY       7
 
 const char* mqtt_client_id = "ir_controller";
 const char* mqtt_server_ip = "broker.hivemq.com";
@@ -41,7 +41,7 @@ void publish_msg(char* msg)
 void mqtt_callback(char* p_toppic, uint8_t* p_data, unsigned int length)
 {
     /* parse data */
-    Serial.printf("%s\n", (char*)p_data);
+    // Serial.printf("%s\n", (char*)p_data);
 
     DynamicJsonDocument doc(256);
     DeserializationError error = deserializeJson(doc, p_data);
@@ -87,7 +87,9 @@ void mqtt_handler()
 
 void parse_data(JsonDocument& root)
 {
-    uint8_t cmd_type = root["cmd"];
+    uint8_t cmd_type = root["cmd_type"];
+    char buff[1024];
+    memset(buff, 0, 1024);
 
     switch (cmd_type) {
         case CMD_USER_READ_DATA: {
@@ -100,6 +102,12 @@ void parse_data(JsonDocument& root)
 
         case CMD_RESET_FACTORY: {
             reset_database();
+            sprintf(buff, "%s", "{\"cmd\": 1}");
+            Serial.println(buff);
+
+            memset(buff, 0, 1024);
+            sprintf(buff, "{\"cmd_type\": %d, \"result\":1}", cmd_type);
+            publish_msg(buff);
         } break;
 
         default:
@@ -113,12 +121,12 @@ void publish_data_to_sever(JsonDocument& root)
     char buff[1024];
     memset(buff, 0, 1024);
 
-    uint8_t cmd_type = root["cmd"];
+    uint8_t cmd_type = root["cmd_type"];
 
-    sprintf(buff, "{\"cmd\": %d, \
+    sprintf(buff, "{\"cmd_type\": %d, \
     \"energy\": [\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \
-                \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\"], \
-    \"water\": [%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d]}",
+\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\"], \
+\"water\": [%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d]}",
             cmd_type,
             m_device.data[0].energy,
             m_device.data[1].energy,
@@ -154,9 +162,9 @@ void publish_cur_data_to_sever(JsonDocument& root)
     char buff[1024];
     memset(buff, 0, 1024);
 
-    uint8_t cmd_type = root["cmd"];
+    uint8_t cmd_type = root["cmd_type"];
 
-    sprintf(buff, "{\"cmd\": %d, \"energy\": \"%s\", \"water\": %d}",
+    sprintf(buff, "{\"cmd_type\": %d, \"energy\": \"%s\", \"water\": %d}",
             cmd_type,
             m_device.data[m_device.current_month-1].energy,
             m_device.data[m_device.current_month-1].water);

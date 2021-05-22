@@ -37,57 +37,6 @@ float energy;
 float frequency;
 float pf;
 
-void pzem_show(void)
-{
-    if (voltage != NAN) {
-        Serial.print("Voltage: "); 
-        Serial.print(voltage); 
-        Serial.println("V");
-    } else {
-        Serial.println("Error reading voltage");
-    }
-
-    if(current != NAN){
-        Serial.print("Current: ");
-        Serial.print(current);
-        Serial.println("A");
-    } else {
-        Serial.println("Error reading current");
-    }
-
-    if(power != NAN){
-        Serial.print("Power: ");
-        Serial.print(power);
-        Serial.println("W");
-    } else {
-        Serial.println("Error reading power");
-    }
-
-    if(energy != NAN){
-        Serial.print("Energy: ");
-        Serial.print(energy,3);
-        Serial.println("kWh");
-    } else {
-        Serial.println("Error reading energy");
-    }
-
-    if(frequency != NAN){
-        Serial.print("Frequency: ");
-        Serial.print(frequency, 1);
-        Serial.println("Hz");
-    } else {
-        Serial.println("Error reading frequency");
-    }
-
-    if(pf != NAN){
-        Serial.print("PF: ");
-        Serial.println(pf);
-    } else {
-        Serial.println("Error reading power factor");
-    }
-    Serial.println();
-}
-
 void pzem_reader(void)
 {
         voltage = _pzem.voltage();
@@ -158,18 +107,6 @@ void read_water_loop(void)
         // Add the millilitres passed in this second to the cumulative total
         totalMilliLitres += flowMilliLitres;
         totalLitres += flowLitres;
-
-        // Print the flow rate for this second in litres / minute
-//        Serial.print("Flow rate: ");
-//        Serial.print(float(flowRate));  // Print the integer part of the variable
-//        Serial.print("L/min");
-//        Serial.print("\t");  // Print tab space
-//
-//        Serial.print("Output Liquid Quantity: ");
-//        Serial.print(totalMilliLitres);
-//        Serial.print("mL / ");
-//        Serial.print(totalLitres);
-//        Serial.println("L");
     }
 }
 
@@ -217,12 +154,14 @@ void uart_handler(void)
             delay(1); /*1ms */
         }
 
+        Serial.print("Get data:\n");
+        Serial.println(hc06_rx_queue);
+
         /* Handler data recieved */
         DynamicJsonDocument doc(256);
         DeserializationError error = deserializeJson(doc, hc06_rx_queue);
         if (error) {
-//            Serial.print(F("Decode fail\n"));
-//            Serial.println(error.c_str());
+            Serial.print(F("Uno Decode fail\n"));
             return;
         }
     
@@ -238,7 +177,8 @@ void uart_handler(void)
 
 void uno_handler_reset_data_new_month(void)
 {
+    Serial.println("Reset data");
     _pzem.resetEnergy();
-    flowMilliLitres = 0;
-    flowLitres = 0;
+    totalMilliLitres = 0;
+    totalLitres = 0;
 }
