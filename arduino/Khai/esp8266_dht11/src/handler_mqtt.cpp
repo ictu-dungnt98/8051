@@ -145,19 +145,6 @@ void handler_remove_alarm(JsonDocument& _doc)
     }
 }
 
-/*  {cmd_type:5, "type_sensor":1, "humi": %d, "temper": %d, "action": %d} */
-void handler_set_sensor_threshold(JsonDocument& _doc)
-{
-    m_device.sensor.threshold_type = _doc["type_sensor"];
-    m_device.sensor.huminity_threshold = _doc["humi"];
-    m_device.sensor.temperature_threshold = _doc["temper"];
-    m_device.sensor.action = _doc["action"];
-
-    char respond[256];
-    memset(respond, 0, sizeof(respond));
-    sprintf(respond, "{\"cmd_type\":%d, \"res\":1}\n", SET_SENSOR_THRESH_HOLD);
-    publish_msg(respond);
-}
 
 void parse_data(JsonDocument& root)
 {
@@ -184,10 +171,6 @@ void parse_data(JsonDocument& root)
 
         case RESET_ALARM: {
             handler_remove_alarm(root);
-        } break;
-
-        case SET_SENSOR_THRESH_HOLD: {
-            handler_set_sensor_threshold(root);
         } break;
 
         default:

@@ -30,28 +30,4 @@ void sensor_read()
 
     Serial.printf("Temper: %.2f\n", temperature);
     Serial.printf("huminity: %.2f\n", huminity);
-
-    if (m_device.sensor.threshold_type == 0)
-        return;
-
-    if (m_device.sensor.threshold_type == 1) /* humi over */
-    {
-        if (huminity > m_device.sensor.huminity_threshold)
-            control_pin(m_device.sensor.action);
-    }
-    else if (m_device.sensor.threshold_type == 2) /* temper over */
-    {
-        if (temperature > m_device.sensor.temperature_threshold)
-            control_pin(m_device.sensor.action);
-    }
-    else if (m_device.sensor.threshold_type == 3) /* humi lower */
-    {
-            if (huminity < m_device.sensor.huminity_threshold)
-            control_pin(m_device.sensor.action);
-    }
-    else if (m_device.sensor.threshold_type == 4) /* temper lower */
-    {
-        if (temperature < m_device.sensor.temperature_threshold)
-            control_pin(m_device.sensor.action);
-    }
 }
