@@ -1,10 +1,12 @@
 #include <Arduino.h>
 
 #define NUM_MOTOR_PIN   4
-#define MOTOR1_1        12
-#define MOTOR1_2        13
-#define MOTOR2_1        14
-#define MOTOR2_2        14
+// direction
+#define MOTOR1_1        14
+#define MOTOR1_2        16
+// up down
+#define MOTOR2_1        4
+#define MOTOR2_2        5
 
 void motor_init(void);
 

@@ -5,7 +5,6 @@
 #include <SoftwareSerial.h>
 
 void hc06_init(void);
-
 void hc06_read_data(void);
 void hc06_process_data(void);
 

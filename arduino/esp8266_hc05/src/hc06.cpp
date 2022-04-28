@@ -1,10 +1,10 @@
 #include "hc06.h"
 #include "squeue.h"
-#include "handler_data.h"
+#include "process_data.h"
 
 #define MAX_QUEUE_ITEM 16
 
-SoftwareSerial HC06(12, 13); // RX, TX
+SoftwareSerial HC06(13, 15); // RX, TX
 
 /* Rx buffer */
 static sq_t rx_queue;

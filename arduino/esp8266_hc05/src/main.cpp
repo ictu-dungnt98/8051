@@ -1,11 +1,13 @@
 #include <Arduino.h>
 #include "hc06.h"
+#include "motor.h"
 
 #define TIME_READ_HC06           50
 static uint32_t time_read_hc06_before = 0;
 static uint32_t time_process_data_before = 0;
 
 void setup() {
+	motor_init();
   	hc06_init();
 }
 
