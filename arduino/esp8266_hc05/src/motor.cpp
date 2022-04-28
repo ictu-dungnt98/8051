@@ -20,34 +20,40 @@ void motor_init(void)
     }
 }
 
-void go_left(void)
+void forward_left(void)
 {
 	Serial.println("turn left");
 
 	set_pin(MOTOR1_1);
 	clear_pin(MOTOR1_2);
-	delay(200);
-	clear_pin(MOTOR1_1);
-	clear_pin(MOTOR1_2);
+
+	/* forward */
+		clear_pin(MOTOR2_1);
+	set_pin(MOTOR2_2);
+	
+	delay(50);
 }
 
-void go_right(void)
+void forward_right(void)
 {
 	Serial.println("turn right");
 
 	clear_pin(MOTOR1_1);
 	set_pin(MOTOR1_2);
-	delay(200);
-	clear_pin(MOTOR1_1);
-	clear_pin(MOTOR1_2);
+
+	/* forward */
+	clear_pin(MOTOR2_1);
+	set_pin(MOTOR2_2);
+
+	delay(50);
 }
 
 void go_forward(void)
 {
 	Serial.println("turn forward");
-
 	clear_pin(MOTOR2_1);
 	set_pin(MOTOR2_2);
+	delay(50);
 }
 
 void go_backward(void)
@@ -56,6 +62,35 @@ void go_backward(void)
 
 	set_pin(MOTOR2_1);
 	clear_pin(MOTOR2_2);
+	delay(50);
+}
+
+void back_left(void)
+{
+	Serial.println("turn left");
+
+	clear_pin(MOTOR1_1);
+	set_pin(MOTOR1_2);
+
+	/* go_backward */
+	set_pin(MOTOR2_1);
+	clear_pin(MOTOR2_2);
+	
+	delay(50);
+}
+
+void back_right(void)
+{
+	Serial.println("turn right");
+
+	set_pin(MOTOR1_1);
+	clear_pin(MOTOR1_2);
+
+	/* go_backward */
+	set_pin(MOTOR2_1);
+	clear_pin(MOTOR2_2);
+
+	delay(50);
 }
 
 void stop(void)

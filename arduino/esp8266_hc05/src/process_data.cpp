@@ -8,16 +8,14 @@ void process_data(char* command)
         return;
     }
 
-	uint8_t cmd_type = atoi(command);
+	uint8_t cmd_type = command[0];
     Serial.println(command);
 
     switch (cmd_type) {
 		case TURN_LEFT: {
-			go_left();
 		} break;
 
 		case TURN_RIGHT: {
-			go_right();
 		} break;
 
 		case TURN_FORWARD: {
@@ -31,7 +29,15 @@ void process_data(char* command)
 		case TURN_STOP: {
 			stop();
 		} break;
-   
+
+		case FORWARD_LEFT: {
+			forward_left();
+		} break;
+
+		case FORWARD_RIGHT: {
+			forward_right();
+		} break;
+
 		default:
 			break;
     }

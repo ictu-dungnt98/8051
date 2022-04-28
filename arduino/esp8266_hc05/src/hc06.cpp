@@ -41,7 +41,7 @@ void hc06_read_data(void)
 
 		temp_data.len = p_hc06_rx_data;
 		memcpy(temp_data.data, hc06_rx_queue, p_hc06_rx_data);
-
+		
         sq_push(&rx_queue, &temp_data);
     }
 }
