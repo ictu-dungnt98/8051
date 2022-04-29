@@ -65,7 +65,7 @@ void go_backward(void)
 	delay(50);
 }
 
-void back_left(void)
+void backward_left(void)
 {
 	Serial.println("turn left");
 
@@ -79,7 +79,7 @@ void back_left(void)
 	delay(50);
 }
 
-void back_right(void)
+void backward_right(void)
 {
 	Serial.println("turn right");
 
