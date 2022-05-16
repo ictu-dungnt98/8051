@@ -31,9 +31,12 @@ void hc06_read_data(void)
     if (HC06.available() > 0) {
         while (HC06.available() > 0) {
             ch = HC06.read();
-            hc06_rx_queue[p_hc06_rx_data] = ch;
-            p_hc06_rx_data ++;
-            delay(1); /* Delay for wait data ready on serial port */
+
+			if (p_hc06_rx_data < sizeof(hc06_rx_queue)) {
+				hc06_rx_queue[p_hc06_rx_data] = ch;
+				p_hc06_rx_data ++;
+			}
+            // delay(5); /* Delay for wait data ready on serial port */
         }
 		
         Serial.print("recieved: ");
