@@ -1,0 +1,16 @@
+{
+	"files.associations": {
+		"arduino.h": "c",
+		"hardware.h": "c",
+		"database.h": "c",
+		"time.h": "c",
+		"rtclib.h": "c",
+		"eeprom.h": "c",
+		"array": "c",
+		"*.tcc": "c",
+		"functional": "c",
+		"istream": "c",
+		"tuple": "c",
+		"utility": "c"
+	}
+}
