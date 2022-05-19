@@ -19,6 +19,8 @@
 #define HC595_CLK_PIN	12 /* clock pin */
 #define HC595_LATCH_PIN	13 /* latch pin */
 
+#define os_trace Serial.printf 
+
 uint32_t sys_get_tick_ms(void);
 
 void relay_init(void);
