@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 
-
 device_info_t m_device;
 
 uint8_t uno_sync_database_request = 0;

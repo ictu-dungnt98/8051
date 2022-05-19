@@ -9,7 +9,7 @@ static const char *event_name[] = {"pressed", "release",
                                    "idle", "idle break", "invalid"};
 void on_button_event_cb(int button_pin, int event, void *data)
 {
-    Serial.printf("Button %d, event %s\r\n", button_pin, event_name[event]);
+    os_trace("Button %d, event %s\r\n", button_pin, event_name[event]);
     
     switch (event)
     {
@@ -52,17 +52,21 @@ uint32_t btn_read(uint32_t index)
 {
 	int adc_value = analogRead(index);
 	float voltage = adc_value * (1.0 / 1023.0);
-	Serial.printf("adc_value: %d, voltage: %f\r\n", adc_value, voltage);
+	os_trace("adc_value: %d, voltage: %f\r\n", adc_value, voltage);
 
 	return 1;
+}
+
+static uint32_t sys_get_tick_ms(void)
+{
+	return millis();
 }
 
 void m_button_init(void)
 {
     static app_btn_hw_config_t m_hw_button_initialize_value[APP_BTN_MAX_BTN_SUPPORT];
     
-    for (uint32_t i = 0; i < APP_BTN_MAX_BTN_SUPPORT; i++)
-    {
+    for (uint32_t i = 0; i < APP_BTN_MAX_BTN_SUPPORT; i++) {
         m_hw_button_initialize_value[i].idle_level = 1;
         m_hw_button_initialize_value[i].last_state = btn_read(i); // read the very first level at initialization
         m_hw_button_initialize_value[i].pin = i;
@@ -83,12 +87,12 @@ void m_button_init(void)
 }
 
 /* private */
-void button_scan_task(void *param)
+void button_scan_task(void)
 {
 	static uint32_t old_tick = 0;
 
-	if (sys_get_tick_ms() - old_tick > 50) {
-		old_tick = sys_get_tick_ms();
+	if (millis() - old_tick > 50) {
+		old_tick = millis();
 		app_btn_scan(NULL);
 	}
 }

@@ -7,6 +7,7 @@
 
 #include "PubSubClient.h"
 #include "database.h"
+#include "hardware.h"
 #include "rtc.h"
 
 const char* mqtt_client_id = "ir_controller";
@@ -35,34 +36,17 @@ void parse_data(JsonDocument& root)
 void mqtt_callback(char* p_toppic, uint8_t* p_data, unsigned int length)
 {
     /* parse data */
-    Serial.printf("%s\n", (char*)p_data);
+    os_trace("%s\n", (char*)p_data);
 
     DynamicJsonDocument doc(256);
     DeserializationError error = deserializeJson(doc, p_data);
 
     if (error) {
-        Serial.print(F("Parse Json Failed.\n"));
+        os_trace("Parse Json Failed.\n");
         return;
     }
 
     parse_data(doc);
-}
-
-void reconnect()
-{
-    while (!client.connected()) {
-        Serial.println("Dang ket noi MQTT...");
-        // Connect MQTT
-        if (client.connect(mqtt_client_id, mqtt_user, mqtt_password)) {
-            Serial.println("Da ket noi xong MQTT");  // Ket noi xong , hien thi
-            client.subscribe(mqtt_topic_sub);
-        } else {
-            Serial.print("No connect: ");
-            Serial.print(client.state());
-            Serial.println("Doi 5 giay");
-            delay(5000);
-        }
-    }
 }
 
 void mqtt_init(void)
@@ -74,7 +58,12 @@ void mqtt_init(void)
 void mqtt_handler()
 {
     if (!client.connected()) {
-        reconnect();
+        while (!client.connected()) {
+            if (client.connect(mqtt_client_id, mqtt_user, mqtt_password)) {
+                os_trace("Connected mqtt\n");
+                client.subscribe(mqtt_topic_sub);
+            }
+        }
     }
 
     client.loop();

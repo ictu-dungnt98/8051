@@ -10,7 +10,7 @@
 
 #define IR_RE 	2
 #define IR_TR1 	16
-#define IR_TR1 	14
+#define IR_TR2 	14
 
 #define RELAY1	15
 #define RELAY2	3
@@ -19,11 +19,17 @@
 #define HC595_CLK_PIN	12 /* clock pin */
 #define HC595_LATCH_PIN	13 /* latch pin */
 
-#define os_trace Serial.printf 
-
-uint32_t sys_get_tick_ms(void);
-
 void relay_init(void);
 void relay_set(uint8_t relay, uint8_t state);
+
+void button_scan_task(void);
+
+void init_74hc595(void);
+void hc595_write(uint8_t data);
+
+void rtc_init(void);
+void rtc_hander(void);
+
+#define os_trace Serial.printf 
 
 #endif
