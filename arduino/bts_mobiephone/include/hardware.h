@@ -21,4 +21,7 @@
 
 uint32_t sys_get_tick_ms(void);
 
+void relay_init(void);
+void relay_set(uint8_t relay, uint8_t state);
+
 #endif

@@ -48,11 +48,6 @@ void on_button_event_cb(int button_pin, int event, void *data)
     }
 }
 
-uint32_t sys_get_tick_ms(void)
-{
-	return millis();
-}
-
 uint32_t btn_read(uint32_t index)
 {
 	int adc_value = analogRead(index);
