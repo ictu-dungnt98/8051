@@ -23,5 +23,5 @@ void setup()
 void loop()
 {
 	button_scan_task();
-	delay(200);
+	rtc_hander();
 }

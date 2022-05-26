@@ -25,9 +25,15 @@ void rtc_init(void)
 
 void rtc_hander(void)
 {
-    now = rtc.now();
+	static uint32_t old_tick = 0;
+	if (millis() - old_tick < 1000)
+		return;
+	old_tick = millis();
 
-    os_trace("%d\n", now.hour());
-    os_trace("%d\n", now.minute());
-    os_trace("%d\n", now.second());
+    now = rtc.now();
+	uint8_t hour = now.hour();
+	uint8_t minute = now.minute();
+	uint8_t second = now.second();
+
+    os_trace("%d:%d:%d\n", hour, minute, second);
 }
