@@ -22,6 +22,7 @@ void rtc_init(void)
 
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 }
+
 void rtc_hander(void)
 {
     now = rtc.now();

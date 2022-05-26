@@ -50,11 +50,27 @@ void on_button_event_cb(int button_pin, int event, void *data)
 
 uint32_t btn_read(uint32_t index)
 {
-	int adc_value = analogRead(index);
-	float voltage = adc_value * (1.0 / 1023.0);
-	os_trace("adc_value: %d, voltage: %f\r\n", adc_value, voltage);
+	uint32_t adc_value = analogRead(BTN_PIN);
+	uint32_t voltage = 1000*(adc_value * (1.0 / 1023.0)); /* mV */
+	// os_trace("%d: adc_value: %d, voltage: %d\r\n", index, adc_value, voltage);
 
-	return 1;
+	uint8_t state = BTN_RELEASED;
+
+	switch (index)
+	{
+	case 0:
+		if (200 <= voltage && voltage < 220)
+			state = BTN_PRESSED;
+			break;
+	case 1:
+		if (380 <= voltage && voltage < 400)
+			state = BTN_PRESSED;
+			break;
+	default:
+		break;
+	}
+
+	return state;
 }
 
 static uint32_t sys_get_tick_ms(void)

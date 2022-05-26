@@ -10,6 +10,8 @@ void init_74hc595(void)
 void hc595_write(uint8_t data)
 {
 	digitalWrite(HC595_LATCH_PIN, LOW);
-    shiftOut(data, HC595_CLK_PIN, LSBFIRST, data);
+	shiftOut(HC595_DATA_PIN, HC595_CLK_PIN, MSBFIRST, data);
     digitalWrite(HC595_LATCH_PIN, HIGH);
+	
+	os_trace("%02X - %u\n", data, data);
 }

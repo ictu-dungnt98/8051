@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 
+#define BTN_PRESSED 0
+#define BTN_RELEASED 1
+
 #define SDA_PIN D4
 #define SCL_PIN D5
 
@@ -15,13 +18,17 @@
 #define RELAY1	15
 #define RELAY2	3
 
-#define HC595_DATA_PIN	D0 /* 74HC595 DS pin */
-#define HC595_CLK_PIN	12 /* clock pin */
-#define HC595_LATCH_PIN	13 /* latch pin */
+#define HC595_RCLK_PIN		13
+#define HC595_SCLK_PIN		12
+
+#define HC595_DATA_PIN	0 /* 74HC595 DS pin */
+#define HC595_CLK_PIN	HC595_SCLK_PIN /* clock pin */
+#define HC595_LATCH_PIN	HC595_RCLK_PIN /* latch pin */
 
 void relay_init(void);
 void relay_set(uint8_t relay, uint8_t state);
 
+void m_button_init(void);
 void button_scan_task(void);
 
 void init_74hc595(void);
