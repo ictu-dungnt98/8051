@@ -59,13 +59,13 @@ uint32_t btn_read(uint32_t index)
 	switch (index)
 	{
 	case 0:
-		if (200 <= voltage && voltage < 220)
+		if (200 <= voltage && voltage < 220) {
 			state = BTN_PRESSED;
-			break;
+		} break;
 	case 1:
-		if (380 <= voltage && voltage < 400)
+		if (380 <= voltage && voltage < 400) {
 			state = BTN_PRESSED;
-			break;
+		} break;
 	default:
 		break;
 	}
