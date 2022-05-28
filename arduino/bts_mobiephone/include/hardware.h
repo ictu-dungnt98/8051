@@ -22,6 +22,10 @@
 #define HC595_RCLK_PIN		14
 #define HC595_SCLK_PIN		16
 
+// #define HC595_D0_PIN		0
+// #define HC595_RCLK_PIN		13
+// #define HC595_SCLK_PIN		12
+
 #define HC595_DATA_PIN	HC595_D0_PIN /* 74HC595 DS pin */
 #define HC595_CLK_PIN	HC595_SCLK_PIN /* clock pin */
 #define HC595_LATCH_PIN	HC595_RCLK_PIN /* latch pin */
