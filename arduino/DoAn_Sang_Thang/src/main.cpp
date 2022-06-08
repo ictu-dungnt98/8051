@@ -1,18 +1,15 @@
 #include <Arduino.h>
 #include "lcd_1602.h"
-
-int in1 = 8; 
-int in2 = 9;
-int in3 = 10; 
-int in4 = 11;  
+#include "step_motor.h"
 
 void setup() 
 {
    lcd_init();
-   set_so_vong(10);
+   step_motor_init();
 } 
 
 void loop() 
 {
    lcd_loop();
+   motor_loop();
 }
