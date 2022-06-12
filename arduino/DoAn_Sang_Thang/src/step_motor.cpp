@@ -9,9 +9,11 @@ AccelStepper stepper(1, 5, 4);  // pin 5 step, pin 4 dir
 static uint32_t _step_count = 0;
 uint8_t step_motor_state = 0;
 
-void set_step_move(uint32_t step_count)
+void set_step_move(uint32_t step_count, uint8_t dir)
 {
     step_motor_state = 1;
+
+	digitalWrite(DIR_PIN, dir);
 
     _step_count += step_count;
     stepper.moveTo(_step_count);

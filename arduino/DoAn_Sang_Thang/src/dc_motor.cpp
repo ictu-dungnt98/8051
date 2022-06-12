@@ -9,16 +9,17 @@
 extern uint8_t step_motor_state;
 
 static uint32_t counter = 0;
+static uint32_t number_circle = 0;
+static uint32_t dir = 0;
 static uint8_t old_dc_motor_state = MOTOR_STOP;
 static uint8_t new_dc_motor_state = MOTOR_STOP;
-
-char buffer[16];
 
 void countpulse()
 {
     counter++;
 
-    if (counter == 80) {
+    if (counter == 60) {
+		number_circle ++;
         stop_dc_motor();
     }
 }
@@ -39,37 +40,39 @@ void dc_motor_loop(void)
         return;
     time_stamp = millis();
 
-    lcd_set_so_vong(counter);
+    lcd_set_so_vong(number_circle);
 
-    // if (old_dc_motor_state == new_dc_motor_state)
-    //     return;
-    // old_dc_motor_state = new_dc_motor_state;
+    if (old_dc_motor_state == new_dc_motor_state)
+        return;
+    old_dc_motor_state = new_dc_motor_state;
 
-    // if (MOTOR_STOP == new_dc_motor_state) {
-    //     Serial.println("MOTOR_STOP");
-    //     digitalWrite(DC_MOTOR_PIN1, LOW);
-    //     digitalWrite(DC_MOTOR_PIN2, LOW);
-	// 	delay(500);
-    // } else if (MOTOR_RUN == new_dc_motor_state) {
-    //     Serial.println("MOTOR_RUN");
-    //     digitalWrite(DC_MOTOR_PIN1, LOW);
-    //     digitalWrite(DC_MOTOR_PIN2, HIGH);
-    // }
+    if (MOTOR_STOP == new_dc_motor_state) {
+        Serial.println("MOTOR_STOP");
+        digitalWrite(DC_MOTOR_PIN1, LOW);
+        digitalWrite(DC_MOTOR_PIN2, LOW);
+
+		/* sua so nay 23 */
+		if (number_circle % 23 == 0 && number_circle != 0) {
+			dir = !dir;
+		}
+		set_step_move(1000, dir);
+    } else if (MOTOR_RUN == new_dc_motor_state) {
+        Serial.println("MOTOR_RUN");
+        digitalWrite(DC_MOTOR_PIN1, LOW);
+		delay(500);
+        digitalWrite(DC_MOTOR_PIN2, HIGH);
+    }
 }
 
 void start_dc_motor(void)
 {
 	Serial.println("start_dc_motor");
     counter = 0;
-	digitalWrite(DC_MOTOR_PIN1, LOW);
-	digitalWrite(DC_MOTOR_PIN2, HIGH);
+    new_dc_motor_state = MOTOR_RUN;
 }
 
 void stop_dc_motor(void)
 {
 	Serial.println("stop_dc_motor");
-	digitalWrite(DC_MOTOR_PIN1, LOW);
-	digitalWrite(DC_MOTOR_PIN2, LOW);
-	delay(500);
-    set_step_move(1000);
+    new_dc_motor_state = MOTOR_STOP;
 }

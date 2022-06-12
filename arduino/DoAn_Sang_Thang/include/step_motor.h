@@ -7,4 +7,4 @@
 
 void step_motor_init(void);
 void step_motor_loop(void);
-void set_step_move(uint32_t step_count);
+void set_step_move(uint32_t step_count, uint8_t dir);
