@@ -27,7 +27,7 @@ void motor_loop(void)
 		return;
 	time_stamp = millis();
 	
-	step_count ++;
+	// step_count ++;
 	
     if (stepper.distanceToGo() == 0) {
         stepper.moveTo(step_count);
