@@ -6,3 +6,5 @@
 
 void dc_motor_init(void);
 void dc_motor_loop(void);
+void start_dc_motor(void);
+void stop_dc_motor(void);

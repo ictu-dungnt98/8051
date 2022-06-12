@@ -6,4 +6,5 @@
 #define ENABLE_PIN 	7// Enable pin
 
 void step_motor_init(void);
-void motor_loop(void);
+void step_motor_loop(void);
+void set_step_move(uint32_t step_count);
