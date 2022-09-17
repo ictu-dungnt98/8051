@@ -1,49 +1,23 @@
 #include <Arduino.h>
 
-int in1 = 8; 
-int in2 = 9;
-int in3 = 10; 
-int in4 = 11;  
+#include "dc_motor.h"
+#include "lcd_1602.h"
+#include "step_motor.h"
+#include "button.h"
 
-void setup() 
+void setup()
 {
-   pinMode(in1, OUTPUT);
-   pinMode(in2, OUTPUT);
-   pinMode(in3, OUTPUT);
-   pinMode(in4, OUTPUT);
-} 
+    Serial.begin(115200);
 
-void motorA() 
+	button_init();
+    lcd_init();
+    step_motor_init();
+    dc_motor_init();
+}
+
+void loop()
 {
-    for (int i = 0; i < 34; i++) {
-		digitalWrite(in1, HIGH);
-    	digitalWrite(in2, LOW);
-		digitalWrite(in3, LOW);
-		digitalWrite(in4, LOW);
-		delay(100);
-
-		digitalWrite(in1, LOW);
-    	digitalWrite(in2, HIGH);
-		digitalWrite(in3, LOW);
-		digitalWrite(in4, LOW);
-		delay(100);
-
-		digitalWrite(in1, LOW);
-    	digitalWrite(in2, LOW);
-		digitalWrite(in3, HIGH);
-		digitalWrite(in4, LOW);
-		delay(100);
-
-		digitalWrite(in1, LOW);
-    	digitalWrite(in2, LOW);
-		digitalWrite(in3, LOW);
-		digitalWrite(in4, HIGH);
-		delay(100);
-	}
-} 
-
-void loop() 
-{
-   motorA();
-   delay(1000);   
+    lcd_loop();
+    dc_motor_loop();
+	button_loop();
 }
