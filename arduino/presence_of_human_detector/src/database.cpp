@@ -7,11 +7,6 @@
 device_info_t m_device;
 uint8_t sync_database_request = 0;
 
-void eeprom_init()
-{
-    EEPROM.begin(512);
-}
-
 void eeprom_clear()
 {
     for (uint16_t i = 0 ; i < (sizeof(device_info_t)+1); i++) {
@@ -39,7 +34,6 @@ void show_database()
 void eeprom_database_loader(void)
 {
     memset(&m_device, 0, sizeof(device_info_t));
-    
     EEPROM.get(EEPROM_DB_ADDR, m_device);
     show_database();
 }
@@ -63,4 +57,10 @@ void sync_database(void)
             sync_database_request = 0;
         }
     }
+}
+
+void eeprom_init()
+{
+    EEPROM.begin(512);
+	eeprom_database_loader();
 }

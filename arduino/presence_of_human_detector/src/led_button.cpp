@@ -98,8 +98,7 @@ static void led_init(void)
 {
     int i;
 
-    for (i = 0; i < NUMBER_LED; i++) 
-	{
+    for (i = 0; i < NUMBER_LED; i++) {
         pinMode(m_leds[i], OUTPUT);
     }
 
