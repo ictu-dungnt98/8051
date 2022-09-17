@@ -1,10 +1,8 @@
 #include "database.h"
-#include "led_button.h"
-#include "handler_mqtt.h"
-
 #include <EEPROM.h>
 #include <stdlib.h>
 
+#define TIME_SYNC_DATABASE          1 /* 100ms */
 
 device_info_t m_device;
 uint8_t sync_database_request = 0;
@@ -31,16 +29,11 @@ void reset_database()
 
 void show_database()
 {
-    Serial.printf("alarm_is_set %d\n", m_device.alarm_is_set);
-
-    uint8_t index;
-    for (index = 0; index < MAX_CMD_ALARM; index++) {
-        if (m_device.m_time_alarm[index].m_cmd != 0) {
-            Serial.printf("alarm_is_set %d\n", m_device.m_time_alarm[index].m_cmd);
-            Serial.printf("tm_hour %d\n", m_device.m_time_alarm[index].m_time.tm_hour);
-            Serial.printf("tm_min %d\n", m_device.m_time_alarm[index].m_time.tm_min);
-        }
-    }
+    Serial.printf("device_was_calibrated %d\n", m_device.device_was_calibrated);
+	Serial.printf("initial_mean %d\n", m_device.initial_mean);
+	Serial.printf("range_of_mean %d\n", m_device.range_of_mean);
+	Serial.printf("initial_variance %d\n", m_device.initial_variance);
+	Serial.printf("range_of_variance %d\n", m_device.range_of_variance);
 }
 
 void eeprom_database_loader(void)
@@ -51,18 +44,16 @@ void eeprom_database_loader(void)
     show_database();
 }
 
-#define TIME_SYNC_DATABASE          1 /* 100ms */
-static uint32_t time_handler_sync_db_before = 0;
-
 void sync_database(void)
 {
-    if (millis() - time_handler_sync_db_before > TIME_SYNC_DATABASE) {
-        time_handler_sync_db_before = millis();
+	static uint32_t time_sync_ms = 0;
+
+    if (millis() - time_sync_ms > TIME_SYNC_DATABASE) {
+        time_sync_ms = millis();
 
         if (sync_database_request != 0) {
  
             Serial.println("sync_database");
-
 
             eeprom_clear();
             EEPROM.put(EEPROM_DB_ADDR, m_device);

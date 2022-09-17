@@ -7,7 +7,7 @@
 #define ON HIGH
 #define OFF LOW
 
-#define NUMBER_CHANNEL   3
+#define NUMBER_CHANNEL   2
 #define NUMBER_BUTTON   NUMBER_CHANNEL
 
 #define BUTTON1_PIN      16
