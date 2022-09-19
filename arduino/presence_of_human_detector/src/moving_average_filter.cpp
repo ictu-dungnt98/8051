@@ -12,7 +12,7 @@ typedef struct moving_average
     bool is_filled;
 } moving_average_t;
 
-int movingAvg(moving_average_t * av_obj, int new_element)
+int movingAvg(moving_average_t* av_obj, int new_element)
 {
   //Subtract the oldest number from the prev sum, add the new number
   av_obj->sum = av_obj->sum - av_obj->buffer[av_obj->pos] + new_element;
@@ -29,7 +29,7 @@ int movingAvg(moving_average_t * av_obj, int new_element)
   return av_obj->sum / (av_obj->is_filled ? av_obj->length:av_obj->pos);
 }
 
-moving_average_t * allocate_moving_average(int len)
+moving_average_t* allocate_moving_average(int len)
 {
     moving_average_t* av_obj = (moving_average_t*)malloc(sizeof(moving_average_t));
     av_obj->sum       = 0;

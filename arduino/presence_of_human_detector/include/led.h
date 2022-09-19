@@ -28,10 +28,8 @@
 #define OS_BTN_IS_PRESS_TIME_MAX    5000
 #define OS_BTN_IS_PRESS_TIME_MIN    20
 
-void led_button_init(void);
-void button_loop(void);
+void led_init(void);
 void control_pin(uint8_t cmd);
-
 void gpio_toggle(uint8_t pin);
 
 #endif

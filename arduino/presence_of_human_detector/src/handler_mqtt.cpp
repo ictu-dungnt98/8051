@@ -6,8 +6,7 @@
 #include <string.h>
 
 #include "PubSubClient.h"
-#include "database.h"
-#include "led_button.h"
+#include "led.h"
 
 const char* mqtt_client_id = "ir_controller";
 const char* mqtt_server_ip = "broker.hivemq.com";
