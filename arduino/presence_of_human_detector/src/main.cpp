@@ -3,8 +3,6 @@
 #include <ESP8266WiFi.h>
 #include <string.h>
 
-#include "PubSubClient.h"
-#include "handler_mqtt.h"
 #include "led.h"
 #include "moving_average_filter.h"
 
@@ -161,13 +159,10 @@ void setup()
     Serial.begin(115200);
     wifi_connect();
     led_init();
-    mqtt_init();
-
     sensor_av = allocate_moving_average(NUMBER_RSSI);
 }
 
 void loop()
 {
     presence_human_detector();
-    mqtt_handler();
 }
