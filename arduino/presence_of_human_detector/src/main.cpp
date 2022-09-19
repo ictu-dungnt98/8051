@@ -40,17 +40,22 @@ void wifi_connect(void)
 void do_calibration(void)
 {
     static int calib_step = 0;
+	static int currentRSSI = 0;
+	static int new_rssi_smoothed = 0;
     do {
         switch (calib_step) {
             case 0: { /* obtain n numbers of RSSI */
                 memset(raw_rssi, 0, sizeof(raw_rssi));
                 for (int i = 0; i < NUMBER_RSSI; i++) {
-                    raw_rssi[i] = WiFi.RSSI();
+                    currentRSSI = WiFi.RSSI();
+					new_rssi_smoothed = movingAvg(sensor_av, currentRSSI);
                 }
                 calib_step++;
             } break;
 
             case 1: { /* smooth sample of raw RSSI */
+				currentRSSI = WiFi.RSSI();
+				new_rssi_smoothed = movingAvg(sensor_av, currentRSSI);
                 calib_step++;
             } break;
 
@@ -74,7 +79,7 @@ void do_calibration(void)
                 calib_step++;
             } break;
 
-			case 7: { /* Calibration was done */
+			case 7: { /* Calibration was done, exit this function */
                 calib_step = 0;
 				return;
             } break;
