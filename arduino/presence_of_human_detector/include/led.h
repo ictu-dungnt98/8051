@@ -6,11 +6,10 @@
 #define ON HIGH
 #define OFF LOW
 
-#define NUMBER_LED 1
 #define LED1_PIN 2
 
+void led_off();
+void led_on();
 void led_init(void);
-void control_pin(uint8_t cmd);
-void gpio_toggle(uint8_t pin);
 
 #endif

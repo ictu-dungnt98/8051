@@ -1,25 +1,20 @@
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <ESP8266WiFi.h>
 #include <string.h>
 
 #include "led.h"
 #include "moving_average_filter.h"
 
-#define NUMBER_RSSI 50
-#define NUMBER_MAF 20
+#define NUMBER_RSSI 20
 
 const char* ssid = "Dungnt98";
 const char* password = "Peppe123";
 
 int system_state = 0;
-int raw_rssi1[NUMBER_RSSI];
-int raw_rssi2[NUMBER_RSSI];
-int smoothed_rssi1[NUMBER_RSSI];
-int smoothed_rssi2[NUMBER_RSSI];
-int mean1 = 0;
-int variance1 = 0;
-int mean2 = 0;
-int variance2 = 0;
+int raw_rssi[NUMBER_RSSI];
+int mean = 0;
+int variance = 0;
 int mean_deviation = 0;
 int variance_deviation = 0;
 moving_average_t* sensor_av;
@@ -45,82 +40,44 @@ void do_calibration(void)
     static int calib_step = 0;
 	static int currentRSSI = 0;
 	static int new_rssi_smoothed = 0;
-	int sum = 0;
     do {
         switch (calib_step) {
             case 0: { /* obtain n numbers of RSSI */
-				/* Fill MAF to get filter */
-                for (int i = 0; i < NUMBER_MAF+1; i++) {
+                memset(raw_rssi, 0, sizeof(raw_rssi));
+                for (int i = 0; i < NUMBER_RSSI; i++) {
                     currentRSSI = WiFi.RSSI();
 					new_rssi_smoothed = movingAvg(sensor_av, currentRSSI);
-                }
-
-				/* obtain n numbers of RSSI */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    raw_rssi1[i] = WiFi.RSSI();
-                }
-				/* obtain n numbers of RSSI */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    raw_rssi2[i] = WiFi.RSSI();
                 }
                 calib_step++;
             } break;
 
             case 1: { /* smooth sample of raw RSSI */
-				/* smooth array 1 */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    smoothed_rssi1[i] = movingAvg(sensor_av, raw_rssi1[i]);
-                }
-				/* smooth array 2 */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    smoothed_rssi2[i] = movingAvg(sensor_av, raw_rssi2[i]);
-                }
+				currentRSSI = WiFi.RSSI();
+				new_rssi_smoothed = movingAvg(sensor_av, currentRSSI);
                 calib_step++;
             } break;
 
             case 2: { /* Calculate initial mean */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    mean1 += smoothed_rssi1[i];
-                }
-				mean1 /= NUMBER_RSSI;
-
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    mean2 += smoothed_rssi2[i];
-                }
-				mean2 /= NUMBER_RSSI;
                 calib_step++;
             } break;
 
-            case 3: { /* Calculate range of mean deviation */
-				mean_deviation = abs(mean2 - mean1);
+            case 3: { /* Calculate initial mean */
                 calib_step++;
             } break;
 
-            case 4: { /* Calculate initial variance */
-				/* variance 1 */
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    sum += (smoothed_rssi1[i] - mean1) * (smoothed_rssi1[i] - mean1);
-                }
-				sum /= (NUMBER_RSSI-1);
-				variance1 = sqrt(sum);
-
-				/* variance 2 */
-				sum = 0;
-				for (int i = 0; i < NUMBER_RSSI; i++) {
-                    sum += (smoothed_rssi2[i] - mean2) * (smoothed_rssi2[i] - mean2);
-                }
-				sum /= (NUMBER_RSSI-1);
-				variance1 = sqrt(sum);
-
+            case 4: { /* Calculate range of mean deviation */
                 calib_step++;
             } break;
 
-            case 5: { /* Calculate inital vardiance deviation */
-				variance_deviation = abs(variance2 - variance1);
+            case 5: { /* Calculate initial variance */
                 calib_step++;
             } break;
 
-			case 6: { /* Calibration was done, exit this function */
+            case 6: { /* Calculate inital vảiance deviation */
+                calib_step++;
+            } break;
+
+			case 7: { /* Calibration was done, exit this function */
                 calib_step = 0;
 				return;
             } break;
