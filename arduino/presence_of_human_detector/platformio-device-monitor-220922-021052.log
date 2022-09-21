@@ -1,0 +1,499 @@
+02:10:52.864 > running...
+02:10:52.933 > connect fail
+02:10:52.943 > connect fail
+02:10:52.952 > connect fail
+02:10:52.963 > connect fail
+02:10:52.973 > connect fail
+02:10:52.982 > connect fail
+02:10:52.992 > connect fail
+02:10:53.003 > connect fail
+02:10:53.013 > connect fail
+02:10:53.024 > connect fail
+02:10:53.033 > connect fail
+02:10:53.043 > connect fail
+02:10:53.053 > connect fail
+02:10:53.064 > connect fail
+02:10:53.074 > connect fail
+02:10:53.084 > connect fail
+02:10:53.094 > connect fail
+02:10:53.105 > connect fail
+02:10:53.115 > connect fail
+02:10:53.125 > connect fail
+02:10:53.135 > connect fail
+02:10:53.145 > connect fail
+02:10:53.155 > connect fail
+02:10:53.165 > connect fail
+02:10:53.175 > connect fail
+02:10:53.185 > connect fail
+02:10:53.195 > connect fail
+02:10:53.205 > connect fail
+02:10:53.215 > connect fail
+02:10:53.225 > connect fail
+02:10:53.236 > connect fail
+02:10:53.246 > connect fail
+02:10:53.256 > connect fail
+02:10:53.266 > connect fail
+02:10:53.276 > connect fail
+02:10:53.286 > connect fail
+02:10:53.296 > connect fail
+02:10:53.306 > connect fail
+02:10:53.316 > connect fail
+02:10:53.326 > connect fail
+02:10:53.336 > connect fail
+02:10:53.346 > connect fail
+02:10:53.355 > connect fail
+02:10:53.366 > connect fail
+02:10:53.377 > connect fail
+02:10:53.386 > connect fail
+02:10:53.396 > connect fail
+02:10:53.406 > connect fail
+02:10:53.417 > connect fail
+02:10:53.427 > connect fail
+02:10:53.437 > connect fail
+02:10:53.447 > connect fail
+02:10:53.458 > connect fail
+02:10:53.467 > connect fail
+02:10:53.477 > connect fail
+02:10:53.488 > connect fail
+02:10:53.498 > connect fail
+02:10:53.508 > connect fail
+02:10:53.518 > connect fail
+02:10:53.527 > connect fail
+02:10:53.539 > connect fail
+02:10:53.549 > connect fail
+02:10:53.559 > connect fail
+02:10:53.569 > connect fail
+02:10:53.579 > connect fail
+02:10:53.589 > connect fail
+02:10:53.599 > connect fail
+02:10:53.609 > connect fail
+02:10:53.619 > connect fail
+02:10:53.629 > connect fail
+02:10:53.639 > connect fail
+02:10:53.649 > connect fail
+02:10:53.660 > connect fail
+02:10:53.670 > connect fail
+02:10:53.680 > connect fail
+02:10:53.690 > connect fail
+02:10:53.700 > connect fail
+02:10:53.711 > connect fail
+02:10:53.721 > connect fail
+02:10:53.731 > connect fail
+02:10:53.741 > connect fail
+02:10:53.751 > connect fail
+02:10:53.761 > connect fail
+02:10:53.771 > connect fail
+02:10:53.781 > connect fail
+02:10:53.791 > connect fail
+02:10:53.801 > connect fail
+02:10:53.811 > connect fail
+02:10:53.821 > connect fail
+02:10:53.831 > connect fail
+02:10:53.842 > connect fail
+02:10:53.852 > connect fail
+02:10:53.861 > connect fail
+02:10:53.872 > connect fail
+02:10:53.882 > connect fail
+02:10:53.891 > connect fail
+02:10:53.902 > connect fail
+02:10:53.912 > connect fail
+02:10:53.922 > connect fail
+02:10:53.933 > connect fail
+02:10:53.943 > connect fail
+02:10:53.953 > connect fail
+02:10:53.963 > connect fail
+02:10:53.973 > connect fail
+02:10:53.983 > connect fail
+02:10:53.994 > connect fail
+02:10:54.004 > connect fail
+02:10:54.014 > connect fail
+02:10:54.024 > connect fail
+02:10:54.033 > connect fail
+02:10:54.044 > connect fail
+02:10:54.054 > connect fail
+02:10:54.064 > connect fail
+02:10:54.074 > connect fail
+02:10:54.084 > connect fail
+02:10:54.094 > connect fail
+02:10:54.104 > connect fail
+02:10:54.114 > connect fail
+02:10:54.124 > connect fail
+02:10:54.134 > connect fail
+02:10:54.145 > connect fail
+02:10:54.155 > connect fail
+02:10:54.165 > connect fail
+02:10:54.175 > connect fail
+02:10:54.185 > connect fail
+02:10:54.196 > connect fail
+02:10:54.206 > connect fail
+02:10:54.216 > connect fail
+02:10:54.226 > connect fail
+02:10:54.236 > connect fail
+02:10:54.246 > connect fail
+02:10:54.256 > connect fail
+02:10:54.266 > connect fail
+02:10:54.276 > connect fail
+02:10:54.286 > connect fail
+02:10:54.297 > connect fail
+02:10:54.307 > connect fail
+02:10:54.317 > connect fail
+02:10:54.327 > connect fail
+02:10:54.337 > connect fail
+02:10:54.347 > connect fail
+02:10:54.357 > connect fail
+02:10:54.367 > connect fail
+02:10:54.377 > connect fail
+02:10:54.387 > connect fail
+02:10:54.397 > connect fail
+02:10:54.407 > connect fail
+02:10:54.418 > connect fail
+02:10:54.428 > connect fail
+02:10:54.438 > connect fail
+02:10:54.449 > connect fail
+02:10:54.459 > connect fail
+02:10:54.469 > connect fail
+02:10:54.479 > connect fail
+02:10:54.489 > connect fail
+02:10:54.499 > connect fail
+02:10:54.509 > connect fail
+02:10:54.519 > connect fail
+02:10:54.529 > connect fail
+02:10:54.539 > connect fail
+02:10:54.549 > connect fail
+02:10:54.559 > connect fail
+02:10:54.569 > connect fail
+02:10:54.580 > connect fail
+02:10:54.590 > connect fail
+02:10:54.600 > connect fail
+02:10:54.610 > connect fail
+02:10:54.620 > connect fail
+02:10:54.630 > connect fail
+02:10:54.640 > connect fail
+02:10:54.650 > connect fail
+02:10:54.660 > connect fail
+02:10:54.671 > connect fail
+02:10:54.681 > connect fail
+02:10:54.691 > connect fail
+02:10:54.701 > connect fail
+02:10:54.711 > connect fail
+02:10:54.721 > connect fail
+02:10:54.731 > connect fail
+02:10:54.741 > connect fail
+02:10:54.751 > connect fail
+02:10:54.761 > connect fail
+02:10:54.771 > connect fail
+02:10:54.781 > connect fail
+02:10:54.791 > connect fail
+02:10:54.800 > connect fail
+02:10:54.811 > connect fail
+02:10:54.821 > connect fail
+02:10:54.831 > connect fail
+02:10:54.841 > connect fail
+02:10:54.851 > connect fail
+02:10:54.861 > connect fail
+02:10:54.871 > connect fail
+02:10:54.881 > connect fail
+02:10:54.892 > connect fail
+02:10:54.902 > connect fail
+02:10:54.912 > connect fail
+02:10:54.922 > connect fail
+02:10:54.932 > connect fail
+02:10:54.942 > connect fail
+02:10:54.952 > connect fail
+02:10:54.962 > connect fail
+02:10:54.972 > connect fail
+02:10:54.982 > connect fail
+02:10:54.992 > connect fail
+02:10:55.003 > connect fail
+02:10:55.013 > connect fail
+02:10:55.023 > connect fail
+02:10:55.033 > connect fail
+02:10:55.043 > connect fail
+02:10:55.053 > connect fail
+02:10:55.062 > connect fail
+02:10:55.073 > connect fail
+02:10:55.082 > connect fail
+02:10:55.093 > connect fail
+02:10:55.102 > connect fail
+02:10:55.112 > connect fail
+02:10:55.123 > connect fail
+02:10:55.132 > connect fail
+02:10:55.143 > connect fail
+02:10:55.153 > connect fail
+02:10:55.163 > connect fail
+02:10:55.173 > connect fail
+02:10:55.183 > connect fail
+02:10:55.193 > connect fail
+02:10:55.203 > connect fail
+02:10:55.213 > connect fail
+02:10:55.223 > connect fail
+02:10:55.234 > connect fail
+02:10:55.244 > connect fail
+02:10:55.254 > connect fail
+02:10:55.264 > connect fail
+02:10:55.274 > connect fail
+02:10:55.284 > connect fail
+02:10:55.294 > connect fail
+02:10:55.304 > connect fail
+02:10:55.314 > connect fail
+02:10:55.324 > connect fail
+02:10:55.334 > connect fail
+02:10:55.344 > connect fail
+02:10:55.354 > connect fail
+02:10:55.364 > connect fail
+02:10:55.374 > connect fail
+02:10:55.384 > connect fail
+02:10:55.394 > connect fail
+02:10:55.404 > connect fail
+02:10:55.414 > connect fail
+02:10:55.424 > connect fail
+02:10:55.434 > connect fail
+02:10:55.444 > connect fail
+02:10:55.454 > connect fail
+02:10:55.465 > connect fail
+02:10:55.475 > connect fail
+02:10:55.485 > connect fail
+02:10:55.495 > connect fail
+02:10:55.505 > connect fail
+02:10:55.514 > connect fail
+02:10:55.525 > connect fail
+02:10:55.535 > connect fail
+02:10:55.545 > connect fail
+02:10:55.555 > connect fail
+02:10:55.565 > connect fail
+02:10:55.575 > connect fail
+02:10:55.585 > connect fail
+02:10:55.595 > connect fail
+02:10:55.605 > connect fail
+02:10:55.615 > connect fail
+02:10:55.625 > connect fail
+02:10:55.635 > connect fail
+02:10:55.645 > connect fail
+02:10:55.655 > connect fail
+02:10:55.665 > connect fail
+02:10:55.675 > connect fail
+02:10:55.685 > connect fail
+02:10:55.695 > connect fail
+02:10:55.706 > connect fail
+02:10:55.716 > connect fail
+02:10:55.726 > connect fail
+02:10:55.736 > connect fail
+02:10:55.746 > connect fail
+02:10:55.756 > connect fail
+02:10:55.766 > connect fail
+02:10:56.725 > connect fail
+02:10:56.735 > connect fail
+02:10:56.745 > connect fail
+02:10:56.755 > connect fail
+02:10:56.765 > connect fail
+02:10:56.776 > connect fail
+02:10:56.785 > connect fail
+02:10:56.795 > connect fail
+02:10:56.806 > connect fail
+02:10:56.816 > wifi connected
+02:10:56.818 > calib_step: 0
+02:10:56.819 > current_rssi/smoothed_rssi: 37 / 37.00
+02:10:58.823 > current_rssi/smoothed_rssi: 38 / 37.00
+02:11:00.826 > current_rssi/smoothed_rssi: 38 / 37.00
+02:11:02.830 > current_rssi/smoothed_rssi: 36 / 37.00
+02:11:04.833 > current_rssi/smoothed_rssi: 36 / 37.00
+02:11:06.837 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:08.841 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:10.845 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:12.849 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:14.848 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:16.849 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:18.849 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:20.864 > current_rssi/smoothed_rssi: 39 / 37.00
+02:11:22.868 > current_rssi/smoothed_rssi: 39 / 37.00
+02:11:24.872 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:26.876 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:28.880 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:30.884 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:32.888 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:34.892 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:36.895 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:38.899 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:40.899 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:42.900 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:44.899 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:46.899 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:48.919 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:50.923 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:52.926 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:54.930 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:56.934 > current_rssi/smoothed_rssi: 37 / 37.00
+02:11:58.938 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:00.942 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:02.946 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:04.949 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:06.949 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:08.949 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:10.949 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:12.964 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:14.969 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:16.973 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:18.977 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:20.980 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:22.985 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:24.989 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:26.993 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:28.997 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:30.999 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:33.005 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:35.009 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:37.000 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:39.016 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:41.022 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:43.025 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:45.029 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:47.033 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:49.037 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:51.041 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:53.045 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:55.050 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:57.050 > calib_step: 1
+02:12:57.055 > calib_step: 2
+02:12:57.056 > calib_step: 3
+02:12:57.057 > sum1: 0, temp: 0.000000 variance1: 0.000000
+02:12:57.061 > sum2: 0, temp: 0.000000 variance2: 0.000000
+02:12:57.065 > calib_step: 4
+02:12:57.066 > calib_step: 5
+02:12:57.067 > mean: 37.000000 mean1: 37.000000 variance: 0.000000 variance1: 0.000000
+02:12:57.074 > detection_step: 0
+02:12:59.074 > current_rssi/smoothed_rssi: 37 / 37.00
+02:12:59.077 > detection_step: 1
+02:12:59.079 > detection_step: 2
+02:12:59.081 > mean: 37.00 mean_detector: 37.00 mean_deviation: 0.00 mean_diff: 0.00
+02:12:59.087 > variance: 0.00 variance_detector: 0.00 variance_deviation: 0.000000 Vardiff: 0.00
+02:12:59.095 > khong co nguoi
+02:12:59.096 > detection_step: 3
+02:12:59.098 > detection_step: 0
+02:13:01.095 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:01.103 > detection_step: 1
+02:13:01.103 > detection_step: 2
+02:13:01.103 > mean: 37.00 mean_detector: 55.50 mean_deviation: 0.00 mean_diff: 18.50
+02:13:01.109 > variance: 0.00 variance_detector: 18.49 variance_deviation: 0.000000 Vardiff: 18.49
+02:13:01.116 > co nguoi
+02:13:01.117 > detection_step: 3
+02:13:01.118 > detection_step: 0
+02:13:03.116 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:03.123 > detection_step: 1
+02:13:03.123 > detection_step: 2
+02:13:03.123 > mean: 37.00 mean_detector: 55.50 mean_deviation: 0.00 mean_diff: 18.50
+02:13:03.129 > variance: 0.00 variance_detector: 21.35 variance_deviation: 0.000000 Vardiff: 21.35
+02:13:03.137 > co nguoi
+02:13:03.137 > detection_step: 3
+02:13:03.139 > detection_step: 0
+02:13:05.138 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:05.142 > detection_step: 1
+02:13:05.143 > detection_step: 2
+02:13:05.145 > mean: 37.00 mean_detector: 50.88 mean_deviation: 0.00 mean_diff: 13.88
+02:13:05.150 > variance: 0.00 variance_detector: 17.49 variance_deviation: 0.000000 Vardiff: 17.49
+02:13:05.157 > co nguoi
+02:13:05.158 > detection_step: 3
+02:13:05.160 > detection_step: 0
+02:13:07.150 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:07.162 > detection_step: 1
+02:13:07.164 > detection_step: 2
+02:13:07.165 > mean: 37.00 mean_detector: 47.17 mean_deviation: 0.00 mean_diff: 10.17
+02:13:07.172 > variance: 0.00 variance_detector: 12.81 variance_deviation: 0.000000 Vardiff: 12.81
+02:13:07.179 > co nguoi
+02:13:07.180 > detection_step: 3
+02:13:07.181 > detection_step: 0
+02:13:09.179 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:09.184 > detection_step: 1
+02:13:09.186 > detection_step: 2
+02:13:09.188 > mean: 37.00 mean_detector: 44.86 mean_deviation: 0.00 mean_diff: 7.86
+02:13:09.194 > variance: 0.00 variance_detector: 9.38 variance_deviation: 0.000000 Vardiff: 9.38
+02:13:09.201 > co nguoi
+02:13:09.202 > detection_step: 3
+02:13:09.203 > detection_step: 0
+02:13:11.201 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:11.205 > detection_step: 1
+02:13:11.206 > detection_step: 2
+02:13:11.208 > mean: 37.00 mean_detector: 43.41 mean_deviation: 0.00 mean_diff: 6.41
+02:13:11.214 > variance: 0.00 variance_detector: 7.28 variance_deviation: 0.000000 Vardiff: 7.28
+02:13:11.221 > co nguoi
+02:13:11.222 > detection_step: 3
+02:13:11.224 > detection_step: 0
+02:13:13.222 > current_rssi/smoothed_rssi: 36 / 36.00
+02:13:13.226 > detection_step: 1
+02:13:13.228 > detection_step: 2
+02:13:13.229 > mean: 37.00 mean_detector: 42.30 mean_deviation: 0.00 mean_diff: 5.30
+02:13:13.235 > variance: 0.00 variance_detector: 6.00 variance_deviation: 0.000000 Vardiff: 6.00
+02:13:13.242 > co nguoi
+02:13:13.243 > detection_step: 3
+02:13:13.245 > detection_step: 0
+02:13:15.233 > current_rssi/smoothed_rssi: 39 / 37.00
+02:13:15.246 > detection_step: 1
+02:13:15.248 > detection_step: 2
+02:13:15.249 > mean: 37.00 mean_detector: 41.59 mean_deviation: 0.00 mean_diff: 4.59
+02:13:15.256 > variance: 0.00 variance_detector: 5.10 variance_deviation: 0.000000 Vardiff: 5.10
+02:13:15.263 > co nguoi
+02:13:15.264 > detection_step: 3
+02:13:15.265 > detection_step: 0
+02:13:17.250 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:17.267 > detection_step: 1
+02:13:17.268 > detection_step: 2
+02:13:17.270 > mean: 37.00 mean_detector: 41.06 mean_deviation: 0.00 mean_diff: 4.06
+02:13:17.276 > variance: 0.00 variance_detector: 4.36 variance_deviation: 0.000000 Vardiff: 4.36
+02:13:17.283 > co nguoi
+02:13:17.285 > detection_step: 3
+02:13:17.286 > detection_step: 0
+02:13:19.286 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:19.289 > detection_step: 1
+02:13:19.291 > detection_step: 2
+02:13:19.292 > mean: 37.00 mean_detector: 40.64 mean_deviation: 0.00 mean_diff: 3.64
+02:13:19.299 > variance: 0.00 variance_detector: 3.87 variance_deviation: 0.000000 Vardiff: 3.87
+02:13:19.306 > co nguoi
+02:13:19.307 > detection_step: 3
+02:13:19.308 > detection_step: 0
+02:13:21.307 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:21.311 > detection_step: 1
+02:13:21.312 > detection_step: 2
+02:13:21.314 > mean: 37.00 mean_detector: 40.30 mean_deviation: 0.00 mean_diff: 3.30
+02:13:21.320 > variance: 0.00 variance_detector: 3.32 variance_deviation: 0.000000 Vardiff: 3.32
+02:13:21.327 > co nguoi
+02:13:21.328 > detection_step: 3
+02:13:21.329 > detection_step: 0
+02:13:23.327 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:23.331 > detection_step: 1
+02:13:23.332 > detection_step: 2
+02:13:23.334 > mean: 37.00 mean_detector: 40.02 mean_deviation: 0.00 mean_diff: 3.02
+02:13:23.340 > variance: 0.00 variance_detector: 3.16 variance_deviation: 0.000000 Vardiff: 3.16
+02:13:23.347 > co nguoi
+02:13:23.348 > detection_step: 3
+02:13:23.350 > detection_step: 0
+02:13:25.333 > current_rssi/smoothed_rssi: 37 / 37.00
+02:13:25.351 > detection_step: 1
+02:13:25.353 > detection_step: 2
+02:13:25.354 > mean: 37.00 mean_detector: 39.79 mean_deviation: 0.00 mean_diff: 2.79
+02:13:25.360 > variance: 0.00 variance_detector: 2.83 variance_deviation: 0.000000 Vardiff: 2.83
+02:13:25.368 > co nguoi
+02:13:25.369 > detection_step: 3
+02:13:25.371 > detection_step: 0
+02:13:27.370 > current_rssi/smoothed_rssi: 38 / 37.00
+02:13:27.374 > detection_step: 1
+02:13:27.376 > detection_step: 2
+02:13:27.377 > mean: 37.00 mean_detector: 39.59 mean_deviation: 0.00 mean_diff: 2.59
+02:13:27.384 > variance: 0.00 variance_detector: 2.45 variance_deviation: 0.000000 Vardiff: 2.45
+02:13:27.391 > co nguoi
+02:13:27.392 > detection_step: 3
+02:13:27.392 > detection_step: 0
+02:13:29.391 > current_rssi/smoothed_rssi: 36 / 37.00
+02:13:29.395 > detection_step: 1
+02:13:29.396 > detection_step: 2
+02:13:29.398 > mean: 37.00 mean_detector: 39.41 mean_deviation: 0.00 mean_diff: 2.41
+02:13:29.404 > variance: 0.00 variance_detector: 2.24 variance_deviation: 0.000000 Vardiff: 2.24
+02:13:29.411 > co nguoi
+02:13:29.412 > detection_step: 3
+02:13:29.413 > detection_step: 0
+02:13:31.400 > current_rssi/smoothed_rssi: 36 / 37.00
+02:13:31.432 > detection_step: 1
+02:13:31.432 > detection_step: 2
+02:13:31.432 > mean: 37.00 mean_detector: 39.26 mean_deviation: 0.00 mean_diff: 2.26
+02:13:31.432 > variance: 0.00 variance_detector: 2.24 variance_deviation: 0.000000 Vardiff: 2.24
+02:13:31.432 > co nguoi
+02:13:31.432 > detection_step: 3
+02:13:31.434 > detection_step: 0

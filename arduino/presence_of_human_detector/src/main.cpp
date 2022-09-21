@@ -23,15 +23,23 @@ int raw_rssi2[NUMBER_RSSI];
 float smoothed_rssi1[NUMBER_RSSI];
 float smoothed_rssi2[NUMBER_RSSI];
 float mean1 = 0;
-float variance1 = 0;
+double variance1 = 0;
 float mean2 = 0;
-float variance2 = 0;
+double variance2 = 0;
+
+uint32_t measure_count = 0;
+float mean_detector = 0;
+float variance_detector = 0;
+uint8_t is_filtered = 0;
+float smoothed_rssi_values[NUMBER_RSSI];
+float variances_detector[NUMBER_RSSI];
+moving_average_t* maf_detector_rssi;
 
 float mean = 0;
 float variance = 0;
 float mean_deviation = 0;
 float variance_deviation = 0;
-moving_average_t* sensor_av;
+moving_average_t* maf_raw_rssi;
 
 int current_rssi = 0;
 float smoothed_rssi = 0;
@@ -67,7 +75,7 @@ void do_calibration(void)
           /* Fill MAF to get filter */
           for (int i = 0; i < NUMBER_MAF; i++) {
             current_rssi = -WiFi.RSSI();
-            smoothed_rssi = movingAvg(sensor_av, current_rssi);
+            smoothed_rssi = movingAvg(maf_raw_rssi, current_rssi);
             printf("current_rssi/smoothed_rssi: %d / %.2f\n", current_rssi, smoothed_rssi);
             delay(TIME_DELAY);
           }
@@ -75,7 +83,7 @@ void do_calibration(void)
           /* obtain n numbers of RSSI */
           for (int i = 0; i < NUMBER_RSSI; i++) {
             current_rssi = -WiFi.RSSI();
-            smoothed_rssi1[i] = movingAvg(sensor_av, current_rssi);
+            smoothed_rssi1[i] = movingAvg(maf_raw_rssi, current_rssi);
             printf("current_rssi/smoothed_rssi: %d / %.2f\n", current_rssi, smoothed_rssi1[i]);
             delay(TIME_DELAY);
           }
@@ -83,7 +91,7 @@ void do_calibration(void)
           /* obtain n numbers of RSSI again */
           for (int i = 0; i < NUMBER_RSSI; i++) {
             current_rssi = -WiFi.RSSI();
-            smoothed_rssi2[i] = movingAvg(sensor_av, current_rssi);
+            smoothed_rssi2[i] = movingAvg(maf_raw_rssi, current_rssi);
             printf("current_rssi/smoothed_rssi: %d / %.2f\n", current_rssi, smoothed_rssi2[i]);
             delay(TIME_DELAY);
           }
@@ -115,7 +123,7 @@ void do_calibration(void)
           }
           double temp = (double)(sum / (NUMBER_RSSI - 1));
           variance1 = sqrt(temp);
-          printf("sum1: %d, temp: %ld variance1: %2f\n", sum, temp, variance1);
+          printf("sum1: %d, temp: %lf variance1: %2lf\n", sum, temp, variance1);
 
           /* variance 2 */
           sum = 0;
@@ -124,7 +132,7 @@ void do_calibration(void)
           }
           temp = (double)(sum / (NUMBER_RSSI - 1));
           variance2 = sqrt(temp);
-          printf("sum2: %d, temp: %ld variance2: %2f\n", sum, temp, variance2);
+          printf("sum2: %d, temp: %lf variance2: %2lf\n", sum, temp, variance2);
 
           calib_step++;
         } break;
@@ -160,45 +168,67 @@ void do_detection(void)
   Serial.printf("detection_step: %d\n", detection_step);
   switch (detection_step) {
     case 0: { /* obtain n RSSI */
-        for (int i = 0; i < NUMBER_RSSI; i++) {
-          current_rssi = -WiFi.RSSI();
-          smoothed_rssi1[i] = movingAvg(sensor_av, current_rssi);
-		  printf("current_rssi/smoothed_rssi: %d / %.2f\n", current_rssi, smoothed_rssi1[i]);
-          delay(TIME_DELAY);
-        }
+		delay(TIME_DELAY);
+		current_rssi = -WiFi.RSSI();
+		smoothed_rssi = movingAvg(maf_raw_rssi, current_rssi);
+		printf("current_rssi/smoothed_rssi: %d / %.2f\n", current_rssi, smoothed_rssi);
+		
+		/* calculate mean */
+		smoothed_rssi_values[measure_count] = smoothed_rssi;
+		measure_count++;
+		if (is_filtered) {
+			for (uint32_t i = 0; i < NUMBER_RSSI; i++) {
+				mean_detector += smoothed_rssi_values[i];
+			}
+			mean_detector /= NUMBER_RSSI;
+		} else {
+			for (uint32_t i = 0; i < measure_count; i++) {
+				mean_detector += smoothed_rssi_values[i];
+			}
+			mean_detector /= measure_count;
+		}
+		if (measure_count == NUMBER_RSSI) {
+			is_filtered = 1;
+			measure_count = 0;
+		}
+
         detection_step++;
       } break;
 
     case 1: { /* Calculate mean & variance */
-        /* mean */
-        for (int i = 0; i < NUMBER_RSSI; i++) {
-          mean1 += smoothed_rssi1[i];
-        }
-        mean1 /= NUMBER_RSSI;
-
         /* variance */
-        for (int i = 0; i < NUMBER_RSSI; i++) {
-          sum += (smoothed_rssi1[i] - mean1) * (smoothed_rssi1[i] - mean1);
-        }
-        sum /= (NUMBER_RSSI - 1);
-        variance1 = sqrt(sum);
-
+		if (is_filtered) {
+			for (uint32_t i = 0; i < NUMBER_RSSI; i++) {
+				sum += (smoothed_rssi_values[i] - mean_detector)
+					* (smoothed_rssi_values[i] - mean_detector);
+			}
+			sum /= NUMBER_RSSI;
+		} else {
+			for (uint32_t i = 0; i < measure_count; i++) {
+				sum += (smoothed_rssi_values[i] - mean_detector) 
+					* (smoothed_rssi_values[i] - mean_detector);
+			}
+			sum /= measure_count;
+		}
+        variance_detector = sqrt(sum);
         detection_step++;
       } break;
 
     case 2: { /* Compare mean and variance to initial calibrated parameters */
-        printf("mean: %.2f mean1: %.2f mean_deviation: %.2f mean_diff: %.2f\n",
-               mean, mean1, mean_deviation, mean > mean1 ? (mean - mean1) : (mean1 - mean));
-        printf("variance1: %.2f variance: %.2f variance_deviation: %2f Vardiff: %.2f\n",
-               variance1, variance, variance_deviation, 
-			   variance > variance1 ? (variance - variance1) : (variance1 - variance));
+        printf("mean: %.2f mean_detector: %.2f mean_deviation: %.2f mean_diff: %.2f\n",
+               mean, mean_detector, mean_deviation, 
+			   mean > mean_detector ? (mean - mean_detector) : (mean_detector - mean));
+        printf("variance: %.2f variance_detector: %.2f variance_deviation: %2f Vardiff: %.2f\n",
+               variance, variance_detector, variance_deviation, 
+			   variance > variance1 ? (variance - variance_detector) 
+			   						: (variance_detector - variance));
 
         int check = false;
-        if (((mean1 <= mean) && (abs(mean1) >= abs((int)(mean - mean_deviation)))) ||
-            ((mean1 >= mean) && (abs(mean1) <= abs((int)(mean + mean_deviation)))))
+        if (((mean_detector <= mean) && (abs(mean_detector) >= abs((int)(mean - mean_deviation)))) ||
+            ((mean_detector >= mean) && (abs(mean_detector) <= abs((int)(mean + mean_deviation)))))
         {
-          if ((variance1 <= variance && variance1 >= (variance - variance_deviation)) ||
-              (variance1 >= variance && variance1 <= (variance + variance_deviation)))
+          if ((variance_detector <= variance && variance_detector >= (variance - variance_deviation)) ||
+              (variance_detector >= variance && variance_detector <= (variance + variance_deviation)))
           {
             // k co nguoi
             check = true;
@@ -256,7 +286,8 @@ void setup()
   Serial.println("running...");
   wifi_connect();
   led_init();
-  sensor_av = allocate_moving_average(NUMBER_MAF);
+  maf_raw_rssi = allocate_moving_average(NUMBER_MAF);
+  maf_detector_rssi = allocate_moving_average(NUMBER_MAF);
 }
 
 void loop()

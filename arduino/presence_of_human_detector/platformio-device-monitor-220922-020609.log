@@ -1,0 +1,68 @@
+02:06:09.934 > running...
+02:06:09.935 > connect fail
+02:06:09.945 > connect fail
+02:06:09.956 > connect fail
+02:06:09.965 > connect fail
+02:06:09.976 > connect fail
+02:06:09.986 > connect fail
+02:06:09.996 > connect fail
+02:06:10.006 > connect fail
+02:06:10.016 > connect fail
+02:06:10.026 > connect fail
+02:06:10.036 > connect fail
+02:06:10.046 > connect fail
+02:06:10.056 > connect fail
+02:06:10.066 > connect fail
+02:06:10.077 > connect fail
+02:06:10.087 > connect fail
+02:06:10.097 > connect fail
+02:06:10.107 > connect fail
+02:06:10.117 > connect fail
+02:06:10.127 > connect fail
+02:06:10.137 > connect fail
+02:06:10.146 > connect fail
+02:06:10.156 > connect fail
+02:06:10.167 > connect fail
+02:06:10.177 > connect fail
+02:06:10.187 > connect fail
+02:06:10.197 > connect fail
+02:06:10.207 > connect fail
+02:06:10.217 > connect fail
+02:06:10.227 > connect fail
+02:06:10.238 > wifi connected
+02:06:10.240 > calib_step: 0
+02:06:10.241 > current_rssi/smoothed_rssi: 34 / 34.00
+02:06:12.245 > current_rssi/smoothed_rssi: 34 / 34.00
+02:06:14.248 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:16.252 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:18.255 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:20.259 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:22.262 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:24.266 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:26.270 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:28.274 > current_rssi/smoothed_rssi: 35 / 34.00
+02:06:30.278 > current_rssi/smoothed_rssi: 37 / 35.00
+02:06:32.281 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:34.286 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:36.290 > current_rssi/smoothed_rssi: 37 / 35.00
+02:06:38.294 > current_rssi/smoothed_rssi: 37 / 35.00
+02:06:40.297 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:42.301 > current_rssi/smoothed_rssi: 37 / 35.00
+02:06:44.305 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:46.309 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:48.313 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:50.317 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:52.321 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:54.325 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:56.329 > current_rssi/smoothed_rssi: 36 / 35.00
+02:06:58.333 > current_rssi/smoothed_rssi: 36 / 35.00
+02:07:00.336 > current_rssi/smoothed_rssi: 35 / 35.00
+02:07:02.331 > current_rssi/smoothed_rssi: 35 / 35.00
+02:07:04.331 > current_rssi/smoothed_rssi: 36 / 36.00
+02:07:06.348 > current_rssi/smoothed_rssi: 37 / 36.00
+02:07:08.352 > current_rssi/smoothed_rssi: 36 / 36.00
+02:07:10.356 > current_rssi/smoothed_rssi: 36 / 36.00
+02:07:12.360 > current_rssi/smoothed_rssi: 36 / 36.00
+02:07:14.363 > current_rssi/smoothed_rssi: 36 / 36.00
+02:07:16.367 > current_rssi/smoothed_rssi: 35 / 36.00
+02:07:18.372 > current_rssi/smoothed_rssi: 35 / 35.00
