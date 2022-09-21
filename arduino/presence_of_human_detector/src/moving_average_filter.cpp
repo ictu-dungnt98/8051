@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <string.h>
 
 typedef struct moving_average
 {
@@ -37,6 +38,7 @@ moving_average_t* allocate_moving_average(int len)
     av_obj->length    = len;
     av_obj->is_filled = false;
     av_obj->buffer = (int*)malloc(len * sizeof(int));
+	memset(av_obj->buffer, 0, len * sizeof(int));
     return av_obj;
 }
 

@@ -3,8 +3,6 @@
 
 #include <Arduino.h>
 
-#include "m_typedef.h"
-
 #define ON HIGH
 #define OFF LOW
 

@@ -1,6 +1,4 @@
-
 #include "led.h"
-#include "m_typedef.h"
 
 static uint8_t m_leds[NUMBER_LED] = {LED1_PIN};
 
