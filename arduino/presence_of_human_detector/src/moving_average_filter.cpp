@@ -25,7 +25,7 @@ int movingAvg(moving_average_t* av_obj, int new_element)
     av_obj->pos = 0;
     av_obj->is_filled = true;
   }
-  printf("is_filled %d", av_obj->is_filled);
+//   printf("is_filled %d", av_obj->is_filled);
   //return the average
   return av_obj->sum / (av_obj->is_filled ? av_obj->length:av_obj->pos);
 }
